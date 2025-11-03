@@ -55,3 +55,9 @@
 
 - [x] Privacy Policy page
 - [x] Terms of Service page
+
+## Contact Information Updates
+
+- [x] Update Privacy Policy with actual business address, phone, and email
+- [x] Update Terms of Service with actual business address, phone, and email
+- [x] Update Compliance page with actual business contact information

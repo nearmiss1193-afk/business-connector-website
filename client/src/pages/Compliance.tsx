@@ -286,7 +286,7 @@ export default function Compliance() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button asChild>
-                    <a href="mailto:compliance@businessconector.com">Email Compliance Team</a>
+                    <a href="mailto:EFILE1234@INCFILE.COM">Email Compliance Team</a>
                   </Button>
                   <Button variant="outline" asChild>
                     <Link href="/get-started">
@@ -310,9 +310,13 @@ export default function Compliance() {
                 <a className="hover:text-foreground transition-colors">Home</a>
               </Link>
               {" • "}
-              <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
+              <Link href="/privacy-policy">
+                <a className="hover:text-foreground transition-colors">Privacy Policy</a>
+              </Link>
               {" • "}
-              <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+              <Link href="/terms-of-service">
+                <a className="hover:text-foreground transition-colors">Terms of Service</a>
+              </Link>
             </p>
           </div>
         </div>

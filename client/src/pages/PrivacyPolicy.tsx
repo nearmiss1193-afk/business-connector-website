@@ -305,9 +305,9 @@ export default function PrivacyPolicy() {
                 </p>
                 <div className="space-y-2 text-sm">
                   <p><strong>Business Conector</strong></p>
-                  <p>Email: <a href="mailto:privacy@businessconector.com" className="text-primary hover:underline">privacy@businessconector.com</a></p>
-                  <p>Phone: <a href="tel:+15551234567" className="text-primary hover:underline">(555) 123-4567</a></p>
-                  <p>Address: [Your Business Address]</p>
+                  <p>Email: <a href="mailto:EFILE1234@INCFILE.COM" className="text-primary hover:underline">EFILE1234@INCFILE.COM</a></p>
+                  <p>Phone: <a href="tel:+18884623453" className="text-primary hover:underline">(888) 462-3453</a></p>
+                  <p>Address: 5830 E 2nd St, Ste 7000 #29249, Casper, WY 82609</p>
                 </div>
               </CardContent>
             </Card>
