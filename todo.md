@@ -50,3 +50,8 @@
 ## Branding Updates
 
 - [x] Remove all GoHighLevel references and replace with Business Conector branding
+
+## Legal Pages
+
+- [x] Privacy Policy page
+- [x] Terms of Service page

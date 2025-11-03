@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import GetStarted from "./pages/GetStarted";
 import Success from "./pages/Success";
 import Compliance from "./pages/Compliance";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -17,6 +19,8 @@ function Router() {
       <Route path="/get-started" component={GetStarted} />
       <Route path="/success" component={Success} />
       <Route path="/compliance" component={Compliance} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/terms-of-service" component={TermsOfService} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

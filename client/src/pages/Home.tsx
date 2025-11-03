@@ -592,8 +592,8 @@ export default function Home() {
             <div>
               <h3 className="font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>
+                <li><Link href="/privacy-policy"><a className="hover:text-foreground transition-colors">Privacy Policy</a></Link></li>
+                <li><Link href="/terms-of-service"><a className="hover:text-foreground transition-colors">Terms of Service</a></Link></li>
                 <li><Link href="/compliance"><a className="hover:text-foreground transition-colors">A2P 10DLC Compliance</a></Link></li>
               </ul>
             </div>
