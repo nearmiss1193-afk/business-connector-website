@@ -9,9 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Check, Loader2 } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 export default function GetStarted() {
+  const [, setLocation] = useLocation();
   const [formData, setFormData] = useState<{
     firstName: string;
     lastName: string;
@@ -40,9 +41,11 @@ export default function GetStarted() {
 
   const submitLead = trpc.leads.submit.useMutation({
     onSuccess: () => {
-      toast.success("Application submitted successfully!", {
-        description: "We'll contact you within 24 hours to schedule your onboarding.",
-      });
+      toast.success("Application submitted successfully!");
+      // Redirect to success page
+      setTimeout(() => {
+        setLocation("/success");
+      }, 1000);
       // Reset form
       setFormData({
         firstName: "",

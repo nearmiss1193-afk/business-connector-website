@@ -189,7 +189,7 @@ export default function Home() {
                   </div>
                   <CardTitle>White-Label CRM</CardTitle>
                   <CardDescription>
-                    Powerful GoHighLevel CRM branded with YOUR name and logo. Unlimited contacts and automation.
+                    Powerful white-label CRM branded with YOUR name and logo. Unlimited contacts and automation.
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -280,7 +280,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-start gap-2">
                       <Check className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">White-label CRM (GoHighLevel)</span>
+                      <span className="text-sm">White-label CRM included</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Check className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
@@ -594,7 +594,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">A2P 10DLC Compliance</a></li>
+                <li><Link href="/compliance"><a className="hover:text-foreground transition-colors">A2P 10DLC Compliance</a></Link></li>
               </ul>
             </div>
           </div>

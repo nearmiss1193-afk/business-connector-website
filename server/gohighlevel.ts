@@ -1,8 +1,8 @@
 /**
- * GoHighLevel API Integration
+ * CRM API Integration
  * 
- * This module handles submitting leads to GoHighLevel CRM.
- * You'll need to add your GoHighLevel API key to the secrets.
+ * This module handles submitting leads to the Business Conector CRM backend.
+ * Credentials are automatically configured from environment variables.
  */
 
 interface LeadData {
@@ -23,7 +23,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
   const locationId = process.env.GOHIGHLEVEL_LOCATION_ID;
 
   if (!apiKey || !locationId) {
-    console.warn("GoHighLevel API credentials not configured. Lead will be logged only.");
+    console.warn("CRM API credentials not configured. Lead will be logged only.");
     console.log("Lead data:", JSON.stringify(data, null, 2));
     
     // Return mock success for now
@@ -34,7 +34,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
   }
 
   try {
-    // Create contact in GoHighLevel
+    // Create contact in CRM
     const response = await fetch(`https://rest.gohighlevel.com/v1/contacts/`, {
       method: "POST",
       headers: {
@@ -60,7 +60,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`GoHighLevel API error: ${response.status} - ${errorText}`);
+      throw new Error(`CRM API error: ${response.status} - ${errorText}`);
     }
 
     const result = await response.json();
@@ -70,7 +70,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
       contactId: result.contact?.id || result.id,
     };
   } catch (error) {
-    console.error("GoHighLevel submission error:", error);
+    console.error("CRM submission error:", error);
     throw error;
   }
 }
