@@ -214,3 +214,15 @@
 - [ ] Request Stellar MLS connection
 - [ ] Add API credentials to environment variables
 - [ ] Run first production sync
+
+### Realtor.com RapidAPI Integration
+- [ ] Create RapidAPI client module for Realtor.com
+- [ ] Add RAPIDAPI_KEY to environment variables
+- [ ] Build property search and fetch functions
+- [ ] Map Realtor.com data to database schema
+- [ ] Create import function for bulk property sync
+- [ ] Handle property images from Realtor.com
+- [ ] Set up automated daily sync job
+- [ ] Test with Central Florida properties
+- [ ] Import all 7,948+ properties
+- [ ] Verify data quality and completeness
