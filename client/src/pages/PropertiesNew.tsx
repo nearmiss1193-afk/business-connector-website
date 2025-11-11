@@ -3,7 +3,8 @@
  * Zillow-quality design with modern UI/UX
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { Link, useLocation } from 'wouter';
 import {
   Search,
   Bed,
@@ -275,14 +276,14 @@ export default function PropertiesNew() {
                   <div className="h-4 bg-gray-200 rounded w-2/3 mb-2" />
                   <div className="h-3 bg-gray-200 rounded w-1/2" />
                 </CardContent>
-              </Card>
+                </Card>
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties?.items.map((property: any) => (
+              <Link key={property.id} href={`/properties/${property.id}`} className="block">
               <Card
-                key={property.id}
                 className="overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group border-gray-200"
                 onClick={() => {
                   setSelectedProperty(property);
@@ -367,6 +368,7 @@ export default function PropertiesNew() {
                   </div>
                 </CardContent>
               </Card>
+              </Link>
             ))}
           </div>
         )}
