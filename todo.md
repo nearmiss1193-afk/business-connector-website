@@ -85,3 +85,80 @@
 - [x] Build Referral Generation workflow
 - [x] Test all workflows with sample leads
 - [x] Document workflow implementation for users
+
+## Property Website System (centralfloridahomes.com)
+
+### Database & Schema
+- [x] Create properties table with MLS fields
+- [x] Create property_images table for multiple photos
+- [x] Create property_sync_log table for tracking MLS updates
+- [x] Add indexes for search performance
+
+### Property Listing UI
+- [x] Professional property card design (Zillow-style)
+- [x] Property search page with filters
+- [x] Property cards with pricing, specs, images
+- [x] Responsive mobile design
+- [ ] Property detail page with full info
+- [ ] Image gallery with lightbox
+- [ ] Map integration for property location
+
+### Lead Capture System
+- [x] Track property views with session ID
+- [x] Show registration modal after 3 clicks
+- [x] Buyer registration form (name, email, phone, budget, timeline, pre-approval)
+- [x] Submit to GoHighLevel buyer pipeline
+- [x] Store registration state to prevent re-prompting
+
+### MLS Integration
+- [ ] Research MLS API options (Zillow, Realtor.com, Bridge Interactive)
+- [ ] Build MLS data sync script
+- [ ] Schedule daily sync job
+- [ ] Handle new listings (add to database)
+- [ ] Handle sold/off-market listings (mark inactive)
+- [ ] Download and store property images
+
+### Deployment
+- [ ] Deploy property website as subdomain or separate domain
+- [ ] Configure CORS for API calls
+- [ ] Test lead capture flow end-to-end
+- [ ] Verify GoHighLevel integration
+
+## GoHighLevel Dual-Pipeline Integration
+
+- [x] Dual-pipeline system (Agent + Buyer)
+- [x] Smart lead routing
+- [x] Setup script for buyer pipeline
+- [x] Documentation (GOHIGHLEVEL_SETUP.md)
+
+### Professional Design Upgrade (Zillow-Quality)
+- [x] Real property photos (high-quality stock images)
+- [x] Hero section with professional background image
+- [x] Advanced search bar with autocomplete
+- [x] Premium property cards with better spacing and shadows
+- [x] Professional color scheme (Zillow blue #006AFF)
+- [x] Better typography (Inter font family)
+- [x] Smooth hover effects and micro-interactions
+- [ ] Map view toggle
+- [ ] Save favorites functionality
+- [ ] Status badges (New, Price Drop, Open House)
+- [ ] Agent contact info on cards
+- [ ] Neighborhood information section
+- [ ] Professional footer with links
+- [ ] Better mobile responsiveness
+- [ ] Image carousels on property cards
+
+### Property Detail Page
+- [ ] Professional property detail page layout
+- [ ] Image gallery with lightbox/carousel
+- [ ] Property overview section (price, beds, baths, sqft)
+- [ ] Property description
+- [ ] Key features list
+- [ ] Neighborhood information
+- [ ] School information
+- [ ] Map with property location
+- [ ] Contact agent form
+- [ ] Schedule tour button
+- [ ] Share property button
+- [ ] Similar properties section
+- [ ] Mortgage calculator
