@@ -305,3 +305,46 @@ export async function insertSampleProperties() {
 
   console.log('✅ Sample properties inserted');
 }
+
+/**
+ * Get featured properties based on user location
+ * Returns properties under specified price near the user's city
+ */
+export async function getFeaturedPropertiesByLocation(params: {
+  city?: string;
+  maxPrice?: number;
+  limit?: number;
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error('Database not available');
+  }
+
+  const { city, maxPrice = 500000, limit = 8 } = params;
+
+  // Build WHERE conditions
+  const conditions = [
+    eq(properties.listingStatus, 'active' as any),
+    lte(properties.price, maxPrice.toString()),
+  ];
+
+  // If city is provided, filter by city
+  if (city) {
+    conditions.push(
+      sql`${properties.city} LIKE ${`%${city}%`}`
+    );
+  }
+
+  // Get properties
+  const results = await db
+    .select()
+    .from(properties)
+    .where(and(...conditions))
+    .orderBy(desc(properties.createdAt))
+    .limit(limit);
+
+  return {
+    properties: results,
+    city: city || 'Central Florida',
+  };
+}

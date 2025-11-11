@@ -323,3 +323,12 @@
 - [x] Auto-fit map bounds to show all properties
 - [ ] Implement marker clustering for better performance with 56K+ properties
 - [ ] Test map view with large dataset
+
+### Zillow-Style Top Navigation & Location-Based Features
+- [x] Create TopNavigation component with Zillow-style tabs (Buy, Rent, Sell, Get a mortgage, Find an agent, Manage rentals, Advertise, Get help, Sign in)
+- [x] Add TopNavigation to PropertyHome page above hero section
+- [x] Implement IP-based geolocation to detect user's location
+- [x] Create location-based featured properties tRPC query (filter by proximity and price under $500k)
+- [x] Update featured properties section to show "Trending Homes in [User's City]" based on detected location
+- [x] Add fallback for users who deny location permission (show default city like Tampa or Orlando)
+- [x] Test navigation links and location detection

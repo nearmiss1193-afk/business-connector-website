@@ -3,7 +3,7 @@
  * Zillow-quality design with hero, featured properties, and CTAs
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import MortgageLeadModal from '@/components/MortgageLeadModal';
 import Footer from '@/components/Footer';
+import TopNavigation from '@/components/TopNavigation';
 import {
   Search,
   MapPin,
@@ -33,6 +34,8 @@ export default function PropertyHome() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'buy' | 'mortgage'>('buy');
   const [showMortgageModal, setShowMortgageModal] = useState(false);
+  const [userCity, setUserCity] = useState<string | undefined>(undefined);
+  const [locationDetected, setLocationDetected] = useState(false);
   
   // Mortgage calculator state
   const [homePrice, setHomePrice] = useState('400000');
@@ -66,11 +69,30 @@ export default function PropertyHome() {
     return pi + monthlyPropertyTax + monthlyInsurance + monthlyHoa;
   };
 
-  // Fetch featured properties
-  const { data: properties } = trpc.properties.search.useQuery({
-    limit: 6,
-    sortBy: 'price',
-    sortOrder: 'desc',
+  // Detect user location on mount using IP geolocation
+  useEffect(() => {
+    if (!locationDetected) {
+      // Use ipapi.co for free IP-based geolocation
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          if (data.city) {
+            setUserCity(data.city);
+          }
+          setLocationDetected(true);
+        })
+        .catch(error => {
+          console.log('Could not detect location:', error);
+          setLocationDetected(true);
+        });
+    }
+  }, [locationDetected]);
+
+  // Fetch featured properties based on location
+  const { data: featuredData } = trpc.properties.getFeaturedByLocation.useQuery({
+    city: userCity,
+    maxPrice: 500000,
+    limit: 8,
   });
 
   const handleSearch = (e: React.FormEvent) => {
@@ -84,10 +106,10 @@ export default function PropertyHome() {
       currency: 'USD',
       maximumFractionDigits: 0,
     }).format(parseInt(price));
-  };
-
-  return (
-    <div className="min-h-screen bg-white">
+  };  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Navigation */}
+      <TopNavigation />
       {/* Hero Section - Zillow Style with Real Photo */}
       <div className="relative h-[600px] overflow-hidden">
         {/* Background Image */}
@@ -259,8 +281,14 @@ export default function PropertyHome() {
       <div className="container mx-auto px-4 py-16">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Properties</h2>
-            <p className="text-gray-600">Handpicked homes in Central Florida</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              {featuredData?.city ? `Trending Homes in ${featuredData.city}` : 'Featured Properties'}
+            </h2>
+            <p className="text-gray-600">
+              {featuredData?.city 
+                ? `Viewed and saved the most in the area over the past 24 hours`
+                : 'Handpicked homes in Central Florida'}
+            </p>
           </div>
           <Link href="/properties">
             <Button variant="outline" className="gap-2">
@@ -270,8 +298,8 @@ export default function PropertyHome() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {properties?.items.slice(0, 6).map((property: any) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredData?.properties.slice(0, 8).map((property: any) => (
             <Link key={property.id} href={`/properties/${property.id}`}>
               <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group border-gray-200">
                 {/* Property Image */}

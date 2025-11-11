@@ -12,6 +12,7 @@ import {
   trackPropertyView,
   getPropertyViewCount,
   getSessionViewCount,
+  getFeaturedPropertiesByLocation,
 } from '../db-properties';
 
 export const propertiesRouter = router({
@@ -80,5 +81,21 @@ export const propertiesRouter = router({
         sessionViewCount,
         shouldShowLeadCapture: sessionViewCount >= 3,
       };
+    }),
+
+  /**
+   * Get featured properties based on user location
+   * Returns properties under $500k near the user's city
+   */
+  getFeaturedByLocation: publicProcedure
+    .input(
+      z.object({
+        city: z.string().optional(),
+        maxPrice: z.number().default(500000),
+        limit: z.number().default(8),
+      })
+    )
+    .query(async ({ input }) => {
+      return await getFeaturedPropertiesByLocation(input);
     }),
 });
