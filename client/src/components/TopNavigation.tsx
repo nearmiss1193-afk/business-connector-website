@@ -1,16 +1,19 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { APP_LOGO, getLoginUrl } from "@/const";
 import { Link, useLocation } from "wouter";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 export default function TopNavigation() {
   const { isAuthenticated, user } = useAuth();
   const [location] = useLocation();
+  const [showMortgageDropdown, setShowMortgageDropdown] = useState(false);
 
   const navItems = [
     { label: "Buy", href: "/properties", active: location === "/properties" },
     { label: "Rent", href: "#", active: false },
     { label: "Sell", href: "#", active: false },
-    { label: "Get a mortgage", href: "#mortgage", active: false },
+    { label: "Get a mortgage", href: "#mortgage", active: false, hasDropdown: true },
     { label: "Find an agent", href: "#", active: false },
     { label: "Manage rentals", href: "#", active: false },
     { label: "Advertise", href: "/advertise", active: location === "/advertise" },
@@ -31,17 +34,77 @@ export default function TopNavigation() {
           {/* Navigation Items */}
           <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
-              <Link key={item.label} href={item.href}>
-                <a
-                  className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
-                    item.active
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
+              item.hasDropdown ? (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setShowMortgageDropdown(true)}
+                  onMouseLeave={() => setShowMortgageDropdown(false)}
                 >
-                  {item.label}
-                </a>
-              </Link>
+                  <button
+                    className={`px-4 py-2 text-sm font-medium rounded transition-colors flex items-center gap-1 ${
+                      item.active
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                  
+                  {/* Dropdown Menu */}
+                  {showMortgageDropdown && (
+                    <div className="absolute top-full left-0 mt-1 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
+                      <div className="p-6">
+                        <div className="grid grid-cols-2 gap-6">
+                          <div>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">Your mortgage</h3>
+                            <Link href="#">
+                              <a className="block text-sm text-blue-600 hover:underline mb-2">Discover Zillow Home Loans</a>
+                            </Link>
+                            <Link href="#">
+                              <a className="block text-sm text-blue-600 hover:underline mb-2">Calculate your BuyAbility</a>
+                            </Link>
+                            <Link href="#">
+                              <a className="block text-sm text-blue-600 hover:underline">Get pre-qualified</a>
+                            </Link>
+                          </div>
+                          <div>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">Mortgage tools</h3>
+                            <Link href="#">
+                              <a className="block text-sm text-blue-600 hover:underline mb-2">Estimate your mortgage payment</a>
+                            </Link>
+                            <Link href="#">
+                              <a className="block text-sm text-blue-600 hover:underline mb-2">See current mortgage rates</a>
+                            </Link>
+                            <Link href="#">
+                              <a className="block text-sm text-blue-600 hover:underline">Learn about financing a home</a>
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <p className="text-xs text-gray-600">Started a loan application?</p>
+                          <Link href="#">
+                            <a className="text-sm text-blue-600 hover:underline">Home Loans dashboard</a>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link key={item.label} href={item.href}>
+                  <a
+                    className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
+                      item.active
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                </Link>
+              )
             ))}
           </div>
 

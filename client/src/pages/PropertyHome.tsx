@@ -3,7 +3,7 @@
  * Zillow-quality design with hero, featured properties, and CTAs
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
@@ -36,6 +36,8 @@ export default function PropertyHome() {
   const [showMortgageModal, setShowMortgageModal] = useState(false);
   const [userCity, setUserCity] = useState<string | undefined>(undefined);
   const [locationDetected, setLocationDetected] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
   
   // Mortgage calculator state
   const [homePrice, setHomePrice] = useState('400000');
@@ -277,6 +279,101 @@ export default function PropertyHome() {
         </div>
       </div>
 
+      {/* BuyAbility Calculator Widget */}
+      <div className="bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">
+            Find homes you can afford with BuyAbility<sup className="text-sm">SM</sup>
+          </h2>
+          <p className="text-gray-600 text-center mb-8">
+            Answer a few questions. We'll highlight homes you're likely to qualify for.
+          </p>
+          
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* BuyAbility Widget Card */}
+              <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                <div className="flex items-center gap-2 mb-4">
+                  <img src={APP_LOGO} alt="Logo" className="h-6" />
+                  <span className="text-sm font-semibold">Home Loans</span>
+                </div>
+                
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">$ --</div>
+                    <div className="text-xs text-gray-600">Suggested target price</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">$ --</div>
+                    <div className="text-xs text-gray-600">BuyAbility<sup>SM</sup></div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <div className="text-lg font-bold text-gray-900">$ --</div>
+                      <div className="text-xs text-gray-600">Mo. payment</div>
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-gray-900">-- %</div>
+                      <div className="text-xs text-gray-600">Today's rate</div>
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-gray-900">-- %</div>
+                      <div className="text-xs text-gray-600">APR</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold">
+                  Let's get started
+                </Button>
+              </div>
+              
+              {/* Placeholder property cards with "Within BuyAbility" badge */}
+              {featuredData?.properties.slice(0, 2).map((property: any) => (
+                parseInt(property.price) < 400000 && (
+                  <Link key={property.id} href={`/properties/${property.id}`}>
+                    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group border-gray-200 h-full">
+                      <div className="relative h-48 bg-gray-100 overflow-hidden">
+                        <img
+                          src={property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
+                          alt={property.address}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <span className="absolute top-3 left-3 bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">
+                          Within BuyAbility
+                        </span>
+                      </div>
+                      <CardContent className="p-4">
+                        <div className="text-xl font-bold text-gray-900 mb-2">
+                          {formatPrice(property.price)}
+                        </div>
+                        <div className="flex items-center gap-3 text-xs text-gray-600 mb-2">
+                          <span>{property.bedrooms} bd</span>
+                          <span>{property.bathrooms} ba</span>
+                          <span>{property.sqft?.toLocaleString()} sqft</span>
+                        </div>
+                        <div className="text-sm text-gray-700">{property.address}</div>
+                        <div className="text-xs text-gray-500">
+                          {property.city}, {property.state}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )
+              ))}
+            </div>
+            
+            <div className="text-center mt-6">
+              <Link href="#">
+                <a className="text-blue-600 hover:underline text-sm font-medium flex items-center justify-center gap-1">
+                  <span>↓</span> More recommended homes
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Featured Properties */}
       <div className="container mx-auto px-4 py-16">
         <div className="flex items-center justify-between mb-8">
@@ -290,18 +387,49 @@ export default function PropertyHome() {
                 : 'Handpicked homes in Central Florida'}
             </p>
           </div>
-          <Link href="/properties">
-            <Button variant="outline" className="gap-2">
-              View All Properties
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          <div className="flex items-center gap-4">
+            {/* Carousel Navigation Arrows */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  if (carouselRef.current) {
+                    carouselRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+                  }
+                }}
+                className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 transition-colors"
+                aria-label="Previous properties"
+              >
+                <ArrowRight className="w-5 h-5 rotate-180" />
+              </button>
+              <button
+                onClick={() => {
+                  if (carouselRef.current) {
+                    carouselRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+                  }
+                }}
+                className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 transition-colors"
+                aria-label="Next properties"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+            <Link href="/properties">
+              <Button variant="outline" className="gap-2">
+                View All Properties
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div 
+          ref={carouselRef}
+          className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           {featuredData?.properties.slice(0, 8).map((property: any) => (
             <Link key={property.id} href={`/properties/${property.id}`}>
-              <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group border-gray-200">
+              <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group border-gray-200 flex-shrink-0 w-72 snap-start">
                 {/* Property Image */}
                 <div className="relative h-56 bg-gray-100 overflow-hidden">
                   <img
@@ -312,6 +440,12 @@ export default function PropertyHome() {
 
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex flex-col gap-2">
+                    {/* Showcase badge for properties under $500k */}
+                    {parseInt(property.price) < 500000 && (
+                      <span className="bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">
+                        Showcase
+                      </span>
+                    )}
                     {property.hasVirtualTour && (
                       <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
                         <Home className="w-3 h-3" />
@@ -354,12 +488,22 @@ export default function PropertyHome() {
                     {property.city}, {property.state} {property.zipCode}
                   </div>
 
-                  {/* Property Type */}
-                  <div className="mt-4 pt-4 border-t border-gray-100">
+                  {/* Status and MLS Info */}
+                  <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
                     <span className="text-xs text-gray-500 uppercase tracking-wide">
-                      {property.propertyType.replace('_', ' ')}
+                      {property.listingStatus === 'active' ? 'Active' : property.listingStatus}
                     </span>
+                    {property.mlsId && (
+                      <span className="text-xs text-gray-500">
+                        MLS ID #{property.mlsId}
+                      </span>
+                    )}
                   </div>
+                  {property.source && property.source !== 'sample' && (
+                    <div className="text-xs text-gray-400 mt-2">
+                      Source: {property.source}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </Link>
@@ -367,43 +511,73 @@ export default function PropertyHome() {
         </div>
       </div>
 
-      {/* Why Choose Us */}
-      <div className="bg-gray-50 py-16">
+      {/* Value Proposition Section - Zillow Style */}
+      <div className="bg-white py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Why Choose Central Florida Homes</h2>
-            <p className="text-gray-600 text-lg">Your trusted partner in finding the perfect home</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="w-8 h-8 text-blue-600" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Buy a home */}
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-gray-200">
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/illustrations/buy-home.png" 
+                  alt="Buy a home" 
+                  className="w-40 h-40 object-contain"
+                />
               </div>
-              <h3 className="text-xl font-bold mb-2">Latest Listings</h3>
-              <p className="text-gray-600">
-                Access the newest properties as soon as they hit the market
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Buy a home</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                A real estate agent can provide you with a clear breakdown of costs so that you can avoid surprise expenses.
               </p>
+              <Button 
+                variant="outline" 
+                className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold"
+              >
+                Find a local agent
+              </Button>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Home className="w-8 h-8 text-green-600" />
+            {/* Finance a home */}
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-gray-200">
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/illustrations/finance-home.png" 
+                  alt="Finance a home" 
+                  className="w-40 h-40 object-contain"
+                />
               </div>
-              <h3 className="text-xl font-bold mb-2">3D Virtual Tours</h3>
-              <p className="text-gray-600">
-                Tour properties from the comfort of your home with immersive 3D technology
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Finance a home</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Zillow Home Loans can get you pre-approved so you're ready to make an offer quickly when you find the right home.
               </p>
+              <Button 
+                variant="outline" 
+                className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold"
+                onClick={() => setShowMortgageModal(true)}
+              >
+                Start now
+              </Button>
+              <p className="text-xs text-gray-500 mt-3">NMLS #10287</p>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-purple-600" />
+            {/* Rent a home */}
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-gray-200">
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/illustrations/rent-home.png" 
+                  alt="Rent a home" 
+                  className="w-40 h-40 object-contain"
+                />
               </div>
-              <h3 className="text-xl font-bold mb-2">Expert Agents</h3>
-              <p className="text-gray-600">
-                Work with experienced local agents who know Central Florida inside out
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Rent a home</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                We're creating a seamless online experience – from shopping on the largest rental network, to applying, to paying rent.
               </p>
+              <Button 
+                variant="outline" 
+                className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold"
+              >
+                Find rentals
+              </Button>
             </Card>
           </div>
         </div>
