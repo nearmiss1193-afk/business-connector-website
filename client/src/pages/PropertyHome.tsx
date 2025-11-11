@@ -8,6 +8,7 @@ import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
   Search,
   MapPin,
@@ -21,11 +22,46 @@ import {
   Users,
   ArrowRight,
   Star,
+  Percent,
+  Calendar,
 } from 'lucide-react';
 
 export default function PropertyHome() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'buy' | 'mortgage'>('buy');
+  
+  // Mortgage calculator state
+  const [homePrice, setHomePrice] = useState('400000');
+  const [downPayment, setDownPayment] = useState('80000');
+  const [interestRate, setInterestRate] = useState('7.0');
+  const [loanTerm, setLoanTerm] = useState('30');
+  
+  // Calculate mortgage
+  const calculateMonthlyPayment = () => {
+    const price = parseFloat(homePrice) || 0;
+    const down = parseFloat(downPayment) || 0;
+    const rate = parseFloat(interestRate) || 0;
+    const years = parseInt(loanTerm) || 30;
+    
+    const loanAmount = price - down;
+    const monthlyRate = rate / 100 / 12;
+    const numberOfPayments = years * 12;
+    
+    let pi = 0;
+    if (monthlyRate > 0) {
+      pi = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / 
+           (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+    } else {
+      pi = loanAmount / numberOfPayments;
+    }
+    
+    const monthlyPropertyTax = (price * 0.012) / 12;
+    const monthlyInsurance = 1500 / 12;
+    const monthlyHoa = 200;
+    
+    return pi + monthlyPropertyTax + monthlyInsurance + monthlyHoa;
+  };
 
   // Fetch featured properties
   const { data: properties } = trpc.properties.search.useQuery({
@@ -73,28 +109,143 @@ export default function PropertyHome() {
             Search thousands of properties in Tampa, Orlando, St. Petersburg, and beyond
           </p>
 
-          {/* Search Bar - Zillow Style */}
-          <form onSubmit={handleSearch} className="w-full max-w-3xl">
-            <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
-              <div className="flex-1 flex items-center gap-3 px-5">
-                <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                <input
-                  type="text"
-                  placeholder="Enter an address, neighborhood, city, or ZIP code"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 py-4 text-base outline-none text-gray-900 placeholder:text-gray-500"
-                />
-              </div>
-              <Button
-                type="submit"
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
+          {/* Tab Toggle */}
+          <div className="w-full max-w-3xl mb-4">
+            <div className="inline-flex bg-white/20 backdrop-blur-sm rounded-lg p-1">
+              <button
+                onClick={() => setActiveTab('buy')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
+                  activeTab === 'buy'
+                    ? 'bg-white text-blue-600 shadow-md'
+                    : 'text-white hover:text-white/90'
+                }`}
               >
-                <Search className="w-5 h-5" />
-              </Button>
+                Buy
+              </button>
+              <button
+                onClick={() => setActiveTab('mortgage')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
+                  activeTab === 'mortgage'
+                    ? 'bg-white text-blue-600 shadow-md'
+                    : 'text-white hover:text-white/90'
+                }`}
+              >
+                Get Pre-Approved
+              </button>
             </div>
-          </form>
+          </div>
+
+          {/* Search Bar - Zillow Style */}
+          {activeTab === 'buy' && (
+            <form onSubmit={handleSearch} className="w-full max-w-3xl">
+              <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
+                <div className="flex-1 flex items-center gap-3 px-5">
+                  <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                  <input
+                    type="text"
+                    placeholder="Enter an address, neighborhood, city, or ZIP code"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 py-4 text-base outline-none text-gray-900 placeholder:text-gray-500"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
+                >
+                  <Search className="w-5 h-5" />
+                </Button>
+              </div>
+            </form>
+          )}
+
+          {/* Mortgage Calculator */}
+          {activeTab === 'mortgage' && (
+            <div className="w-full max-w-3xl">
+              <div className="bg-white rounded-xl shadow-2xl p-6">
+                {/* Input Fields */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <label className="text-xs font-medium text-gray-600 mb-1 block">
+                      Home Price
+                    </label>
+                    <div className="relative">
+                      <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        type="text"
+                        value={new Intl.NumberFormat('en-US').format(parseFloat(homePrice) || 0)}
+                        onChange={(e) => setHomePrice(e.target.value.replace(/[^0-9]/g, ''))}
+                        className="pl-9 h-11"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-gray-600 mb-1 block">
+                      Down Payment
+                    </label>
+                    <div className="relative">
+                      <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        type="text"
+                        value={new Intl.NumberFormat('en-US').format(parseFloat(downPayment) || 0)}
+                        onChange={(e) => setDownPayment(e.target.value.replace(/[^0-9]/g, ''))}
+                        className="pl-9 h-11"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-gray-600 mb-1 block">
+                      Interest Rate
+                    </label>
+                    <div className="relative">
+                      <Percent className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        type="text"
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(e.target.value.replace(/[^0-9.]/g, ''))}
+                        className="pr-9 h-11"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-gray-600 mb-1 block">
+                      Loan Term
+                    </label>
+                    <select
+                      value={loanTerm}
+                      onChange={(e) => setLoanTerm(e.target.value)}
+                      className="w-full h-11 px-3 border border-gray-300 rounded-md text-sm"
+                    >
+                      <option value="15">15 years</option>
+                      <option value="20">20 years</option>
+                      <option value="30">30 years</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Result */}
+                <div className="border-t pt-4 mb-4">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-sm text-gray-600">Monthly Payment</span>
+                    <span className="text-3xl font-bold text-blue-600">
+                      {new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0,
+                      }).format(calculateMonthlyPayment())}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Includes taxes, insurance & HOA</p>
+                </div>
+
+                {/* CTA */}
+                <Button className="w-full h-11 bg-blue-600 hover:bg-blue-700">
+                  Get Pre-Approved
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

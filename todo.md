@@ -258,3 +258,11 @@
 - [x] Improve typography and visual hierarchy
 - [x] Add overlay for better text readability
 - [x] Test responsive design on mobile
+
+### Mortgage Calculator Integration
+- [x] Create MortgageCalculator component with inputs (price, down payment, interest rate, loan term)
+- [x] Add real-time calculation logic for monthly payment
+- [x] Design tab toggle UI (Buy vs Get Pre-Approved)
+- [x] Integrate calculator into hero section
+- [x] Add visual results display with breakdown
+- [x] Test calculator accuracy and responsiveness
