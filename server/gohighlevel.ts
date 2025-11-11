@@ -58,6 +58,13 @@ interface FormData {
   propertyBaths?: string;
   propertySqft?: string;
   city?: string;
+  
+  // Mortgage-specific fields
+  homePrice?: string;
+  downPayment?: string;
+  interestRate?: string;
+  loanTerm?: string;
+  monthlyPayment?: string;
 }
 
 interface ContactData {
@@ -340,6 +347,53 @@ async function handleAgentLead(formData: FormData) {
     leadType: 'AGENT',
     pipeline: 'Business Conector - Lead to Customer',
     message: 'Agent lead processed successfully',
+  };
+}
+
+/**
+ * Handle MORTGAGE lead submission
+ */
+async function handleMortgageLead(formData: FormData) {
+  console.log('💰 Processing MORTGAGE LEAD...');
+
+  const contactData: ContactData = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    phone: formData.phone,
+    tags: ['mortgage-lead', 'pre-approval-request', 'high-intent-buyer'],
+    customFields: {
+      home_price: formData.homePrice || '',
+      down_payment: formData.downPayment || '',
+      interest_rate: formData.interestRate || '',
+      loan_term: formData.loanTerm || '',
+      monthly_payment: formData.monthlyPayment || '',
+      lead_source: 'Mortgage Calculator',
+      website_url: formData.source || 'centralfloridahomes.com',
+    },
+    source: 'Mortgage Calculator - Property Website',
+  };
+
+  // Create contact
+  const contact = await createContact(contactData);
+
+  // If buyer pipeline is configured, add to it
+  if (BUYER_PIPELINE_ID && BUYER_STAGE_ID) {
+    await addToPipeline(
+      contact.id,
+      BUYER_PIPELINE_ID,
+      BUYER_STAGE_ID,
+      0,
+      'BUYER'
+    );
+  }
+
+  return {
+    success: true,
+    contactId: contact.id,
+    leadType: 'MORTGAGE',
+    pipeline: BUYER_PIPELINE_ID ? 'Buyer Leads - Property to Sale' : 'Contact Created',
+    message: 'Mortgage lead processed successfully',
   };
 }
 

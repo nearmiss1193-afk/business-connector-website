@@ -9,6 +9,7 @@ import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import MortgageLeadModal from '@/components/MortgageLeadModal';
 import {
   Search,
   MapPin,
@@ -30,6 +31,7 @@ export default function PropertyHome() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'buy' | 'mortgage'>('buy');
+  const [showMortgageModal, setShowMortgageModal] = useState(false);
   
   // Mortgage calculator state
   const [homePrice, setHomePrice] = useState('400000');
@@ -240,7 +242,10 @@ export default function PropertyHome() {
                 </div>
 
                 {/* CTA */}
-                <Button className="w-full h-11 bg-blue-600 hover:bg-blue-700">
+                <Button 
+                  className="w-full h-11 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => setShowMortgageModal(true)}
+                >
                   Get Pre-Approved
                 </Button>
               </div>
@@ -472,6 +477,19 @@ export default function PropertyHome() {
           </div>
         </div>
       </footer>
+
+      {/* Mortgage Lead Modal */}
+      <MortgageLeadModal
+        open={showMortgageModal}
+        onOpenChange={setShowMortgageModal}
+        mortgageData={{
+          homePrice,
+          downPayment,
+          interestRate,
+          loanTerm,
+          monthlyPayment: calculateMonthlyPayment(),
+        }}
+      />
     </div>
   );
 }

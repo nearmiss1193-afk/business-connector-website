@@ -266,3 +266,11 @@
 - [x] Integrate calculator into hero section
 - [x] Add visual results display with breakdown
 - [x] Test calculator accuracy and responsiveness
+
+### Mortgage Lead Capture - GoHighLevel Integration
+- [x] Create MortgageLeadModal component with form fields (name, email, phone)
+- [x] Add mortgage calculation data to lead submission
+- [x] Create tRPC procedure to send leads to GoHighLevel
+- [x] Connect Get Pre-Approved button to open modal
+- [x] Add success/error handling and user feedback
+- [x] Test complete flow from calculator to GoHighLevel
