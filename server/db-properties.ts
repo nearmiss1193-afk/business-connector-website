@@ -7,6 +7,29 @@ import { and, eq, gte, lte, sql, desc, asc } from 'drizzle-orm';
 import { getDb } from './db';
 import { properties, propertyImages, propertyViews } from '../drizzle/schema';
 
+/**
+ * Point-in-polygon algorithm (ray casting)
+ */
+function isPointInPolygon(
+  point: { lat: number; lng: number },
+  polygon: Array<{ lat: number; lng: number }>
+): boolean {
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const xi = polygon[i].lng;
+    const yi = polygon[i].lat;
+    const xj = polygon[j].lng;
+    const yj = polygon[j].lat;
+
+    const intersect =
+      yi > point.lat !== yj > point.lat &&
+      point.lng < ((xj - xi) * (point.lat - yi)) / (yj - yi) + xi;
+
+    if (intersect) inside = !inside;
+  }
+  return inside;
+}
+
 interface PropertySearchParams {
   location?: string;
   minPrice?: number;
@@ -14,11 +37,13 @@ interface PropertySearchParams {
   bedrooms?: number;
   bathrooms?: number;
   propertyType?: string;
+  propertyTypes?: string[];
   status?: string;
   page?: number;
   limit?: number;
   sortBy?: 'price' | 'date' | 'sqft';
   sortOrder?: 'asc' | 'desc';
+  polygon?: Array<{ lat: number; lng: number }>;
 }
 
 /**
@@ -37,11 +62,13 @@ export async function searchProperties(params: PropertySearchParams) {
     bedrooms,
     bathrooms,
     propertyType,
+    propertyTypes,
     status = 'active',
     page = 1,
     limit = 24,
     sortBy = 'date',
     sortOrder = 'desc',
+    polygon,
   } = params;
 
   // Build WHERE conditions
@@ -75,9 +102,27 @@ export async function searchProperties(params: PropertySearchParams) {
     conditions.push(gte(properties.bathrooms, bathrooms.toString()));
   }
 
-  // Property type
+  // Property type (single)
   if (propertyType && propertyType !== 'any') {
     conditions.push(eq(properties.propertyType, propertyType as any));
+  }
+  
+  // Property types (multiple)
+  if (propertyTypes && propertyTypes.length > 0) {
+    const typeConditions = propertyTypes.map(type => 
+      eq(properties.propertyType, type.toUpperCase().replace(' ', '_') as any)
+    );
+    conditions.push(sql`(${sql.join(typeConditions, sql` OR `)})`);
+  }
+  
+  // Polygon boundary filter
+  if (polygon && polygon.length > 0) {
+    // Use point-in-polygon algorithm
+    // For each property, check if its lat/lng is inside the polygon
+    const polygonCondition = sql`(
+      ${properties.latitude} IS NOT NULL AND ${properties.longitude} IS NOT NULL
+    )`;
+    conditions.push(polygonCondition);
   }
 
   // Count total matching properties
@@ -103,13 +148,24 @@ export async function searchProperties(params: PropertySearchParams) {
 
   // Fetch properties
   const offset = (page - 1) * limit;
-  const results = await db
+  let results = await db
     .select()
     .from(properties)
     .where(and(...conditions))
     .orderBy(sortOrder === 'asc' ? asc(sortColumn) : desc(sortColumn))
-    .limit(limit)
+    .limit(polygon ? limit * 3 : limit) // Fetch more if polygon filtering
     .offset(offset);
+  
+  // Client-side polygon filtering (point-in-polygon algorithm)
+  if (polygon && polygon.length > 0) {
+    results = results.filter(property => {
+      if (!property.latitude || !property.longitude) return false;
+      return isPointInPolygon(
+        { lat: parseFloat(property.latitude), lng: parseFloat(property.longitude) },
+        polygon
+      );
+    }).slice(0, limit); // Limit after filtering
+  }
 
   // Count properties with virtual tours
   const virtualToursResult = await db

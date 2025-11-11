@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import MortgageLeadModal from '@/components/MortgageLeadModal';
 import Footer from '@/components/Footer';
 import TopNavigation from '@/components/TopNavigation';
+import DrawMapModal from '@/components/DrawMapModal';
 import {
   Search,
   MapPin,
@@ -38,6 +39,16 @@ export default function PropertyHome() {
   const [locationDetected, setLocationDetected] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  
+  // Advanced search filters
+  const [showFilters, setShowFilters] = useState(false);
+  const [showDrawMap, setShowDrawMap] = useState(false);
+  const [priceMin, setPriceMin] = useState('');
+  const [priceMax, setPriceMax] = useState('');
+  const [beds, setBeds] = useState<string>('any');
+  const [baths, setBaths] = useState<string>('any');
+  const [homeTypes, setHomeTypes] = useState<string[]>([]);
+  const [drawnPolygon, setDrawnPolygon] = useState<google.maps.LatLngLiteral[] | null>(null);
   
   // Mortgage calculator state
   const [homePrice, setHomePrice] = useState('400000');
@@ -164,27 +175,185 @@ export default function PropertyHome() {
 
           {/* Search Bar - Zillow Style */}
           {activeTab === 'buy' && (
-            <form onSubmit={handleSearch} className="w-full max-w-3xl">
-              <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
-                <div className="flex-1 flex items-center gap-3 px-5">
-                  <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                  <input
-                    type="text"
-                    placeholder="Enter an address, neighborhood, city, or ZIP code"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 py-4 text-base outline-none text-gray-900 placeholder:text-gray-500"
-                  />
+            <div className="w-full max-w-3xl">
+              <form onSubmit={handleSearch}>
+                <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
+                  <div className="flex-1 flex items-center gap-3 px-5">
+                    <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Enter an address, neighborhood, city, or ZIP code"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="flex-1 py-4 text-base outline-none text-gray-900 placeholder:text-gray-500"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
+                  >
+                    <Search className="w-5 h-5" />
+                  </Button>
                 </div>
+              </form>
+              
+              {/* Advanced Filters Bar */}
+              <div className="mt-3 flex items-center gap-2">
                 <Button
-                  type="submit"
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
+                  variant="outline"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="bg-white hover:bg-gray-50 border-gray-300 text-gray-700 font-medium"
                 >
-                  <Search className="w-5 h-5" />
+                  Price
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="bg-white hover:bg-gray-50 border-gray-300 text-gray-700 font-medium"
+                >
+                  Beds & Baths
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="bg-white hover:bg-gray-50 border-gray-300 text-gray-700 font-medium"
+                >
+                  Home Type
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="bg-white hover:bg-gray-50 border-gray-300 text-gray-700 font-medium"
+                >
+                  More filters
+                </Button>
+                <div className="h-6 w-px bg-gray-300" />
+                <Button
+                  variant="outline"
+                  onClick={() => setShowDrawMap(true)}
+                  className="bg-white hover:bg-gray-50 border-gray-300 text-gray-700 font-medium flex items-center gap-2"
+                >
+                  <MapPin className="w-4 h-4" />
+                  Draw
                 </Button>
               </div>
-            </form>
+              
+              {/* Filter Panel */}
+              {showFilters && (
+                <div className="mt-3 bg-white rounded-xl shadow-2xl p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Price Range */}
+                    <div>
+                      <label className="text-sm font-semibold text-gray-900 mb-3 block">Price Range</label>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          type="text"
+                          placeholder="Min"
+                          value={priceMin}
+                          onChange={(e) => setPriceMin(e.target.value.replace(/[^0-9]/g, ''))}
+                          className="flex-1"
+                        />
+                        <span className="text-gray-400">—</span>
+                        <Input
+                          type="text"
+                          placeholder="Max"
+                          value={priceMax}
+                          onChange={(e) => setPriceMax(e.target.value.replace(/[^0-9]/g, ''))}
+                          className="flex-1"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Beds */}
+                    <div>
+                      <label className="text-sm font-semibold text-gray-900 mb-3 block">Bedrooms</label>
+                      <select
+                        value={beds}
+                        onChange={(e) => setBeds(e.target.value)}
+                        className="w-full h-10 px-3 border border-gray-300 rounded-md text-sm"
+                      >
+                        <option value="any">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                      </select>
+                    </div>
+                    
+                    {/* Baths */}
+                    <div>
+                      <label className="text-sm font-semibold text-gray-900 mb-3 block">Bathrooms</label>
+                      <select
+                        value={baths}
+                        onChange={(e) => setBaths(e.target.value)}
+                        className="w-full h-10 px-3 border border-gray-300 rounded-md text-sm"
+                      >
+                        <option value="any">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  {/* Home Type */}
+                  <div className="mt-6">
+                    <label className="text-sm font-semibold text-gray-900 mb-3 block">Home Type</label>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {['Single Family', 'Condo', 'Townhouse', 'Multi-Family', 'Land', 'Mobile'].map((type) => (
+                        <label key={type} className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={homeTypes.includes(type)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setHomeTypes([...homeTypes, type]);
+                              } else {
+                                setHomeTypes(homeTypes.filter(t => t !== type));
+                              }
+                            }}
+                            className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                          />
+                          <span className="text-sm text-gray-700">{type}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Actions */}
+                  <div className="mt-6 flex items-center justify-between">
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        setPriceMin('');
+                        setPriceMax('');
+                        setBeds('any');
+                        setBaths('any');
+                        setHomeTypes([]);
+                      }}
+                      className="text-blue-600 hover:text-blue-700"
+                    >
+                      Clear all
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setShowFilters(false);
+                        // Apply filters logic here
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      Apply filters
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
 
           {/* Mortgage Calculator */}
@@ -680,6 +849,17 @@ export default function PropertyHome() {
           </div>
         </div>
       </footer>
+
+      {/* Draw Map Modal */}
+      <DrawMapModal
+        open={showDrawMap}
+        onClose={() => setShowDrawMap(false)}
+        onPolygonDrawn={(coords) => {
+          setDrawnPolygon(coords);
+          console.log('Polygon drawn:', coords);
+          // TODO: Filter properties within polygon
+        }}
+      />
 
       {/* Mortgage Lead Modal */}
       <MortgageLeadModal

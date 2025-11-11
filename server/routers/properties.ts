@@ -28,11 +28,13 @@ export const propertiesRouter = router({
         bedrooms: z.number().optional(),
         bathrooms: z.number().optional(),
         propertyType: z.string().optional(),
+        propertyTypes: z.array(z.string()).optional(), // Multiple property types
         status: z.string().optional(),
         page: z.number().default(1),
         limit: z.number().default(24),
         sortBy: z.enum(['price', 'date', 'sqft']).optional(),
         sortOrder: z.enum(['asc', 'desc']).optional(),
+        polygon: z.array(z.object({ lat: z.number(), lng: z.number() })).optional(), // Drawn boundary
       })
     )
     .query(async ({ input }) => {

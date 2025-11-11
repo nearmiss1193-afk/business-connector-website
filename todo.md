@@ -346,3 +346,18 @@
 - [x] Add "More recommended homes" link at bottom of BuyAbility section
 - [x] Implement proper hover states on all interactive elements
 - [ ] Add "Selling Soon Homes" section below trending homes
+
+### Advanced Search Filters & Map Drawing Tool
+- [x] Add "More filters" button to hero search bar that opens filter panel
+- [x] Implement price range with min/max inputs (e.g., $0 - $1M+)
+- [x] Add beds/baths dropdown filters (Any, 1+, 2+, 3+, 4+, 5+)
+- [x] Create home type multi-select filter (Single Family, Condo, Townhouse, Multi-Family, Land, Mobile)
+- [x] Add "Draw" button to search bar that opens map modal
+- [x] Implement Google Maps Drawing Manager for custom boundary drawing
+- [x] Allow users to draw polygon, rectangle, or circle on map to define search area
+- [x] Save drawn boundaries and filter properties within the polygon
+- [x] Add "Clear" and "Search" buttons to map drawing modal
+- [x] Update property search backend to support polygon/boundary filtering with point-in-polygon algorithm
+- [x] Add "Clear all filters" option
+- [ ] Display active filter count badge on "More filters" button
+- [ ] Persist filter state in URL query parameters for shareable searches
