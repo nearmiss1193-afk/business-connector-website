@@ -235,3 +235,18 @@
 - [x] Run expanded sync to reach 7,000+ properties (achieved 55,000+!)
 - [x] Verify all properties have images
 - [ ] Test property search with larger dataset
+
+### Listing Verification & Cleanup System
+- [x] Add lastSeenAt timestamp field to properties table
+- [x] Add isActive boolean field to properties table
+- [x] Add verificationStatus enum field (active, off_market, flagged, reported, verified)
+- [x] Add flaggedReason text field for manual flags
+- [x] Create property_reports table for user-submitted reports
+- [x] Update sync script to track lastSeenAt on each sync
+- [x] Create mark-off-market script to flag properties not seen in 7 days
+- [x] Create admin dashboard page to view flagged/off-market properties
+- [x] Add manual flag/unflag functionality for admins
+- [x] Add user report form on property detail pages
+- [x] Add owner notifications for new property reports
+- [x] Add admin route to App.tsx
+- [x] Create comprehensive documentation (VERIFICATION_SYSTEM.md)

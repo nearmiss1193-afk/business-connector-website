@@ -4,6 +4,7 @@ import { trpc } from '@/lib/trpc';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import NeighborhoodInfo from '@/components/NeighborhoodInfo';
 import PropertyMap from '@/components/PropertyMap';
+import { ReportPropertyDialog } from '@/components/ReportPropertyDialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -244,6 +245,11 @@ export default function PropertyDetail() {
                   <Button variant="outline" size="icon">
                     <Share2 className="w-5 h-5" />
                   </Button>
+                  <ReportPropertyDialog
+                    propertyId={property.id}
+                    mlsId={property.mlsId}
+                    address={`${property.address}, ${property.city}, ${property.state}`}
+                  />
                 </div>
               </div>
 

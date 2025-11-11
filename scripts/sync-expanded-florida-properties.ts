@@ -48,11 +48,14 @@ async function syncExpandedFloridaProperties() {
           .limit(1);
 
         if (existing.length > 0) {
-          // Update existing property
+          // Update existing property and mark as seen
           await db
             .update(properties)
             .set({
               ...mappedProperty,
+              lastSeenAt: new Date(),
+              isActive: true,
+              verificationStatus: 'active',
               updatedAt: new Date(),
             })
             .where(eq(properties.mlsId, mappedProperty.mlsId));
@@ -64,6 +67,9 @@ async function syncExpandedFloridaProperties() {
             .insert(properties)
             .values({
               ...mappedProperty,
+              lastSeenAt: new Date(),
+              isActive: true,
+              verificationStatus: 'active',
               createdAt: new Date(),
               updatedAt: new Date(),
             })

@@ -98,6 +98,21 @@ export const properties = mysqlTable("properties", {
   // Metadata
   source: varchar("source", { length: 100 }).notNull(), // zillow, realtor.com, etc.
   lastSyncedAt: timestamp("last_synced_at").defaultNow().notNull(),
+  
+  // Verification & Cleanup
+  lastSeenAt: timestamp("last_seen_at").defaultNow().notNull(), // Last time property appeared in API
+  isActive: boolean("is_active").default(true).notNull(), // False if off-market
+  verificationStatus: mysqlEnum("verification_status", [
+    "active",      // Normal active listing
+    "off_market",  // Not seen in API for 7+ days
+    "flagged",     // Manually flagged by admin
+    "reported",    // User reported as inaccurate
+    "verified"     // Admin verified as accurate
+  ]).default("active").notNull(),
+  flaggedReason: text("flagged_reason"), // Reason for flagging
+  flaggedAt: timestamp("flagged_at"),
+  flaggedBy: varchar("flagged_by", { length: 100 }), // Admin user ID
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
