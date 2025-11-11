@@ -313,3 +313,13 @@
 - [ ] Add Footer to Properties and PropertyDetail pages
 - [x] Add "By submitting, you agree to receive SMS/calls" text to all forms
 - [ ] Test all legal pages and form disclosures
+
+### Property Search Map View
+- [x] Create PropertyMapView component with Google Maps integration
+- [x] Add property markers for all search results
+- [x] Implement marker info windows with property details
+- [x] Add map/list view toggle button to Properties page
+- [x] Create property detail card on marker click
+- [x] Auto-fit map bounds to show all properties
+- [ ] Implement marker clustering for better performance with 56K+ properties
+- [ ] Test map view with large dataset

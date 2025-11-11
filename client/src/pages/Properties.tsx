@@ -4,7 +4,8 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera } from 'lucide-react';
+import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera, Map, List } from 'lucide-react';
+import PropertyMapView from '@/components/PropertyMapView';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -31,6 +32,7 @@ export default function Properties() {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [sessionId, setSessionId] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
 
   // Initialize session ID
   useEffect(() => {
@@ -177,7 +179,28 @@ export default function Properties() {
           <div className="text-lg font-semibold text-gray-700">
             {properties?.total.toLocaleString() || 0} Properties Found
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
+            {/* View Mode Toggle */}
+            <div className="flex border rounded-lg overflow-hidden">
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+                className="rounded-none"
+              >
+                <List className="h-4 w-4 mr-1" />
+                List
+              </Button>
+              <Button
+                variant={viewMode === 'map' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('map')}
+                className="rounded-none"
+              >
+                <Map className="h-4 w-4 mr-1" />
+                Map
+              </Button>
+            </div>
             <Badge variant="secondary" className="text-sm">
               <Camera className="mr-1 h-4 w-4" />
               {properties?.virtualTours.toLocaleString() || 0} Virtual Tours
@@ -185,8 +208,23 @@ export default function Properties() {
           </div>
         </div>
 
-        {/* Property Grid */}
-        {isLoading ? (
+        {/* Property Grid or Map View */}
+        {viewMode === 'map' ? (
+          <div className="h-[calc(100vh-300px)] min-h-[600px] rounded-lg overflow-hidden shadow-lg">
+            <PropertyMapView
+              properties={properties?.items || []}
+              onPropertyClick={(property) => {
+                setSelectedProperty(property);
+                if (sessionId) {
+                  trackView.mutate({
+                    propertyId: property.id,
+                    sessionId,
+                  });
+                }
+              }}
+            />
+          </div>
+        ) : isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(12)].map((_, i) => (
               <Card key={i} className="overflow-hidden animate-pulse">
