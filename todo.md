@@ -392,3 +392,16 @@
 - [x] Add MLS ID to all property cards
 - [x] Add routes for all new pages in App.tsx
 - [ ] Implement "Viewed and saved the most in the area over the past 24 hours" subtitle for trending homes
+
+### Filter Functionality, Status Badges & Recently Viewed
+- [x] Wire up "Apply filters" button to trigger property search with price range, beds/baths, home types, and polygon
+- [x] Update PropertyHome search to pass filter parameters to Properties page via URL query params
+- [x] Add property status badges: "New" (listed within 7 days), "Pending" (under contract)
+- [x] Calculate badge display logic based on listingDate and listingStatus
+- [x] Implement Recently Viewed tracking using localStorage
+- [x] Create Recently Viewed carousel component at bottom of search results
+- [x] Track property views when users visit PropertyDetail page
+- [x] Limit Recently Viewed to last 20 properties
+- [x] Add "Clear History" button to Recently Viewed section
+- [ ] Add "Price Drop" badge (requires priceHistory field in database)
+- [ ] Add "Open House" badge (requires openHouseDate field in database)
