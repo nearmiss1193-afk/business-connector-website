@@ -49,67 +49,52 @@ export default function PropertyHome() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <div className="relative h-[600px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 overflow-hidden">
-        {/* Background Image with Overlay */}
+      {/* Hero Section - Zillow Style with Real Photo */}
+      <div className="relative h-[600px] overflow-hidden">
+        {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: 'url(/hero-bg.jpg)',
-            opacity: 0.3,
+            backgroundImage: 'url(/hero-property.jpg)',
           }}
         />
+        
+        {/* Dark Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-black/40" />
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Find Your Dream Home
+        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-start text-left max-w-6xl">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
+            Rentals. Homes.
             <br />
-            in Central Florida
+            Agents. Loans.
           </h1>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl">
+          <p className="text-xl md:text-2xl text-white/95 mb-8 max-w-2xl drop-shadow-lg">
             Search thousands of properties in Tampa, Orlando, St. Petersburg, and beyond
           </p>
 
-          {/* Search Bar */}
+          {/* Search Bar - Zillow Style */}
           <form onSubmit={handleSearch} className="w-full max-w-3xl">
-            <div className="bg-white rounded-lg shadow-2xl p-2 flex items-center gap-2">
-              <div className="flex-1 flex items-center gap-3 px-4">
-                <MapPin className="w-5 h-5 text-gray-400" />
+            <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
+              <div className="flex-1 flex items-center gap-3 px-5">
+                <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
                 <input
                   type="text"
                   placeholder="Enter an address, neighborhood, city, or ZIP code"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 py-3 text-lg outline-none"
+                  className="flex-1 py-4 text-base outline-none text-gray-900 placeholder:text-gray-500"
                 />
               </div>
               <Button
                 type="submit"
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
               >
-                <Search className="w-5 h-5 mr-2" />
-                Search
+                <Search className="w-5 h-5" />
               </Button>
             </div>
           </form>
-
-          {/* Quick Stats */}
-          <div className="mt-12 grid grid-cols-3 gap-8 text-white">
-            <div>
-              <div className="text-4xl font-bold">{properties?.total || 0}</div>
-              <div className="text-white/80">Homes for Sale</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold">{properties?.items.filter((p: any) => p.hasVirtualTour).length || 0}</div>
-              <div className="text-white/80">3D Tours</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold">24/7</div>
-              <div className="text-white/80">Support</div>
-            </div>
-          </div>
         </div>
       </div>
 
