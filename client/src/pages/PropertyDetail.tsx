@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useRoute, Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
+import MortgageCalculator from '@/components/MortgageCalculator';
+import NeighborhoodInfo from '@/components/NeighborhoodInfo';
+import PropertyMap from '@/components/PropertyMap';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -366,6 +369,24 @@ export default function PropertyDetail() {
                 ))}
               </div>
             </Card>
+
+            {/* Mortgage Calculator */}
+            <MortgageCalculator propertyPrice={property.price} />
+
+            {/* Neighborhood Information */}
+            <NeighborhoodInfo
+              city={property.city}
+              state={property.state}
+              zipCode={property.zipCode}
+            />
+
+            {/* Google Maps */}
+            <PropertyMap
+              address={property.address}
+              city={property.city}
+              state={property.state}
+              zipCode={property.zipCode}
+            />
           </div>
 
           {/* Right Column - Contact Form */}

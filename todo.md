@@ -173,3 +173,44 @@
 - [x] Professional footer with links
 - [x] Smooth animations and transitions
 - [x] Mobile-responsive design
+
+### Property Detail Enhancements
+- [ ] Interactive mortgage calculator with monthly payment breakdown
+- [ ] Neighborhood demographics section (population, income, education)
+- [ ] School ratings and information
+- [ ] Walkability score and nearby amenities
+- [ ] Property tax calculator
+- [ ] HOA fee breakdown
+
+### Google Maps Integration
+- [x] Create PropertyMap component with Google Maps
+- [x] Show property location marker
+- [x] Add nearby points of interest (schools, shopping, restaurants, cafes)
+- [x] Add info windows for markers
+- [x] Integrate into property detail page
+- [x] Add map legend with color-coded categories
+
+### Mobile Responsiveness Testing
+- [ ] Test property detail page on mobile viewport
+- [ ] Optimize photo gallery for mobile
+- [ ] Ensure contact form is mobile-friendly
+- [ ] Test mortgage calculator on small screens
+- [ ] Verify map displays correctly on mobile
+- [ ] Check navigation and back button on mobile
+- [ ] Test all interactive elements (buttons, sliders) on touch devices
+
+### MLS Data Integration
+- [x] Research MLS data provider options (Bridge Interactive, SimplyRETS, Zillow API)
+- [x] Select MLS provider (SimplyRETS with Stellar MLS)
+- [x] Create MLS sync service module
+- [x] Map MLS fields to database schema
+- [x] Build property import function
+- [x] Handle property images download and storage
+- [x] Create daily automated sync job
+- [x] Add sync status tracking and error handling
+- [x] Test with sample MLS data (65 demo properties)
+- [x] Verify data quality and completeness
+- [ ] Sign up for SimplyRETS account
+- [ ] Request Stellar MLS connection
+- [ ] Add API credentials to environment variables
+- [ ] Run first production sync
