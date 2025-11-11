@@ -221,11 +221,29 @@ export default function BuyerRegistrationModal({
             {submitLead.isPending ? 'Registering...' : 'Register & Continue Browsing'}
           </Button>
 
-          {/* Privacy Note */}
-          <p className="text-xs text-gray-500 text-center">
-            By registering, you agree to receive property updates and information from our
-            partner real estate agents. Your information is secure and will never be sold.
-          </p>
+          {/* TCPA/SMS Compliance Disclosure */}
+          <div className="text-xs text-gray-500 text-center space-y-2 border-t pt-4">
+            <p>
+              By submitting this form, you expressly consent to receive communications from Business Conector 
+              and affiliated real estate professionals via telephone calls (including autodialed and pre-recorded calls), 
+              text messages (SMS/MMS), and email regarding property listings, market updates, and related services.
+            </p>
+            <p>
+              <strong>Message frequency varies. Message and data rates may apply. Text STOP to opt out or HELP for assistance.</strong>
+            </p>
+            <p>
+              Your consent is not required as a condition of purchasing any property or service. 
+              View our{' '}
+              <a href="/terms-of-service" target="_blank" className="text-blue-600 hover:underline">
+                Terms of Service
+              </a>
+              {' '}and{' '}
+              <a href="/privacy-policy" target="_blank" className="text-blue-600 hover:underline">
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

@@ -327,6 +327,30 @@ export default function Advertise() {
                 {submitInquiry.isPending ? 'Submitting...' : 'Get Started'}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
+
+              {/* TCPA/SMS Compliance Disclosure */}
+              <div className="text-xs text-gray-500 text-center space-y-2 border-t pt-4 mt-4">
+                <p>
+                  By submitting this form, you expressly consent to receive communications from Business Conector 
+                  via telephone calls (including autodialed and pre-recorded calls), text messages (SMS/MMS), and email 
+                  regarding advertising packages, platform features, and related services.
+                </p>
+                <p>
+                  <strong>Message frequency varies. Message and data rates may apply. Text STOP to opt out or HELP for assistance.</strong>
+                </p>
+                <p>
+                  Your consent is not required as a condition of purchasing any advertising service. 
+                  View our{' '}
+                  <a href="/terms-of-service" target="_blank" className="text-blue-600 hover:underline">
+                    Terms of Service
+                  </a>
+                  {' '}and{' '}
+                  <a href="/privacy-policy" target="_blank" className="text-blue-600 hover:underline">
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
+              </div>
             </form>
           </CardContent>
         </Card>

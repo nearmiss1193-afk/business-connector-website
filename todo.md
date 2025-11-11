@@ -300,3 +300,16 @@
 - [x] Add AgentBanner component to Properties page sidebar
 - [x] Add AgentBanner component to PropertyDetail page sidebar
 - [x] Test banner display on all placements
+
+### A2P/TCPA Compliance & Legal Pages
+- [x] Create Terms & Conditions page with comprehensive legal terms
+- [x] Create Privacy Policy page with GDPR/CCPA compliance
+- [x] Add SMS/TCPA consent disclosure to BuyerRegistrationModal
+- [x] Add SMS/TCPA consent disclosure to MortgageLeadModal
+- [x] Add SMS/TCPA consent disclosure to Advertise page inquiry form
+- [x] Add comprehensive TCPA disclosure with STOP/HELP keywords to all forms
+- [x] Create Footer component with Terms, Privacy, Contact links
+- [x] Add Footer to PropertyHome page
+- [ ] Add Footer to Properties and PropertyDetail pages
+- [x] Add "By submitting, you agree to receive SMS/calls" text to all forms
+- [ ] Test all legal pages and form disclosures

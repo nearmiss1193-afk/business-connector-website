@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import MortgageLeadModal from '@/components/MortgageLeadModal';
+import Footer from '@/components/Footer';
 import {
   Search,
   MapPin,
