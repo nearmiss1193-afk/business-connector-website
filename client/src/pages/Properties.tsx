@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera, Map, List } from 'lucide-react';
 import PropertyMapView from '@/components/PropertyMapView';
+import MapListView from '@/components/MapListView';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -32,7 +33,7 @@ export default function Properties() {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [sessionId, setSessionId] = useState('');
-  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'map' | 'split'>('split');
 
   // Initialize session ID
   useEffect(() => {
@@ -180,27 +181,6 @@ export default function Properties() {
             {properties?.total.toLocaleString() || 0} Properties Found
           </div>
           <div className="flex gap-2 items-center">
-            {/* View Mode Toggle */}
-            <div className="flex border rounded-lg overflow-hidden">
-              <Button
-                variant={viewMode === 'list' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setViewMode('list')}
-                className="rounded-none"
-              >
-                <List className="h-4 w-4 mr-1" />
-                List
-              </Button>
-              <Button
-                variant={viewMode === 'map' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setViewMode('map')}
-                className="rounded-none"
-              >
-                <Map className="h-4 w-4 mr-1" />
-                Map
-              </Button>
-            </div>
             <Badge variant="secondary" className="text-sm">
               <Camera className="mr-1 h-4 w-4" />
               {properties?.virtualTours.toLocaleString() || 0} Virtual Tours
@@ -209,22 +189,7 @@ export default function Properties() {
         </div>
 
         {/* Property Grid or Map View */}
-        {viewMode === 'map' ? (
-          <div className="h-[calc(100vh-300px)] min-h-[600px] rounded-lg overflow-hidden shadow-lg">
-            <PropertyMapView
-              properties={properties?.items || []}
-              onPropertyClick={(property) => {
-                setSelectedProperty(property);
-                if (sessionId) {
-                  trackView.mutate({
-                    propertyId: property.id,
-                    sessionId,
-                  });
-                }
-              }}
-            />
-          </div>
-        ) : isLoading ? (
+        {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(12)].map((_, i) => (
               <Card key={i} className="overflow-hidden animate-pulse">
@@ -238,8 +203,28 @@ export default function Properties() {
             ))}
           </div>
         ) : (
+          <div className="h-[calc(100vh-300px)] min-h-[600px] rounded-lg overflow-hidden shadow-lg border border-gray-200">
+            <MapListView
+              properties={properties?.items || []}
+              onPropertyClick={(propertyId) => {
+                const property = properties?.items.find((p: any) => p.id === propertyId);
+                if (property) {
+                  setSelectedProperty(property);
+                  if (sessionId) {
+                    trackView.mutate({
+                      propertyId: property.id,
+                      sessionId,
+                    });
+                  }
+                }
+              }}
+            />
+          </div>
+        )}
+        
+        {/* Hidden for now - keeping old grid code for reference */}
+        {false && (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Main Content - Property Grid */}
             <div className="lg:col-span-3">
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {properties?.items.map((property: any) => (

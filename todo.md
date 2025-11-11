@@ -361,3 +361,18 @@
 - [x] Add "Clear all filters" option
 - [ ] Display active filter count badge on "More filters" button
 - [ ] Persist filter state in URL query parameters for shareable searches
+
+### Split-Screen Map/List View
+- [x] Create MapListView component with 50/50 split layout (map left, list right)
+- [x] Integrate Google Maps with property markers/pins
+- [x] Add custom map marker icons showing property price labels
+- [x] Add synchronized hover highlighting (hover card → highlight pin, hover pin → highlight card)
+- [x] Implement pin click to scroll list to corresponding property card
+- [x] Add card click to center map on corresponding pin and zoom to level 15
+- [x] Show property info window on pin click with image, price, beds/baths, address
+- [x] Add toggle button to switch between map view, list view, and split view
+- [x] Update search results page to use MapListView component
+- [x] Auto-fit map bounds to show all property markers
+- [ ] Implement marker clustering for areas with many properties
+- [ ] Make split-screen responsive (stack vertically on mobile)
+- [ ] Preserve map bounds when filters change
