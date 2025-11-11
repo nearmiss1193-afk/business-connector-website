@@ -4,6 +4,7 @@ import { trpc } from '@/lib/trpc';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import NeighborhoodInfo from '@/components/NeighborhoodInfo';
 import PropertyMap from '@/components/PropertyMap';
+import AgentBanner from '@/components/AgentBanner';
 import { ReportPropertyDialog } from '@/components/ReportPropertyDialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -393,6 +394,9 @@ export default function PropertyDetail() {
               state={property.state}
               zipCode={property.zipCode}
             />
+
+            {/* Agent Advertising Banner */}
+            <AgentBanner placement="property_detail" propertyId={property.id} />
           </div>
 
           {/* Right Column - Contact Form */}

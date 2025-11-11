@@ -18,6 +18,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { trpc } from '@/lib/trpc';
 import BuyerRegistrationModal from '@/components/BuyerRegistrationModal';
+import AgentBanner from '@/components/AgentBanner';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Properties() {
@@ -199,7 +200,10 @@ export default function Properties() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Main Content - Property Grid */}
+            <div className="lg:col-span-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {properties?.items.map((property: any) => (
             <Card
               key={property.id}
@@ -284,6 +288,15 @@ export default function Properties() {
               </CardContent>
             </Card>
             ))}
+              </div>
+            </div>
+
+            {/* Sidebar - Agent Banners */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-4">
+                <AgentBanner placement="sidebar" className="mb-4" />
+              </div>
+            </div>
           </div>
         )}
       </div>

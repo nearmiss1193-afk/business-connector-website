@@ -291,3 +291,12 @@
 - [x] Create ad performance dashboard for agents
 - [ ] Add AgentBanner to property pages (sidebar, listings, details)
 - [ ] Test complete flow from banner click to GoHighLevel lead
+
+### Demo Banner Ads
+- [x] Generate professional banner image for Sarah Mitchell (Luxury Homes Specialist)
+- [x] Generate professional banner image for Tampa Bay Realty Group
+- [x] Generate professional banner image for Mike Rodriguez (First Time Buyer Expert)
+- [x] Create demo ads in database via SQL
+- [x] Add AgentBanner component to Properties page sidebar
+- [x] Add AgentBanner component to PropertyDetail page sidebar
+- [x] Test banner display on all placements
