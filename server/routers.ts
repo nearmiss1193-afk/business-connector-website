@@ -8,6 +8,8 @@ import { mlsRouter } from "./routers/mls";
 import { adminRouter } from "./routers/admin";
 import { propertyReportsRouter } from "./routers/property-reports";
 import { mortgageLeadsRouter } from "./routers/mortgage-leads";
+import { adminAgentAdsRouter } from "./routers/admin-agent-ads";
+import { agentAdsPublicRouter } from "./routers/agent-ads-public";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -18,6 +20,8 @@ export const appRouter = router({
   admin: adminRouter,
   propertyReports: propertyReportsRouter,
   mortgageLeads: mortgageLeadsRouter,
+  adminAgentAds: adminAgentAdsRouter,
+  agentAds: agentAdsPublicRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

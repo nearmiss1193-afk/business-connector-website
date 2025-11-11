@@ -14,6 +14,8 @@ import Compliance from "./pages/Compliance";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import PropertyVerification from "./pages/admin/PropertyVerification";
+import AgentAds from "./pages/admin/AgentAds";
+import Advertise from "./pages/Advertise";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -29,6 +31,8 @@ function Router() {
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/admin/properties" component={PropertyVerification} />
+      <Route path="/admin/agent-ads" component={AgentAds} />
+      <Route path="/advertise" component={Advertise} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

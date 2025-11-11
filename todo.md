@@ -274,3 +274,20 @@
 - [x] Connect Get Pre-Approved button to open modal
 - [x] Add success/error handling and user feedback
 - [x] Test complete flow from calculator to GoHighLevel
+
+### Agent Advertising System
+- [x] Create agent_ads table (agent name, company, banner image, contact info, placement, status, start/end dates)
+- [x] Create ad_clicks table for tracking impressions and clicks
+- [x] Create ad_inquiries table for agent leads
+- [x] Build admin dashboard for managing agent ads
+- [x] Create banner upload and approval workflow
+- [x] Build AgentBanner component for sidebar placement
+- [x] Build AgentBanner component for between-listings placement
+- [x] Build AgentBanner component for property detail pages
+- [x] Create "Advertise Here" page explaining packages and pricing
+- [x] Create agent inquiry form that routes to Business Conector GoHighLevel pipeline
+- [x] Add click tracking with analytics
+- [x] Add impression tracking
+- [x] Create ad performance dashboard for agents
+- [ ] Add AgentBanner to property pages (sidebar, listings, details)
+- [ ] Test complete flow from banner click to GoHighLevel lead
