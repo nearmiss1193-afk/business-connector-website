@@ -300,12 +300,27 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                     >
                       <div className="flex">
                         {/* Property Image */}
-                        <div className="w-64 h-48 bg-gray-100 flex-shrink-0">
+                        <div className="w-64 h-48 bg-gray-100 flex-shrink-0 relative">
                           <img
                             src={property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
                             alt={property.address}
                             className="w-full h-full object-cover"
                           />
+                          {/* Feature Badges */}
+                          {property.features && (() => {
+                            try {
+                              const features = JSON.parse(property.features);
+                              return features.length > 0 && (
+                                <div className="absolute top-2 left-2">
+                                  <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded">
+                                    {features[0]}
+                                  </span>
+                                </div>
+                              );
+                            } catch {
+                              return null;
+                            }
+                          })()}
                         </div>
 
                         {/* Property Details */}

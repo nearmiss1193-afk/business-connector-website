@@ -376,3 +376,19 @@
 - [ ] Implement marker clustering for areas with many properties
 - [ ] Make split-screen responsive (stack vertically on mobile)
 - [ ] Preserve map bounds when filters change
+
+### Comprehensive Zillow Features from Video
+- [x] Add property feature badges to cards (Electric fireplace, Front facing screened lanai, Separate laundry room, etc.)
+- [x] Add "Price cut" badges with amount and date (e.g., "Price cut: $6,000 (10/30)")
+- [x] Create Help Center page with search bar and category cards grid
+- [x] Add Help Center categories: Landlords, Agents, Lenders, Home Loans, Renters, Homebuyers, Homeowners, Home Sellers, Privacy
+- [x] Build comprehensive footer with 5 main sections: Real Estate, Rentals, Mortgage Rates, Browse Homes, Company
+- [x] Add footer links: About, Zestimates, Research, Careers, Help, Advertise, Terms of use, Privacy Notice, etc.
+- [x] Create Research/Blog section with "Housing Trends Report" articles
+- [x] Add featured blog posts: "CPI Shelter Forecast", "Buyers: Results from Consumer Housing Trends Report 2025", "Sellers: Results from Consumer Housing Trends Report 2025"
+- [x] Create Zestimates feature page explaining home value estimates
+- [x] Create About page with company information, mission, values, and stats
+- [x] Create Careers page for job listings with benefits and culture section
+- [x] Add MLS ID to all property cards
+- [x] Add routes for all new pages in App.tsx
+- [ ] Implement "Viewed and saved the most in the area over the past 24 hours" subtitle for trending homes
