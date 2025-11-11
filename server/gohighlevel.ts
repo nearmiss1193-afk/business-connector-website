@@ -1,9 +1,23 @@
 /**
- * CRM API Integration
+ * GoHighLevel CRM Integration
+ * Handles dual-pipeline lead routing for Business Conector
  * 
- * This module handles submitting leads to the Business Conector CRM backend.
- * Credentials are automatically configured from environment variables.
+ * AGENT LEADS → Business Conector - Lead to Customer pipeline
+ * BUYER LEADS → Buyer Leads - Property to Sale pipeline
  */
+
+import axios from 'axios';
+import { ENV } from './_core/env';
+
+const GHL_API_BASE = 'https://services.leadconnectorhq.com';
+
+// Agent Client Pipeline (existing)
+const AGENT_PIPELINE_ID = 'ypWCzagQK0pINOc2sTay';
+const AGENT_STAGE_ID = 'e16b1961-ef07-4365-8102-48076a1ad639'; // New Lead
+
+// Buyer Lead Pipeline (will be populated from environment or setup)
+const BUYER_PIPELINE_ID = process.env.BUYER_PIPELINE_ID || '';
+const BUYER_STAGE_ID = process.env.BUYER_STAGE_ID || '';
 
 interface LeadData {
   firstName: string;
@@ -17,16 +31,58 @@ interface LeadData {
   message?: string;
 }
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  source?: string;
+  
+  // Agent-specific fields
+  brokerageName?: string;
+  yearsExperience?: string;
+  currentLeadSource?: string;
+  monthlyLeadBudget?: string;
+  interestedPackage?: string;
+  selectedPlan?: string;
+  message?: string;
+  
+  // Buyer-specific fields
+  propertyAddress?: string;
+  propertyPrice?: string;
+  propertyId?: string;
+  budget?: string;
+  timeline?: string;
+  preapproved?: string;
+  propertyBeds?: string;
+  propertyBaths?: string;
+  propertySqft?: string;
+  city?: string;
+}
+
+interface ContactData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  tags: string[];
+  customFields: Record<string, string>;
+  source: string;
+}
+
+type LeadType = 'AGENT' | 'BUYER';
+
+/**
+ * Legacy function for backwards compatibility
+ */
 export async function submitLeadToGoHighLevel(data: LeadData) {
-  // TODO: Replace with actual GoHighLevel API key from environment
-  const apiKey = process.env.GOHIGHLEVEL_API_KEY;
-  const locationId = process.env.GOHIGHLEVEL_LOCATION_ID;
+  const apiKey = ENV.gohighlevelApiKey;
+  const locationId = ENV.gohighlevelLocationId;
 
   if (!apiKey || !locationId) {
-    console.warn("CRM API credentials not configured. Lead will be logged only.");
+    console.warn("GoHighLevel credentials not configured. Lead will be logged only.");
     console.log("Lead data:", JSON.stringify(data, null, 2));
     
-    // Return mock success for now
     return {
       success: true,
       contactId: `mock-${Date.now()}`,
@@ -34,14 +90,10 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
   }
 
   try {
-    // Create contact in CRM
-    const response = await fetch(`https://rest.gohighlevel.com/v1/contacts/`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    // Create contact in GoHighLevel
+    const response = await axios.post(
+      `${GHL_API_BASE}/contacts/`,
+      {
         locationId,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -55,22 +107,345 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
           message: data.message || "",
         },
         tags: ["business-conector-lead", `plan-${data.selectedPlan}`],
-      }),
-    });
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Version: '2021-07-28',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`CRM API error: ${response.status} - ${errorText}`);
-    }
-
-    const result = await response.json();
+    // Add to agent pipeline
+    await axios.post(
+      `${GHL_API_BASE}/opportunities/`,
+      {
+        locationId,
+        pipelineId: AGENT_PIPELINE_ID,
+        pipelineStageId: AGENT_STAGE_ID,
+        contactId: response.data.contact.id,
+        name: 'Agent Client Lead',
+        status: 'open',
+        monetaryValue: data.selectedPlan === 'content' ? 891 : data.selectedPlan === 'nurture' ? 597 : 397,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Version: '2021-07-28',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     
     return {
       success: true,
-      contactId: result.contact?.id || result.id,
+      contactId: response.data.contact.id,
     };
-  } catch (error) {
-    console.error("CRM submission error:", error);
+  } catch (error: any) {
+    console.error("GoHighLevel submission error:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+/**
+ * Determine if this is an agent lead or buyer lead
+ */
+function determineLeadType(formData: FormData): LeadType {
+  // Check URL source
+  if (formData.source) {
+    // Property website domains = buyer leads
+    if (
+      formData.source.includes('lakelandhomes') ||
+      formData.source.includes('tampahome') ||
+      formData.source.includes('orlandohome') ||
+      formData.source.includes('daytonahome') ||
+      formData.source.includes('centralfloridashomes')
+    ) {
+      return 'BUYER';
+    }
+    
+    // Main business site = agent leads
+    if (formData.source.includes('businessconector.com')) {
+      return 'AGENT';
+    }
+  }
+
+  // Check for property-specific fields
+  if (
+    formData.propertyAddress ||
+    formData.propertyPrice ||
+    formData.propertyId ||
+    formData.timeline ||
+    formData.budget
+  ) {
+    return 'BUYER';
+  }
+
+  // Check for agent-specific fields
+  if (
+    formData.brokerageName ||
+    formData.yearsExperience ||
+    formData.currentLeadSource ||
+    formData.monthlyLeadBudget ||
+    formData.selectedPlan
+  ) {
+    return 'AGENT';
+  }
+
+  // Default to agent lead if unclear
+  return 'AGENT';
+}
+
+/**
+ * Create contact in GoHighLevel
+ */
+async function createContact(contactData: ContactData) {
+  const apiKey = ENV.gohighlevelApiKey;
+  const locationId = ENV.gohighlevelLocationId;
+
+  if (!apiKey || !locationId) {
+    throw new Error('GoHighLevel credentials not configured');
+  }
+
+  try {
+    const response = await axios.post(
+      `${GHL_API_BASE}/contacts/`,
+      {
+        locationId,
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        phone: contactData.phone,
+        tags: contactData.tags,
+        customFields: contactData.customFields,
+        source: contactData.source,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Version: '2021-07-28',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    console.log('✅ Contact created:', response.data.contact.id);
+    return response.data.contact;
+  } catch (error: any) {
+    // If contact exists, get their ID
+    if (error.response?.status === 422) {
+      console.log('⚠️  Contact already exists, searching...');
+
+      const searchResponse = await axios.get(
+        `${GHL_API_BASE}/contacts/search/duplicate`,
+        {
+          params: {
+            locationId,
+            email: contactData.email,
+          },
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            Version: '2021-07-28',
+          },
+        }
+      );
+
+      return searchResponse.data.contact;
+    }
+
+    throw error;
+  }
+}
+
+/**
+ * Add contact to opportunity pipeline
+ */
+async function addToPipeline(
+  contactId: string,
+  pipelineId: string,
+  stageId: string,
+  monetaryValue: number,
+  leadType: LeadType
+) {
+  const apiKey = ENV.gohighlevelApiKey;
+  const locationId = ENV.gohighlevelLocationId;
+
+  const opportunityName = leadType === 'BUYER' ? 'Home Buyer Lead' : 'Agent Client Lead';
+
+  const response = await axios.post(
+    `${GHL_API_BASE}/opportunities/`,
+    {
+      locationId,
+      pipelineId,
+      pipelineStageId: stageId,
+      contactId,
+      name: opportunityName,
+      status: 'open',
+      monetaryValue,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Version: '2021-07-28',
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  console.log('✅ Added to pipeline:', pipelineId);
+  return response.data;
+}
+
+/**
+ * Handle AGENT lead submission
+ */
+async function handleAgentLead(formData: FormData) {
+  console.log('👔 Processing AGENT LEAD...');
+
+  const contactData: ContactData = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    phone: formData.phone,
+    tags: ['agent-prospect', 'website-lead', formData.source || 'website'],
+    customFields: {
+      brokerage: formData.brokerageName || '',
+      years_experience: formData.yearsExperience || '',
+      current_lead_source: formData.currentLeadSource || '',
+      monthly_lead_budget: formData.monthlyLeadBudget || '',
+      interested_in: formData.interestedPackage || formData.selectedPlan || 'Starter',
+      message: formData.message || '',
+    },
+    source: formData.source || 'businessconector.com',
+  };
+
+  // Create contact
+  const contact = await createContact(contactData);
+
+  // Determine monetary value based on plan
+  let monetaryValue = 397; // Default starter
+  if (formData.selectedPlan === 'content' || formData.interestedPackage === 'Premium') {
+    monetaryValue = 891;
+  } else if (formData.selectedPlan === 'nurture' || formData.interestedPackage === 'Professional') {
+    monetaryValue = 597;
+  }
+
+  // Add to AGENT pipeline
+  await addToPipeline(contact.id, AGENT_PIPELINE_ID, AGENT_STAGE_ID, monetaryValue, 'AGENT');
+
+  return {
+    success: true,
+    contactId: contact.id,
+    leadType: 'AGENT',
+    pipeline: 'Business Conector - Lead to Customer',
+    message: 'Agent lead processed successfully',
+  };
+}
+
+/**
+ * Handle BUYER lead submission
+ */
+async function handleBuyerLead(formData: FormData) {
+  console.log('🏠 Processing BUYER LEAD...');
+
+  if (!BUYER_PIPELINE_ID || !BUYER_STAGE_ID) {
+    console.warn('⚠️  Buyer pipeline not configured yet. Creating contact without pipeline assignment.');
+    
+    // Still create the contact with buyer tags
+    const contactData: ContactData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      tags: ['buyer-lead', 'property-interest', formData.city || 'florida'],
+      customFields: {
+        property_address: formData.propertyAddress || '',
+        property_price: formData.propertyPrice || '',
+        property_id: formData.propertyId || '',
+        budget: formData.budget || '',
+        timeline: formData.timeline || '',
+        preapproved: formData.preapproved || '',
+        property_beds: formData.propertyBeds || '',
+        property_baths: formData.propertyBaths || '',
+        property_sqft: formData.propertySqft || '',
+        city: formData.city || '',
+        website_url: formData.source || '',
+      },
+      source: formData.source || 'Property Website',
+    };
+
+    const contact = await createContact(contactData);
+
+    return {
+      success: true,
+      contactId: contact.id,
+      leadType: 'BUYER',
+      pipeline: 'Contact Created (Pipeline Pending Setup)',
+      message: 'Buyer lead contact created. Pipeline setup required.',
+    };
+  }
+
+  const contactData: ContactData = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    phone: formData.phone,
+    tags: ['buyer-lead', 'property-interest', formData.city || 'florida'],
+    customFields: {
+      property_address: formData.propertyAddress || '',
+      property_price: formData.propertyPrice || '',
+      property_id: formData.propertyId || '',
+      budget: formData.budget || '',
+      timeline: formData.timeline || '',
+      preapproved: formData.preapproved || '',
+      property_beds: formData.propertyBeds || '',
+      property_baths: formData.propertyBaths || '',
+      property_sqft: formData.propertySqft || '',
+      city: formData.city || '',
+      website_url: formData.source || '',
+    },
+    source: formData.source || 'Property Website',
+  };
+
+  // Create contact
+  const contact = await createContact(contactData);
+
+  // Add to BUYER pipeline (no monetary value for leads)
+  await addToPipeline(
+    contact.id,
+    BUYER_PIPELINE_ID,
+    BUYER_STAGE_ID,
+    0, // Buyers aren't opportunities for us, they're our product
+    'BUYER'
+  );
+
+  return {
+    success: true,
+    contactId: contact.id,
+    leadType: 'BUYER',
+    pipeline: 'Buyer Leads - Property to Sale',
+    message: 'Buyer lead processed successfully',
+  };
+}
+
+/**
+ * Main handler function for smart form routing
+ */
+export async function handleFormSubmission(formData: FormData) {
+  try {
+    // Determine lead type
+    const leadType = determineLeadType(formData);
+    console.log(`\n📋 Lead Type Detected: ${leadType}\n`);
+
+    // Route to appropriate handler
+    if (leadType === 'BUYER') {
+      return await handleBuyerLead(formData);
+    } else {
+      return await handleAgentLead(formData);
+    }
+  } catch (error: any) {
+    console.error('❌ Form submission error:', error);
     throw error;
   }
 }
