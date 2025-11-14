@@ -21,6 +21,10 @@ import Research from "./pages/Research";
 import Zestimates from "./pages/Zestimates";
 import About from "./pages/About";
 import Careers from "./pages/Careers";
+import AgentDashboard from "./pages/AgentDashboard";
+import LeadsMarketplace from "./pages/LeadsMarketplace";
+import CheckoutPage from "./pages/CheckoutPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -43,6 +47,10 @@ function Router() {
       <Route path="/zestimates" component={Zestimates} />
       <Route path="/about" component={About} />
       <Route path="/careers" component={Careers} />
+      <Route path="/agent-dashboard" component={AgentDashboard} />
+      <Route path="/leads-marketplace" component={LeadsMarketplace} />
+      <Route path="/checkout" component={CheckoutPage} />
+      <Route path="/admin-dashboard" component={AdminDashboard} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

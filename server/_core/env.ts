@@ -9,4 +9,7 @@ export const ENV = {
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
   gohighlevelApiKey: process.env.GOHIGHLEVEL_API_KEY ?? "",
   gohighlevelLocationId: process.env.GOHIGHLEVEL_LOCATION_ID ?? "",
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? "",
+  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? "",
 };
+
