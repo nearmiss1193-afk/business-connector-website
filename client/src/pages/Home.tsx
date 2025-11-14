@@ -31,8 +31,8 @@ export default function Home() {
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button variant="ghost" size="sm" asChild>
+              <a href="#sign-in">Sign In</a>
             </Button>
             <Button size="sm" asChild>
               <Link href="/get-started">
@@ -63,8 +63,8 @@ export default function Home() {
                   <a>Start Getting Leads</a>
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8" asChild>
-                <a href="#how-it-works">See How It Works</a>
+              <Button size="lg" variant="outline" className="text-lg px-8">
+                <a href="#how-it-works" className="w-full h-full flex items-center justify-center">See How It Works</a>
               </Button>
             </div>
             <div className="flex flex-wrap justify-center gap-8 pt-8 text-sm text-muted-foreground">
