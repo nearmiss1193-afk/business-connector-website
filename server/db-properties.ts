@@ -396,7 +396,7 @@ export async function getFeaturedPropertiesByLocation(params: {
     .select()
     .from(properties)
     .where(and(...conditions))
-    .orderBy(desc(properties.createdAt))
+    .orderBy(desc(properties.lastSyncedAt))
     .limit(limit);
 
   return {

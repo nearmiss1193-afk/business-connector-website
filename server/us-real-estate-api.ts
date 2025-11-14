@@ -173,30 +173,44 @@ export async function fetchAllFloridaProperties(): Promise<any[]> {
  * Map US Real Estate API property to our database schema
  */
 export function mapUSRealEstatePropertyToDb(property: any) {
+  const propertyTypeMap: Record<string, string> = {
+    'single family': 'single_family',
+    'condo': 'condo',
+    'townhouse': 'townhouse',
+    'multi family': 'multi_family',
+    'land': 'land',
+    'commercial': 'commercial',
+  };
+
+  const rawPropertyType = property.property_type || property.type || 'Single Family';
+  const propertyType = (propertyTypeMap[rawPropertyType.toLowerCase()] || 'single_family') as 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other';
+
   return {
     mlsId: property.property_id || property.listing_id || `prop_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
     address: property.address || property.full_address || '',
     city: property.city || '',
     state: property.state || property.state_code || 'FL',
     zipCode: property.zip_code || property.postal_code || '',
-    price: property.price || property.list_price || 0,
+    price: (property.price || property.list_price || 0).toString(),
     bedrooms: property.beds || property.bedrooms || 0,
-    bathrooms: property.baths || property.bathrooms || 0,
-    squareFeet: property.sqft || property.square_feet || property.building_size || 0,
+    bathrooms: (property.baths || property.bathrooms || 0).toString(),
+    sqft: property.sqft || property.square_feet || property.building_size || 0,
     lotSize: property.lot_sqft || property.lot_size || null,
     yearBuilt: property.year_built || null,
-    propertyType: property.property_type || property.type || 'Single Family',
-    status: 'active',
+    propertyType: propertyType,
+    listingStatus: 'active' as const,
     description: property.description || property.remarks || '',
-    features: property.features || [],
-    images: property.photos || [],
+    features: JSON.stringify(property.features || []),
+    amenities: JSON.stringify([]),
     virtualTourUrl: property.virtual_tour || property.virtual_tour_url || null,
     latitude: property.latitude || property.lat || null,
     longitude: property.longitude || property.lon || property.lng || null,
     listingDate: property.list_date ? new Date(property.list_date) : new Date(),
     hoaFee: property.hoa_fee || property.hoa || null,
-    agentName: property.agent_name || property.agent?.name || null,
-    agentEmail: property.agent_email || property.agent?.email || null,
-    agentPhone: property.agent_phone || property.agent?.phone || null,
+    listingAgentName: property.agent_name || property.agent?.name || null,
+    listingAgentEmail: property.agent_email || property.agent?.email || null,
+    listingAgentPhone: property.agent_phone || property.agent?.phone || null,
+    source: 'us-real-estate',
+    images: property.photos || [],
   };
 }

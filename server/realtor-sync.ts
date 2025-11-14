@@ -58,18 +58,15 @@ export async function syncRealtorProperties() {
             .insert(properties)
             .values({
               ...mappedProperty,
-              createdAt: new Date(),
-              updatedAt: new Date(),
             })
             .$returningId();
 
           // Insert property images
           if (mappedProperty.images && mappedProperty.images.length > 0) {
-            const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
+            const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
               propertyId: inserted.id,
               imageUrl: url,
-              displayOrder: index + 1,
-              createdAt: new Date(),
+              order: index + 1,
             }));
 
             await db.insert(propertyImages).values(imageRecords);
@@ -92,7 +89,7 @@ export async function syncRealtorProperties() {
         await db
           .update(properties)
           .set({
-            status: 'sold',
+            listingStatus: 'sold',
             updatedAt: new Date(),
           })
           .where(eq(properties.mlsId, dbProp.mlsId));
@@ -106,14 +103,15 @@ export async function syncRealtorProperties() {
     const duration = (endTime.getTime() - startTime.getTime()) / 1000;
 
     await db.insert(mlsSyncLog).values({
-      syncDate: startTime,
+      source: 'realtor-com',
+      syncType: 'full',
+      status: errors.length > 0 ? 'completed' : 'completed',
       propertiesAdded,
       propertiesUpdated,
       propertiesRemoved,
-      totalProperties: realtorProperties.length,
-      status: errors.length > 0 ? 'partial_success' : 'success',
-      errorLog: errors.length > 0 ? errors.join('\n') : null,
-      createdAt: new Date(),
+      errorMessage: errors.length > 0 ? errors.join('\n') : undefined,
+      startedAt: startTime,
+      completedAt: endTime,
     });
 
     console.log(`[Realtor Sync] Completed in ${duration}s`);
@@ -133,14 +131,14 @@ export async function syncRealtorProperties() {
 
     // Log failed sync
     await db.insert(mlsSyncLog).values({
-      syncDate: startTime,
+      source: 'realtor-com',
+      syncType: 'full',
+      status: 'failed',
       propertiesAdded,
       propertiesUpdated,
       propertiesRemoved,
-      totalProperties: 0,
-      status: 'failed',
-      errorLog: String(error),
-      createdAt: new Date(),
+      errorMessage: String(error),
+      startedAt: startTime,
     });
 
     throw error;

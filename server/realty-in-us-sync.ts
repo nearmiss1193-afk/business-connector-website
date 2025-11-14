@@ -58,18 +58,15 @@ export async function syncRealtyInUSProperties() {
             .insert(properties)
             .values({
               ...mappedProperty,
-              createdAt: new Date(),
-              updatedAt: new Date(),
             })
             .$returningId();
 
           // Insert property images
           if (mappedProperty.images && mappedProperty.images.length > 0) {
-            const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
+            const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
               propertyId: inserted.id,
               imageUrl: url,
-              displayOrder: index + 1,
-              createdAt: new Date(),
+              order: index + 1,
             }));
 
             await db.insert(propertyImages).values(imageRecords);
@@ -92,7 +89,7 @@ export async function syncRealtyInUSProperties() {
         await db
           .update(properties)
           .set({
-            status: 'sold',
+            listingStatus: 'sold',
             updatedAt: new Date(),
           })
           .where(eq(properties.mlsId, dbProp.mlsId));

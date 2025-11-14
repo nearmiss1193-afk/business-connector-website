@@ -7,79 +7,158 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 py-12 mt-auto">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Company Info */}
+        <div className="grid md:grid-cols-5 gap-8">
+          {/* Real Estate */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">{APP_TITLE}</h3>
-            <p className="text-sm text-gray-400">
-              Central Florida's premier real estate platform connecting buyers with their dream homes.
-            </p>
-            <p className="text-sm text-gray-400 mt-4">
-              A Division of WORLDUNITIES LLC
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-white font-semibold mb-4">Real Estate</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/properties" className="hover:text-white transition-colors">
-                  Browse Properties
+                  Homes for Sale
+                </Link>
+              </li>
+              <li>
+                <Link href="/properties?type=condo" className="hover:text-white transition-colors">
+                  Condos for Sale
+                </Link>
+              </li>
+              <li>
+                <Link href="/properties?type=townhouse" className="hover:text-white transition-colors">
+                  Townhomes for Sale
+                </Link>
+              </li>
+              <li>
+                <Link href="/properties?type=land" className="hover:text-white transition-colors">
+                  Land for Sale
+                </Link>
+              </li>
+              <li>
+                <Link href="/zestimates" className="hover:text-white transition-colors">
+                  Zestimates
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Rentals */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Rentals</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/rentals" className="hover:text-white transition-colors">
+                  Apartments for Rent
+                </Link>
+              </li>
+              <li>
+                <Link href="/rentals?type=house" className="hover:text-white transition-colors">
+                  Houses for Rent
+                </Link>
+              </li>
+              <li>
+                <Link href="/rentals?type=condo" className="hover:text-white transition-colors">
+                  Condos for Rent
+                </Link>
+              </li>
+              <li>
+                <Link href="/manage-rentals" className="hover:text-white transition-colors">
+                  Manage Rentals
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Mortgage Rates */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Mortgage Rates</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/mortgage/rates" className="hover:text-white transition-colors">
+                  Current Rates
+                </Link>
+              </li>
+              <li>
+                <Link href="/mortgage/calculator" className="hover:text-white transition-colors">
+                  Mortgage Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/mortgage/prequalify" className="hover:text-white transition-colors">
+                  Get Pre-qualified
+                </Link>
+              </li>
+              <li>
+                <Link href="/mortgage/refinance" className="hover:text-white transition-colors">
+                  Refinance Calculator
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Browse Homes */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Browse Homes</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/properties?city=Tampa" className="hover:text-white transition-colors">
+                  Tampa, FL
+                </Link>
+              </li>
+              <li>
+                <Link href="/properties?city=Orlando" className="hover:text-white transition-colors">
+                  Orlando, FL
+                </Link>
+              </li>
+              <li>
+                <Link href="/properties?city=Lakeland" className="hover:text-white transition-colors">
+                  Lakeland, FL
+                </Link>
+              </li>
+              <li>
+                <Link href="/properties?city=Clermont" className="hover:text-white transition-colors">
+                  Clermont, FL
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Company</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/research" className="hover:text-white transition-colors">
+                  Research
+                </Link>
+              </li>
+              <li>
+                <Link href="/careers" className="hover:text-white transition-colors">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link href="/help" className="hover:text-white transition-colors">
+                  Help Center
                 </Link>
               </li>
               <li>
                 <Link href="/advertise" className="hover:text-white transition-colors">
-                  Advertise With Us
+                  Advertise
                 </Link>
               </li>
               <li>
-                <a href="tel:+18633203921" className="hover:text-white transition-colors">
-                  (863) 320-3921
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
                 <Link href="/terms-of-service" className="hover:text-white transition-colors">
-                  Terms of Service
+                  Terms of Use
                 </Link>
               </li>
               <li>
                 <Link href="/privacy-policy" className="hover:text-white transition-colors">
-                  Privacy Policy
+                  Privacy Notice
                 </Link>
-              </li>
-              <li>
-                <Link href="/compliance" className="hover:text-white transition-colors">
-                  Compliance
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="text-gray-400">
-                15840 State Road 50<br />
-                Clermont, FL 34711
-              </li>
-              <li>
-                <a href="mailto:danielcoffman@businessconector.com" className="hover:text-white transition-colors">
-                  danielcoffman@businessconector.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+13529368152" className="hover:text-white transition-colors">
-                  +1 (352) 936-8152
-                </a>
               </li>
             </ul>
           </div>

@@ -376,3 +376,150 @@
 - [ ] Implement marker clustering for areas with many properties
 - [ ] Make split-screen responsive (stack vertically on mobile)
 - [ ] Preserve map bounds when filters change
+
+### Comprehensive Zillow Features from Video
+- [x] Add property feature badges to cards (Electric fireplace, Front facing screened lanai, Separate laundry room, etc.)
+- [x] Add "Price cut" badges with amount and date (e.g., "Price cut: $6,000 (10/30)")
+- [x] Create Help Center page with search bar and category cards grid
+- [x] Add Help Center categories: Landlords, Agents, Lenders, Home Loans, Renters, Homebuyers, Homeowners, Home Sellers, Privacy
+- [x] Build comprehensive footer with 5 main sections: Real Estate, Rentals, Mortgage Rates, Browse Homes, Company
+- [x] Add footer links: About, Zestimates, Research, Careers, Help, Advertise, Terms of use, Privacy Notice, etc.
+- [x] Create Research/Blog section with "Housing Trends Report" articles
+- [x] Add featured blog posts: "CPI Shelter Forecast", "Buyers: Results from Consumer Housing Trends Report 2025", "Sellers: Results from Consumer Housing Trends Report 2025"
+- [x] Create Zestimates feature page explaining home value estimates
+- [x] Create About page with company information, mission, values, and stats
+- [x] Create Careers page for job listings with benefits and culture section
+- [x] Add MLS ID to all property cards
+- [x] Add routes for all new pages in App.tsx
+- [ ] Implement "Viewed and saved the most in the area over the past 24 hours" subtitle for trending homes
+
+### Filter Functionality, Status Badges & Recently Viewed
+- [x] Wire up "Apply filters" button to trigger property search with price range, beds/baths, home types, and polygon
+- [x] Update PropertyHome search to pass filter parameters to Properties page via URL query params
+- [x] Add property status badges: "New" (listed within 7 days), "Pending" (under contract)
+- [x] Calculate badge display logic based on listingDate and listingStatus
+- [x] Implement Recently Viewed tracking using localStorage
+- [x] Create Recently Viewed carousel component at bottom of search results
+- [x] Track property views when users visit PropertyDetail page
+- [x] Limit Recently Viewed to last 20 properties
+- [x] Add "Clear History" button to Recently Viewed section
+- [ ] Add "Price Drop" badge (requires priceHistory field in database)
+- [ ] Add "Open House" badge (requires openHouseDate field in database)
+
+
+---
+
+## REVENUE SYSTEM - DUAL REVENUE MODEL
+
+### Phase 2: Database Schema Design ✅
+- [x] Created schema-revenue.ts with all tables:
+  - [x] agent_subscriptions - Track agent subscription plans ($199-$449/month)
+  - [x] agent_profiles - Extended agent information
+  - [x] leads - All captured leads (buyer $10, seller $15, mortgage $12)
+  - [x] lead_purchases - Track individual lead sales
+  - [x] lead_quality_rules - Scoring configuration
+  - [x] payments - Transaction tracking
+  - [x] agent_lead_limits - Monthly lead purchase limits
+  - [x] lead_notifications - Notification tracking
+- [x] Database migrations generated successfully
+- [x] Created revenue.ts router with core procedures
+
+### Phase 3: Stripe Integration
+- [ ] Set up Stripe webhook endpoints
+- [ ] Create subscription creation procedure
+- [ ] Create subscription cancellation procedure
+- [ ] Create lead purchase payment procedure
+- [ ] Implement payment webhook handlers
+- [ ] Add payment retry logic
+- [ ] Create refund handling
+
+### Phase 4: Lead Quality Scoring System
+- [ ] Create lead scoring engine
+- [ ] Implement hot/warm/cold classification
+- [ ] Create scoring rules configuration UI
+- [ ] Add automatic lead scoring on capture
+- [ ] Create lead quality analytics
+
+### Phase 5: Lead Marketplace - Browse & Purchase Interface
+- [ ] Create lead marketplace page
+- [ ] Implement lead filtering (type, quality, price)
+- [ ] Add lead preview modal
+- [ ] Implement lead purchase flow
+- [ ] Add payment processing UI
+- [ ] Create lead delivery confirmation
+- [ ] Add lead rating/feedback system
+
+### Phase 6: Agent Dashboard - Account & Lead Management
+- [ ] Create agent dashboard layout
+- [ ] Add subscription management section
+- [ ] Create leads purchased section
+- [ ] Add lead status tracking
+- [ ] Implement lead ROI analytics
+- [ ] Add agent profile management
+- [ ] Create payment history view
+- [ ] Add notifications center
+
+### Phase 7: Admin Dashboard - Agent & Lead Management
+- [ ] Create admin dashboard layout
+- [ ] Add agent management section
+- [ ] Create lead management section
+- [ ] Implement payment tracking
+- [ ] Add analytics dashboard
+- [ ] Create agent approval workflow
+- [ ] Add lead quality monitoring
+- [ ] Implement revenue reporting
+
+### Phase 8: Lead Capture & Auto-Scoring Integration
+- [ ] Integrate lead capture from property search
+- [ ] Integrate lead capture from mortgage calculator
+- [ ] Integrate lead capture from buyer registration
+- [ ] Implement automatic quality scoring
+- [ ] Add GoHighLevel sync
+- [ ] Create lead distribution logic
+- [ ] Add lead notification triggers
+
+### Phase 9: Notification System - Email & SMS Alerts
+- [ ] Set up email notification service
+- [ ] Create subscription confirmation emails
+- [ ] Create new lead available emails
+- [ ] Add SMS notifications
+- [ ] Create notification preferences
+- [ ] Implement notification tracking
+- [ ] Add unsubscribe handling
+
+### Phase 10: Testing & Quality Assurance
+- [ ] Test subscription creation flow
+- [ ] Test lead purchase flow
+- [ ] Test payment processing
+- [ ] Test lead quality scoring
+- [ ] Test notification system
+- [ ] Test admin functions
+- [ ] Load testing
+- [ ] Security testing
+
+### Phase 11: Deployment & Go-Live
+- [ ] Final checkpoint before deployment
+- [ ] Deploy to production
+- [ ] Monitor system health
+- [ ] Handle any production issues
+- [ ] Announce platform launch
+
+### Revenue Pricing Configuration ✅
+- **Agent Subscriptions (Monthly):**
+  - Starter: $199/month (50% of market average)
+  - Professional: $299/month (50% of market average)
+  - Premium: $449/month (50% of market average)
+
+- **Lead Pricing (Per Lead):**
+  - Buyer Leads: $10 each (50% of market average $9-$20)
+  - Seller Leads: $15 each (50% of market average $26-$30)
+  - Mortgage Leads: $12 each (50% of market average $15-$25)
+
+### Key Features Completed ✅
+- [x] Database schema for revenue system
+- [x] Revenue router with core procedures
+- [x] Agent subscription queries
+- [x] Lead marketplace queries
+- [x] Agent profile management
+- [x] Lead purchase procedures
+- [x] Agent statistics queries

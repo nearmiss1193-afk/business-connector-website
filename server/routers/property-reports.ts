@@ -50,8 +50,6 @@ export const propertyReportsRouter = router({
           reporterEmail: input.reporterEmail,
           reporterPhone: input.reporterPhone,
           status: "pending",
-          createdAt: new Date(),
-          updatedAt: new Date(),
         })
         .$returningId();
 

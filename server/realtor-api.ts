@@ -185,6 +185,18 @@ export async function fetchAllFloridaProperties(): Promise<RealtorProperty[]> {
  * Map Realtor.com property to our database schema
  */
 export function mapRealtorPropertyToDb(property: RealtorProperty) {
+  const propertyTypeMap: Record<string, string> = {
+    'single_family': 'single_family',
+    'condo': 'condo',
+    'townhouse': 'townhouse',
+    'multi_family': 'multi_family',
+    'land': 'land',
+    'commercial': 'commercial',
+  };
+
+  const rawPropertyType = property.prop_type || 'single_family';
+  const propertyType = (propertyTypeMap[rawPropertyType.toLowerCase()] || 'single_family') as 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other';
+
   return {
     mlsId: property.listing_id || property.property_id,
     address: property.address.line,
@@ -194,21 +206,23 @@ export function mapRealtorPropertyToDb(property: RealtorProperty) {
     price: property.price,
     bedrooms: property.beds,
     bathrooms: property.baths,
-    squareFeet: property.sqft,
+    sqft: property.sqft,
     lotSize: property.lot_sqft,
     yearBuilt: property.year_built,
-    propertyType: property.prop_type,
-    status: property.status === 'for_sale' ? 'active' : property.status,
+    propertyType: propertyType,
+    listingStatus: property.status === 'for_sale' ? 'active' : 'pending',
     description: property.description?.text || '',
-    features: property.features || [],
-    images: property.photos?.map(p => p.href) || [],
+    features: JSON.stringify(property.features || []),
+    amenities: JSON.stringify([]),
     virtualTourUrl: property.virtual_tours?.[0]?.href || null,
     latitude: property.address.lat,
     longitude: property.address.lon,
     listingDate: property.list_date ? new Date(property.list_date) : new Date(),
     hoaFee: property.hoa?.fee || null,
-    agentName: property.agents?.[0]?.name || null,
-    agentEmail: property.agents?.[0]?.email || null,
-    agentPhone: property.agents?.[0]?.phone || null,
+    listingAgentName: property.agents?.[0]?.name || null,
+    listingAgentEmail: property.agents?.[0]?.email || null,
+    listingAgentPhone: property.agents?.[0]?.phone || null,
+    source: 'realtor-com',
+    images: property.photos?.map((p: any) => p.href) || [],
   };
 }

@@ -6,7 +6,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
-import { APP_LOGO, APP_TITLE } from '@/const';
+import { APP_LOGO } from '@/const';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -22,7 +22,7 @@ import {
   Ruler,
   Heart,
   TrendingUp,
-  Home as HomeIcon,
+  Home,
   DollarSign,
   Users,
   ArrowRight,
@@ -346,7 +346,17 @@ export default function PropertyHome() {
                     <Button
                       onClick={() => {
                         setShowFilters(false);
-                        // Apply filters logic here
+                        // Build query params from filters
+                        const params = new URLSearchParams();
+                        if (searchQuery) params.set('location', searchQuery);
+                        if (priceMin) params.set('minPrice', priceMin);
+                        if (priceMax) params.set('maxPrice', priceMax);
+                        if (beds !== 'any') params.set('beds', beds);
+                        if (baths !== 'any') params.set('baths', baths);
+                        if (homeTypes.length > 0) params.set('types', homeTypes.join(','));
+                        if (drawnPolygon) params.set('polygon', JSON.stringify(drawnPolygon));
+                        // Navigate to properties page with filters
+                        setLocation(`/properties?${params.toString()}`);
                       }}
                       className="bg-blue-600 hover:bg-blue-700 text-white"
                     >
@@ -619,7 +629,7 @@ export default function PropertyHome() {
                     )}
                     {property.hasVirtualTour && (
                       <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-                        <HomeIcon className="w-3 h-3" />
+                        <Home className="w-3 h-3" />
                         3D Tour
                       </span>
                     )}
@@ -786,7 +796,7 @@ export default function PropertyHome() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <HomeIcon className="w-6 h-6" />
+                <Home className="w-6 h-6" />
                 <span className="text-xl font-bold">Central Florida Homes</span>
               </div>
               <p className="text-gray-400">

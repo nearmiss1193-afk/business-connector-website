@@ -300,12 +300,56 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                     >
                       <div className="flex">
                         {/* Property Image */}
-                        <div className="w-64 h-48 bg-gray-100 flex-shrink-0">
+                        <div className="w-64 h-48 bg-gray-100 flex-shrink-0 relative">
                           <img
                             src={property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
                             alt={property.address}
                             className="w-full h-full object-cover"
                           />
+                          {/* Status & Feature Badges */}
+                          <div className="absolute top-2 left-2 flex flex-col gap-1">
+                            {/* Status Badges */}
+                            {(() => {
+                              const badges = [];
+                              // New listing (within 7 days)
+                              if (property.listingDate) {
+                                const daysSinceListing = Math.floor(
+                                  (Date.now() - new Date(property.listingDate).getTime()) / (1000 * 60 * 60 * 24)
+                                );
+                                if (daysSinceListing <= 7) {
+                                  badges.push(
+                                    <span key="new" className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded">
+                                      NEW
+                                    </span>
+                                  );
+                                }
+                              }
+                              // Pending status
+                              if (property.listingStatus?.toLowerCase() === 'pending') {
+                                badges.push(
+                                  <span key="pending" className="bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded">
+                                    PENDING
+                                  </span>
+                                );
+                              }
+                              // Open House (placeholder - would need openHouseDate field)
+                              // Price Drop (placeholder - would need priceHistory field)
+                              return badges;
+                            })()}
+                            {/* Feature Badges */}
+                            {property.features && (() => {
+                              try {
+                                const features = JSON.parse(property.features);
+                                return features.length > 0 && (
+                                  <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded">
+                                    {features[0]}
+                                  </span>
+                                );
+                              } catch {
+                                return null;
+                              }
+                            })()}
+                          </div>
                         </div>
 
                         {/* Property Details */}

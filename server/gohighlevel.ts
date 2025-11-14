@@ -40,6 +40,7 @@ interface FormData {
   
   // Agent-specific fields
   brokerageName?: string;
+  companyName?: string;
   yearsExperience?: string;
   currentLeadSource?: string;
   monthlyLeadBudget?: string;

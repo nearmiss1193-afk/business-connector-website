@@ -92,8 +92,6 @@ export async function syncMLSData(options?: {
           // Insert new property
           await db.insert(properties).values({
             ...mappedProperty,
-            createdAt: new Date(),
-            updatedAt: new Date(),
           });
           
           result.added++;
