@@ -156,10 +156,10 @@ export default function RecentlyViewed() {
                         style: 'currency',
                         currency: 'USD',
                         maximumFractionDigits: 0,
-                      }).format(parseFloat(property.price))}
+                      }).format(parseFloat(property.price || '0'))}
                     </div>
                     <div className="text-sm text-gray-600 mb-2">
-                      {property.bedrooms} bd • {property.bathrooms} ba • {new Intl.NumberFormat('en-US').format(parseFloat(property.sqft))} sqft
+                      {property.bedrooms} bd • {property.bathrooms} ba • {new Intl.NumberFormat('en-US').format(parseFloat(property.sqft || '0'))} sqft
                     </div>
                     <div className="text-sm text-gray-700 truncate">
                       {property.address}

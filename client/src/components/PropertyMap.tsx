@@ -1,15 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapView } from '@/components/Map';
-import { MapPin, School, ShoppingBag, Coffee, Utensils } from 'lucide-react';
+import { MapPin, School, ShoppingBag, Coffee, Utensils, X, Heart, Share2, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-interface PropertyMapProps {
+interface Property {
+  id: number;
   address: string;
   city: string;
   state: string;
   zipCode: string;
-  latitude?: number;
-  longitude?: number;
+  price?: string | null;
+  bedrooms?: number;
+  bathrooms?: string | number | null;
+  sqft?: number | string | null;
+  latitude?: string | number | null;
+  longitude?: string | number | null;
+  primaryImage?: string | null;
+  listingAgentName?: string | null;
+  listingAgentPhone?: string | null;
+  description?: string | null;
+  [key: string]: any; // Allow additional properties from database
+}
+
+interface PropertyMapProps {
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  latitude?: number | string | null;
+  longitude?: number | string | null;
+  properties?: Property[];
+  onPropertySelect?: (property: Property) => void;
 }
 
 export default function PropertyMap({
@@ -19,13 +41,17 @@ export default function PropertyMap({
   zipCode,
   latitude,
   longitude,
+  properties = [],
+  onPropertySelect,
 }: PropertyMapProps) {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [geocoder, setGeocoder] = useState<google.maps.Geocoder | null>(null);
   const [placesService, setPlacesService] = useState<google.maps.places.PlacesService | null>(null);
   const [propertyLocation, setPropertyLocation] = useState<google.maps.LatLngLiteral | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const markersRef = useRef<google.maps.Marker[]>([]);
 
-  const fullAddress = `${address}, ${city}, ${state} ${zipCode}`;
+  const fullAddress = address && city && state && zipCode ? `${address}, ${city}, ${state} ${zipCode}` : '';
 
   const handleMapReady = (mapInstance: google.maps.Map) => {
     setMap(mapInstance);
@@ -38,27 +64,79 @@ export default function PropertyMap({
     const placesServiceInstance = new google.maps.places.PlacesService(mapInstance);
     setPlacesService(placesServiceInstance);
 
-    // Geocode the property address
-    if (latitude && longitude) {
-      const location = { lat: latitude, lng: longitude };
-      setPropertyLocation(location);
-      addPropertyMarker(mapInstance, location);
-      searchNearbyPlaces(mapInstance, placesServiceInstance, location);
-    } else {
+    // If we have multiple properties, add them all
+    if (properties.length > 0) {
+      addPropertyMarkers(mapInstance, properties);
+    } else if (latitude && longitude) {
+      // Single property case
+      const lat = typeof latitude === 'string' ? parseFloat(latitude) : latitude;
+      const lng = typeof longitude === 'string' ? parseFloat(longitude) : longitude;
+      if (!isNaN(lat) && !isNaN(lng)) {
+        const location = { lat, lng };
+        setPropertyLocation(location);
+        addPropertyMarker(mapInstance, location, address);
+        searchNearbyPlaces(mapInstance, placesServiceInstance, location);
+      }
+    } else if (fullAddress) {
+      // Geocode the property address
       geocoderInstance.geocode({ address: fullAddress }, (results, status) => {
         if (status === 'OK' && results && results[0]) {
           const location = results[0].geometry.location.toJSON();
           setPropertyLocation(location);
           mapInstance.setCenter(location);
           mapInstance.setZoom(14);
-          addPropertyMarker(mapInstance, location);
+          addPropertyMarker(mapInstance, location, address);
           searchNearbyPlaces(mapInstance, placesServiceInstance, location);
         }
       });
     }
   };
 
-  const addPropertyMarker = (mapInstance: google.maps.Map, location: google.maps.LatLngLiteral) => {
+  const addPropertyMarkers = (mapInstance: google.maps.Map, props: Property[]) => {
+    // Clear existing markers
+    markersRef.current.forEach(marker => marker.setMap(null));
+    markersRef.current = [];
+
+    const bounds = new google.maps.LatLngBounds();
+    let hasValidLocation = false;
+
+    props.forEach((prop) => {
+      const lat = prop.latitude ? (typeof prop.latitude === 'string' ? parseFloat(prop.latitude) : prop.latitude) : null;
+      const lng = prop.longitude ? (typeof prop.longitude === 'string' ? parseFloat(prop.longitude) : prop.longitude) : null;
+
+      if (lat && lng && !isNaN(lat) && !isNaN(lng)) {
+        hasValidLocation = true;
+        const location = { lat, lng };
+        const marker = new google.maps.Marker({
+          position: location,
+          map: mapInstance,
+          title: prop.address,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillColor: '#3b82f6',
+            fillOpacity: 0.8,
+            strokeColor: '#ffffff',
+            strokeWeight: 2,
+          },
+        });
+
+        marker.addListener('click', () => {
+          setSelectedProperty(prop);
+          onPropertySelect?.(prop);
+        });
+
+        markersRef.current.push(marker);
+        bounds.extend(location);
+      }
+    });
+
+    if (hasValidLocation && markersRef.current.length > 0) {
+      mapInstance.fitBounds(bounds);
+    }
+  };
+
+  const addPropertyMarker = (mapInstance: google.maps.Map, location: google.maps.LatLngLiteral, addr?: string) => {
     // Create custom property marker
     const marker = new google.maps.Marker({
       position: location,
@@ -177,12 +255,12 @@ export default function PropertyMap({
         <div className="h-[500px] w-full">
           <MapView
             onMapReady={handleMapReady}
-            defaultCenter={
+            center={
               latitude && longitude
-                ? { lat: latitude, lng: longitude }
+                ? { lat: typeof latitude === 'string' ? parseFloat(latitude) : latitude, lng: typeof longitude === 'string' ? parseFloat(longitude) : longitude }
                 : { lat: 28.5383, lng: -81.3792 } // Orlando, FL default
             }
-            defaultZoom={14}
+            zoom={14}
           />
         </div>
 
