@@ -31,8 +31,8 @@ export default function Home() {
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button variant="ghost" size="sm" asChild>
+              <a href="#sign-in">Sign In</a>
             </Button>
             <Button size="sm" asChild>
               <Link href="/get-started">
