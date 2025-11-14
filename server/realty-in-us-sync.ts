@@ -197,17 +197,14 @@ export async function syncCityProperties(city: string, zipCode: string) {
           .insert(properties)
           .values({
             ...mappedProperty,
-            createdAt: new Date(),
-            updatedAt: new Date(),
           })
           .$returningId();
 
         if (mappedProperty.images && mappedProperty.images.length > 0) {
-          const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
+          const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
             propertyId: inserted.id,
             imageUrl: url,
-            displayOrder: index + 1,
-            createdAt: new Date(),
+            order: index + 1,
           }));
 
           await db.insert(propertyImages).values(imageRecords);

@@ -44,11 +44,11 @@ export default function PropertyDetail() {
         address: property.address,
         city: property.city,
         state: property.state,
-        price: property.price,
-        bedrooms: property.bedrooms,
-        bathrooms: property.bathrooms,
-        sqft: property.sqft,
-        primaryImage: property.primaryImage,
+        price: property.price ? (typeof property.price === 'string' ? property.price : String(property.price)) : null,
+        bedrooms: property.bedrooms || 0,
+        bathrooms: property.bathrooms ? (typeof property.bathrooms === 'string' ? parseFloat(property.bathrooms) : property.bathrooms) : 0,
+        sqft: property.sqft ? (typeof property.sqft === 'string' ? property.sqft : String(property.sqft)) : null,
+        primaryImage: property.primaryImage || null,
       });
     }
   }, [property]);

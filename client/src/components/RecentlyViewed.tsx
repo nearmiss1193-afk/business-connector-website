@@ -14,10 +14,10 @@ interface RecentlyViewedProperty {
   address: string;
   city: string;
   state: string;
-  price: string;
+  price: string | null;
   bedrooms: number;
   bathrooms: number;
-  sqft: string;
+  sqft: string | null;
   primaryImage: string | null;
   viewedAt: number;
 }

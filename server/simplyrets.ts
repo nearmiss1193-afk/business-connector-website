@@ -171,42 +171,41 @@ export function mapSimplyRETSProperty(srProperty: SimplyRETSProperty) {
     city: srProperty.address.city,
     state: srProperty.address.state,
     zipCode: srProperty.address.postalCode,
-    latitude: srProperty.geo.lat,
-    longitude: srProperty.geo.lng,
-    price: srProperty.listPrice,
+    latitude: srProperty.geo.lat?.toString() || null,
+    longitude: srProperty.geo.lng?.toString() || null,
+    price: srProperty.listPrice.toString(),
     bedrooms: srProperty.property.bedrooms,
-    bathrooms: totalBaths,
-    squareFeet: srProperty.property.area,
+    bathrooms: totalBaths.toString(),
+    sqft: srProperty.property.area,
     lotSize: srProperty.property.lotSize || null,
     yearBuilt: srProperty.property.yearBuilt || null,
-    propertyType: mapPropertyType(srProperty.property.type),
+    propertyType: mapPropertyTypeToEnum(srProperty.property.type),
+    listingStatus: mapStatus(srProperty.mls.status),
     description: srProperty.remarks || 'Stunning property',
-    features: buildFeaturesList(srProperty),
-    images: srProperty.photos || [],
+    features: JSON.stringify(buildFeaturesList(srProperty)),
+    amenities: JSON.stringify([]),
     virtualTourUrl: srProperty.virtualTourUrl || null,
-    status: mapStatus(srProperty.mls.status),
     listingDate: new Date(srProperty.listDate),
-    daysOnMarket: srProperty.mls.daysOnMarket || 0,
-    hoaFee: srProperty.association?.fee || null,
+    hoaFee: srProperty.association?.fee ? srProperty.association.fee.toString() : null,
     hoaFrequency: srProperty.association?.frequency || null,
-    parking: srProperty.property.parking?.spaces || null,
-    parkingDescription: srProperty.property.parking?.description || null,
+    source: 'simplyrets',
+    images: srProperty.photos || [],
   };
 }
 
 /**
  * Map SimplyRETS property type to our enum
  */
-function mapPropertyType(type: string): string {
-  const typeMap: Record<string, string> = {
-    'RES': 'Single Family',
-    'CND': 'Condo',
-    'TWN': 'Townhouse',
-    'MFH': 'Multi-Family',
-    'LOT': 'Land',
-    'COM': 'Commercial',
+function mapPropertyTypeToEnum(type: string): 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other' {
+  const typeMap: Record<string, 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other'> = {
+    'RES': 'single_family',
+    'CND': 'condo',
+    'TWN': 'townhouse',
+    'MFH': 'multi_family',
+    'LOT': 'land',
+    'COM': 'commercial',
   };
-  return typeMap[type] || 'Single Family';
+  return typeMap[type] || 'other';
 }
 
 /**

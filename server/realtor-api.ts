@@ -184,8 +184,8 @@ export async function fetchAllFloridaProperties(): Promise<RealtorProperty[]> {
 /**
  * Map Realtor.com property to our database schema
  */
-export function mapRealtorPropertyToDb(property: RealtorProperty) {
-  const propertyTypeMap: Record<string, string> = {
+export function mapRealtorPropertyToDb(property: RealtorProperty): any {
+  const propertyTypeMap: Record<string, 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other'> = {
     'single_family': 'single_family',
     'condo': 'condo',
     'townhouse': 'townhouse',
@@ -203,22 +203,22 @@ export function mapRealtorPropertyToDb(property: RealtorProperty) {
     city: property.address.city,
     state: property.address.state_code,
     zipCode: property.address.postal_code,
-    price: property.price,
+    price: property.price.toString(),
     bedrooms: property.beds,
-    bathrooms: property.baths,
+    bathrooms: property.baths.toString(),
     sqft: property.sqft,
     lotSize: property.lot_sqft,
     yearBuilt: property.year_built,
     propertyType: propertyType,
-    listingStatus: property.status === 'for_sale' ? 'active' : 'pending',
+    listingStatus: property.status === 'for_sale' ? ('active' as const) : ('pending' as const),
     description: property.description?.text || '',
     features: JSON.stringify(property.features || []),
     amenities: JSON.stringify([]),
     virtualTourUrl: property.virtual_tours?.[0]?.href || null,
-    latitude: property.address.lat,
-    longitude: property.address.lon,
+    latitude: property.address.lat?.toString() || null,
+    longitude: property.address.lon?.toString() || null,
     listingDate: property.list_date ? new Date(property.list_date) : new Date(),
-    hoaFee: property.hoa?.fee || null,
+    hoaFee: property.hoa?.fee ? property.hoa.fee.toString() : null,
     listingAgentName: property.agents?.[0]?.name || null,
     listingAgentEmail: property.agents?.[0]?.email || null,
     listingAgentPhone: property.agents?.[0]?.phone || null,
