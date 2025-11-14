@@ -184,45 +184,31 @@ export async function fetchAllFloridaProperties(): Promise<RealtorProperty[]> {
 /**
  * Map Realtor.com property to our database schema
  */
-export function mapRealtorPropertyToDb(property: RealtorProperty): any {
-  const propertyTypeMap: Record<string, 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other'> = {
-    'single_family': 'single_family',
-    'condo': 'condo',
-    'townhouse': 'townhouse',
-    'multi_family': 'multi_family',
-    'land': 'land',
-    'commercial': 'commercial',
-  };
-
-  const rawPropertyType = property.prop_type || 'single_family';
-  const propertyType = (propertyTypeMap[rawPropertyType.toLowerCase()] || 'single_family') as 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other';
-
+export function mapRealtorPropertyToDb(property: RealtorProperty) {
   return {
     mlsId: property.listing_id || property.property_id,
     address: property.address.line,
     city: property.address.city,
     state: property.address.state_code,
     zipCode: property.address.postal_code,
-    price: property.price.toString(),
+    price: property.price,
     bedrooms: property.beds,
-    bathrooms: property.baths.toString(),
-    sqft: property.sqft,
+    bathrooms: property.baths,
+    squareFeet: property.sqft,
     lotSize: property.lot_sqft,
     yearBuilt: property.year_built,
-    propertyType: propertyType,
-    listingStatus: property.status === 'for_sale' ? ('active' as const) : ('pending' as const),
+    propertyType: property.prop_type,
+    status: property.status === 'for_sale' ? 'active' : property.status,
     description: property.description?.text || '',
-    features: JSON.stringify(property.features || []),
-    amenities: JSON.stringify([]),
+    features: property.features || [],
+    images: property.photos?.map(p => p.href) || [],
     virtualTourUrl: property.virtual_tours?.[0]?.href || null,
-    latitude: property.address.lat?.toString() || null,
-    longitude: property.address.lon?.toString() || null,
+    latitude: property.address.lat,
+    longitude: property.address.lon,
     listingDate: property.list_date ? new Date(property.list_date) : new Date(),
-    hoaFee: property.hoa?.fee ? property.hoa.fee.toString() : null,
-    listingAgentName: property.agents?.[0]?.name || null,
-    listingAgentEmail: property.agents?.[0]?.email || null,
-    listingAgentPhone: property.agents?.[0]?.phone || null,
-    source: 'realtor-com',
-    images: property.photos?.map((p: any) => p.href) || [],
+    hoaFee: property.hoa?.fee || null,
+    agentName: property.agents?.[0]?.name || null,
+    agentEmail: property.agents?.[0]?.email || null,
+    agentPhone: property.agents?.[0]?.phone || null,
   };
 }

@@ -10,14 +10,13 @@ interface Property {
   city: string;
   state: string;
   zipCode: string;
-  price?: string | null;
-  bedrooms?: number;
-  bathrooms?: string | number | null;
-  sqft?: number | string | null;
-  latitude?: string | number | null;
-  longitude?: string | number | null;
-  primaryImage?: string | null;
-  [key: string]: any;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  squareFeet: number;
+  latitude: number;
+  longitude: number;
+  primaryImage?: string;
 }
 
 interface PropertyMapViewProps {
@@ -44,10 +43,8 @@ export default function PropertyMapView({ properties, onPropertyClick }: Propert
     const newMarkers = properties
       .filter(p => p.latitude && p.longitude)
       .map(property => {
-        const lat = typeof property.latitude === 'string' ? parseFloat(property.latitude) : property.latitude;
-        const lng = typeof property.longitude === 'string' ? parseFloat(property.longitude) : property.longitude;
         const marker = new google.maps.Marker({
-          position: { lat: lat || 0, lng: lng || 0 },
+          position: { lat: property.latitude, lng: property.longitude },
           map: mapInstance,
           title: property.address,
           icon: {
@@ -70,13 +67,13 @@ export default function PropertyMapView({ properties, onPropertyClick }: Propert
             const content = `
               <div style="padding: 8px; max-width: 200px;">
                 <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">
-                  ${property.price ? '$' + (typeof property.price === 'string' ? parseInt(property.price).toLocaleString() : Math.floor(Number(property.price) || 0).toLocaleString()) : 'N/A'}
+                  $${property.price.toLocaleString()}
                 </div>
                 <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
                   ${property.address}
                 </div>
                 <div style="font-size: 13px; color: #888;">
-                  ${property.bedrooms || 0} bed • ${property.bathrooms || 0} bath • ${property.sqft ? (typeof property.sqft === 'string' ? parseInt(property.sqft).toLocaleString() : Math.floor(Number(property.sqft) || 0).toLocaleString()) : 'N/A'} sqft
+                  ${property.bedrooms} bed • ${property.bathrooms} bath • ${property.squareFeet.toLocaleString()} sqft
                 </div>
               </div>
             `;
@@ -107,22 +104,20 @@ export default function PropertyMapView({ properties, onPropertyClick }: Propert
     }
   };
 
-  const formatPrice = (price: string | number | null | undefined) => {
-    if (!price) return '$0';
-    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+  const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       maximumFractionDigits: 0,
-    }).format(numPrice || 0);
+    }).format(price);
   };
 
   return (
     <div className="relative w-full h-full">
       <MapView
         onMapReady={handleMapReady}
-        center={{ lat: 28.5383, lng: -81.3792 }} // Orlando, FL
-        zoom={10}
+        defaultCenter={{ lat: 28.5383, lng: -81.3792 }} // Orlando, FL
+        defaultZoom={10}
         className="w-full h-full"
       />
 

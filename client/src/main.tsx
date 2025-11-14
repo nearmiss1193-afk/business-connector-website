@@ -37,22 +37,10 @@ queryClient.getMutationCache().subscribe(event => {
   }
 });
 
-const getTRPCUrl = () => {
-  if (typeof window === 'undefined') return "/api/trpc";
-  
-  // In development on localhost, use relative path
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return "/api/trpc";
-  }
-  
-  // In production on custom domain, use absolute URL to Manus backend
-  return "https://busconnector-4ktxbxcb.manus.space/api/trpc";
-};
-
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      url: getTRPCUrl(),
+      url: "/api/trpc",
       transformer: superjson,
       fetch(input, init) {
         return globalThis.fetch(input, {

@@ -58,15 +58,18 @@ export async function syncUSRealEstateProperties() {
             .insert(properties)
             .values({
               ...mappedProperty,
+              createdAt: new Date(),
+              updatedAt: new Date(),
             })
             .$returningId();
 
           // Insert property images
           if (mappedProperty.images && mappedProperty.images.length > 0) {
-            const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
+            const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
               propertyId: inserted.id,
               imageUrl: url,
-              order: index + 1,
+              displayOrder: index + 1,
+              createdAt: new Date(),
             }));
 
             await db.insert(propertyImages).values(imageRecords);
@@ -89,7 +92,7 @@ export async function syncUSRealEstateProperties() {
         await db
           .update(properties)
           .set({
-            listingStatus: 'sold',
+            status: 'sold',
             updatedAt: new Date(),
           })
           .where(eq(properties.mlsId, dbProp.mlsId));
@@ -103,15 +106,14 @@ export async function syncUSRealEstateProperties() {
     const duration = (endTime.getTime() - startTime.getTime()) / 1000;
 
     await db.insert(mlsSyncLog).values({
-      source: 'us-real-estate',
-      syncType: 'full',
-      status: errors.length > 0 ? 'completed' : 'completed',
+      syncDate: startTime,
       propertiesAdded,
       propertiesUpdated,
       propertiesRemoved,
-      errorMessage: errors.length > 0 ? errors.join('\n') : undefined,
-      startedAt: startTime,
-      completedAt: endTime,
+      totalProperties: apiProperties.length,
+      status: errors.length > 0 ? 'partial_success' : 'success',
+      errorLog: errors.length > 0 ? errors.join('\n') : null,
+      createdAt: new Date(),
     });
 
     console.log(`[US Real Estate Sync] Completed in ${duration}s`);
@@ -131,14 +133,14 @@ export async function syncUSRealEstateProperties() {
 
     // Log failed sync
     await db.insert(mlsSyncLog).values({
-      source: 'us-real-estate',
-      syncType: 'full',
-      status: 'failed',
+      syncDate: startTime,
       propertiesAdded,
       propertiesUpdated,
       propertiesRemoved,
-      errorMessage: String(error),
-      startedAt: startTime,
+      totalProperties: 0,
+      status: 'failed',
+      errorLog: String(error),
+      createdAt: new Date(),
     });
 
     throw error;
@@ -188,14 +190,17 @@ export async function syncCityProperties(city: string, state: string = 'FL') {
           .insert(properties)
           .values({
             ...mappedProperty,
+            createdAt: new Date(),
+            updatedAt: new Date(),
           })
           .$returningId();
 
         if (mappedProperty.images && mappedProperty.images.length > 0) {
-          const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
+          const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
             propertyId: inserted.id,
             imageUrl: url,
-            order: index + 1,
+            displayOrder: index + 1,
+            createdAt: new Date(),
           }));
 
           await db.insert(propertyImages).values(imageRecords);

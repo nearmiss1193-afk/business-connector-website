@@ -58,15 +58,18 @@ export async function syncRealtyInUSProperties() {
             .insert(properties)
             .values({
               ...mappedProperty,
+              createdAt: new Date(),
+              updatedAt: new Date(),
             })
             .$returningId();
 
           // Insert property images
           if (mappedProperty.images && mappedProperty.images.length > 0) {
-            const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
+            const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
               propertyId: inserted.id,
               imageUrl: url,
-              order: index + 1,
+              displayOrder: index + 1,
+              createdAt: new Date(),
             }));
 
             await db.insert(propertyImages).values(imageRecords);
@@ -89,7 +92,7 @@ export async function syncRealtyInUSProperties() {
         await db
           .update(properties)
           .set({
-            listingStatus: 'sold',
+            status: 'sold',
             updatedAt: new Date(),
           })
           .where(eq(properties.mlsId, dbProp.mlsId));
@@ -197,14 +200,17 @@ export async function syncCityProperties(city: string, zipCode: string) {
           .insert(properties)
           .values({
             ...mappedProperty,
+            createdAt: new Date(),
+            updatedAt: new Date(),
           })
           .$returningId();
 
         if (mappedProperty.images && mappedProperty.images.length > 0) {
-          const imageRecords = mappedProperty.images.slice(0, 20).map((url: any, index: any) => ({
+          const imageRecords = mappedProperty.images.slice(0, 20).map((url, index) => ({
             propertyId: inserted.id,
             imageUrl: url,
-            order: index + 1,
+            displayOrder: index + 1,
+            createdAt: new Date(),
           }));
 
           await db.insert(propertyImages).values(imageRecords);

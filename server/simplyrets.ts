@@ -171,41 +171,42 @@ export function mapSimplyRETSProperty(srProperty: SimplyRETSProperty) {
     city: srProperty.address.city,
     state: srProperty.address.state,
     zipCode: srProperty.address.postalCode,
-    latitude: srProperty.geo.lat?.toString() || null,
-    longitude: srProperty.geo.lng?.toString() || null,
-    price: srProperty.listPrice.toString(),
+    latitude: srProperty.geo.lat,
+    longitude: srProperty.geo.lng,
+    price: srProperty.listPrice,
     bedrooms: srProperty.property.bedrooms,
-    bathrooms: totalBaths.toString(),
-    sqft: srProperty.property.area,
+    bathrooms: totalBaths,
+    squareFeet: srProperty.property.area,
     lotSize: srProperty.property.lotSize || null,
     yearBuilt: srProperty.property.yearBuilt || null,
-    propertyType: mapPropertyTypeToEnum(srProperty.property.type),
-    listingStatus: mapStatus(srProperty.mls.status),
+    propertyType: mapPropertyType(srProperty.property.type),
     description: srProperty.remarks || 'Stunning property',
-    features: JSON.stringify(buildFeaturesList(srProperty)),
-    amenities: JSON.stringify([]),
-    virtualTourUrl: srProperty.virtualTourUrl || null,
-    listingDate: new Date(srProperty.listDate),
-    hoaFee: srProperty.association?.fee ? srProperty.association.fee.toString() : null,
-    hoaFrequency: srProperty.association?.frequency || null,
-    source: 'simplyrets',
+    features: buildFeaturesList(srProperty),
     images: srProperty.photos || [],
+    virtualTourUrl: srProperty.virtualTourUrl || null,
+    status: mapStatus(srProperty.mls.status),
+    listingDate: new Date(srProperty.listDate),
+    daysOnMarket: srProperty.mls.daysOnMarket || 0,
+    hoaFee: srProperty.association?.fee || null,
+    hoaFrequency: srProperty.association?.frequency || null,
+    parking: srProperty.property.parking?.spaces || null,
+    parkingDescription: srProperty.property.parking?.description || null,
   };
 }
 
 /**
  * Map SimplyRETS property type to our enum
  */
-function mapPropertyTypeToEnum(type: string): 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other' {
-  const typeMap: Record<string, 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other'> = {
-    'RES': 'single_family',
-    'CND': 'condo',
-    'TWN': 'townhouse',
-    'MFH': 'multi_family',
-    'LOT': 'land',
-    'COM': 'commercial',
+function mapPropertyType(type: string): string {
+  const typeMap: Record<string, string> = {
+    'RES': 'Single Family',
+    'CND': 'Condo',
+    'TWN': 'Townhouse',
+    'MFH': 'Multi-Family',
+    'LOT': 'Land',
+    'COM': 'Commercial',
   };
-  return typeMap[type] || 'other';
+  return typeMap[type] || 'Single Family';
 }
 
 /**

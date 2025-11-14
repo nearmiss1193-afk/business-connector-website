@@ -26,7 +26,7 @@ export const adminAgentAdsRouter = router({
       const db = await getDb();
       if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database unavailable' });
 
-      const conditions: any[] = [];
+      const conditions = [];
       if (input.status && input.status !== 'all') {
         conditions.push(eq(agentAds.status, input.status));
       }
@@ -179,7 +179,7 @@ export const adminAgentAdsRouter = router({
       const db = await getDb();
       if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database unavailable' });
 
-      const conditions: any[] = [];
+      const conditions = [];
       if (input.status && input.status !== 'all') {
         conditions.push(eq(adInquiries.status, input.status));
       }
@@ -225,7 +225,7 @@ export const adminAgentAdsRouter = router({
       const db = await getDb();
       if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database unavailable' });
 
-      const conditions: any[] = [];
+      const conditions = [];
       if (input.adId) {
         conditions.push(eq(adClicks.adId, input.adId));
       }

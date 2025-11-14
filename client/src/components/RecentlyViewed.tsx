@@ -14,10 +14,10 @@ interface RecentlyViewedProperty {
   address: string;
   city: string;
   state: string;
-  price: string | null;
+  price: string;
   bedrooms: number;
   bathrooms: number;
-  sqft: string | null;
+  sqft: string;
   primaryImage: string | null;
   viewedAt: number;
 }
@@ -156,10 +156,10 @@ export default function RecentlyViewed() {
                         style: 'currency',
                         currency: 'USD',
                         maximumFractionDigits: 0,
-                      }).format(parseFloat(property.price || '0'))}
+                      }).format(parseFloat(property.price))}
                     </div>
                     <div className="text-sm text-gray-600 mb-2">
-                      {property.bedrooms} bd • {property.bathrooms} ba • {new Intl.NumberFormat('en-US').format(parseFloat(property.sqft || '0'))} sqft
+                      {property.bedrooms} bd • {property.bathrooms} ba • {new Intl.NumberFormat('en-US').format(parseFloat(property.sqft))} sqft
                     </div>
                     <div className="text-sm text-gray-700 truncate">
                       {property.address}

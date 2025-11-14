@@ -2,9 +2,6 @@ import { z } from 'zod';
 import { publicProcedure, protectedProcedure, router } from '../_core/trpc';
 import { syncMLSData, getLastSyncStatus } from '../mls-sync';
 import { testConnection } from '../simplyrets';
-import { desc } from 'drizzle-orm';
-import { mlsSyncLog } from '../../drizzle/schema-properties';
-import { getDb } from '../db';
 
 /**
  * MLS Management Router
@@ -60,15 +57,10 @@ export const mlsRouter = router({
         return [];
       }
 
-      const db_ = await getDb();
-      if (!db_) {
-        return [];
-      }
-
-      const logs = await db_
+      const logs = await db
         .select()
         .from(mlsSyncLog)
-        .orderBy(desc(mlsSyncLog.startedAt))
+        .orderBy(mlsSyncLog.syncDate)
         .limit(input?.limit || 10);
 
       return logs;

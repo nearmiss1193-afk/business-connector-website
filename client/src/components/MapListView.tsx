@@ -11,17 +11,16 @@ interface Property {
   city: string;
   state: string;
   zipCode: string;
-  price?: string | null;
-  bedrooms?: number;
-  bathrooms?: string | number | null;
-  sqft?: number | string | null;
-  propertyType?: string;
-  listingStatus?: string;
-  primaryImage?: string | null;
-  latitude?: string | number | null;
-  longitude?: string | number | null;
-  mlsId?: string | null;
-  [key: string]: any;
+  price: string;
+  bedrooms: number;
+  bathrooms: string;
+  sqft: string;
+  propertyType: string;
+  listingStatus: string;
+  primaryImage: string | null;
+  latitude: string | null;
+  longitude: string | null;
+  mlsId: string | null;
 }
 
 interface MapListViewProps {
@@ -60,19 +59,19 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
     properties.forEach(property => {
       if (!property.latitude || !property.longitude) return;
 
-      const lat = typeof property.latitude === 'string' ? parseFloat(property.latitude) : (property.latitude || 0);
-      const lng = typeof property.longitude === 'string' ? parseFloat(property.longitude) : (property.longitude || 0);
-      const position = { lat, lng } as google.maps.LatLngLiteral;
+      const lat = parseFloat(property.latitude);
+      const lng = parseFloat(property.longitude);
+      const position = { lat, lng };
 
       // Create custom marker with price label
       const priceLabel = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         maximumFractionDigits: 0,
-      }).format(parseFloat(String(property.price || '0')));
+      }).format(parseFloat(property.price));
 
       const marker = new google.maps.Marker({
-        position: position as google.maps.LatLngLiteral,
+        position,
         map,
         title: property.address,
         label: {
@@ -106,7 +105,7 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
           <div style="padding: 8px; max-width: 250px;">
             ${property.primaryImage ? `<img src="${property.primaryImage}" alt="${property.address}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />` : ''}
             <div style="font-weight: bold; font-size: 18px; color: #1f2937; margin-bottom: 4px;">${priceLabel}</div>
-            <div style="font-size: 14px; color: #6b7280; margin-bottom: 4px;">${property.bedrooms || 0} bd | ${property.bathrooms || 0} ba | ${new Intl.NumberFormat('en-US').format(parseFloat(String(property.sqft || '0')))} sqft</div>
+            <div style="font-size: 14px; color: #6b7280; margin-bottom: 4px;">${property.bedrooms} bd | ${property.bathrooms} ba | ${new Intl.NumberFormat('en-US').format(parseFloat(property.sqft))} sqft</div>
             <div style="font-size: 13px; color: #9ca3af;">${property.address}</div>
             <div style="font-size: 13px; color: #9ca3af;">${property.city}, ${property.state} ${property.zipCode}</div>
             <a href="/properties/${property.id}" style="display: inline-block; margin-top: 8px; color: #2563eb; text-decoration: none; font-size: 13px; font-weight: 600;">View Details →</a>
@@ -311,7 +310,7 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                           <div className="absolute top-2 left-2 flex flex-col gap-1">
                             {/* Status Badges */}
                             {(() => {
-                              const badges: any[] = [];
+                              const badges = [];
                               // New listing (within 7 days)
                               if (property.listingDate) {
                                 const daysSinceListing = Math.floor(
@@ -361,10 +360,10 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                                 style: 'currency',
                                 currency: 'USD',
                                 maximumFractionDigits: 0,
-                              }).format(parseFloat(String(property.price || '0')))}
+                              }).format(parseFloat(property.price))}
                             </div>
-                              <span className="text-xs text-gray-500 uppercase tracking-wide">
-                              {property.listingStatus || 'N/A'}
+                            <span className="text-xs text-gray-500 uppercase tracking-wide">
+                              {property.listingStatus}
                             </span>
                           </div>
 
@@ -380,7 +379,7 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                             <div className="flex items-center gap-1">
                               <Maximize className="w-4 h-4" />
                               <span className="text-sm font-medium">
-                                {new Intl.NumberFormat('en-US').format(parseFloat(String(property.sqft || '0')))} sqft
+                                {new Intl.NumberFormat('en-US').format(parseFloat(property.sqft))} sqft
                               </span>
                             </div>
                           </div>

@@ -92,6 +92,8 @@ export async function syncMLSData(options?: {
           // Insert new property
           await db.insert(properties).values({
             ...mappedProperty,
+            createdAt: new Date(),
+            updatedAt: new Date(),
           });
           
           result.added++;
@@ -108,8 +110,8 @@ export async function syncMLSData(options?: {
     if (activeMlsIds.length > 0) {
       const offMarketResult = await db
         .update(properties)
-        .set({ listingStatus: 'off_market', updatedAt: new Date() })
-        .where(eq(properties.listingStatus, 'active'));
+        .set({ status: 'off_market', updatedAt: new Date() })
+        .where(eq(properties.status, 'active'));
       
       // Count how many were marked off-market
       // Note: This is a simplified approach. In production, you'd want to be more selective
@@ -167,7 +169,7 @@ export async function getLastSyncStatus() {
   const logs = await db
     .select()
     .from(mlsSyncLog)
-    .orderBy(mlsSyncLog.startedAt)
+    .orderBy(mlsSyncLog.syncDate)
     .limit(1);
 
   return logs.length > 0 ? logs[0] : null;

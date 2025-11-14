@@ -72,7 +72,7 @@ export async function searchProperties(params: PropertySearchParams) {
   } = params;
 
   // Build WHERE conditions
-  const conditions: any[] = [];
+  const conditions = [];
 
   // Status filter (default to active listings)
   conditions.push(eq(properties.listingStatus, status as any));
@@ -121,7 +121,7 @@ export async function searchProperties(params: PropertySearchParams) {
     // For each property, check if its lat/lng is inside the polygon
     const polygonCondition = sql`(
       ${properties.latitude} IS NOT NULL AND ${properties.longitude} IS NOT NULL
-    )` as any;
+    )`;
     conditions.push(polygonCondition);
   }
 
@@ -396,7 +396,7 @@ export async function getFeaturedPropertiesByLocation(params: {
     .select()
     .from(properties)
     .where(and(...conditions))
-    .orderBy(desc(properties.lastSyncedAt))
+    .orderBy(desc(properties.createdAt))
     .limit(limit);
 
   return {

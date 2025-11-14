@@ -13,11 +13,11 @@ const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY || '';
 /**
  * Normalize property type from API to database enum
  */
-function normalizePropertyType(apiType: string): 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other' {
+function normalizePropertyType(apiType: string): string {
   const type = (apiType || '').toLowerCase().trim();
   
   // Map API property types to database enum values
-  const typeMap: Record<string, 'single_family' | 'condo' | 'townhouse' | 'multi_family' | 'land' | 'commercial' | 'other'> = {
+  const typeMap: Record<string, string> = {
     'single_family': 'single_family',
     'single family': 'single_family',
     'single-family': 'single_family',
@@ -177,23 +177,26 @@ export function mapRealtyInUSPropertyToDb(prop: any) {
     price: prop.list_price || 0,
     bedrooms: description.beds || 0,
     bathrooms: description.baths || 0,
-    sqft: description.sqft || 0,
+    squareFeet: description.sqft || 0,
     lotSize: description.lot_sqft || null,
     yearBuilt: description.year_built || null,
     propertyType: normalizePropertyType(description.type || 'single_family'),
-    listingStatus: 'active' as const,
+    status: 'active',
     description: description.text || '',
     features: JSON.stringify(prop.tags || []),
-    amenities: JSON.stringify([]),
-    virtualTourUrl: prop.virtual_tours?.[0]?.href || null,
-    latitude: location_data.coordinate?.lat?.toString() || null,
-    longitude: location_data.coordinate?.lon?.toString() || null,
-    listingDate: prop.list_date ? new Date(prop.list_date) : new Date(),
-    hoaFee: null,
-    listingAgentName: null,
-    listingAgentEmail: null,
-    listingAgentPhone: null,
-    source: 'realty_in_us',
     images: prop.primary_photo?.href ? [prop.primary_photo.href] : [],
+    virtualTourUrl: prop.virtual_tours?.[0]?.href || null,
+    latitude: location_data.coordinate?.lat || null,
+    longitude: location_data.coordinate?.lon || null,
+    listingDate: prop.list_date ? new Date(prop.list_date) : new Date(),
+    daysOnMarket: prop.days_on_mls || 0,
+    mlsNumber: prop.mls?.id || null,
+    listingUrl: prop.href || null,
+    photoCount: prop.photo_count || 0,
+    hoaFee: null,
+    agentName: null,
+    agentEmail: null,
+    agentPhone: null,
+    source: 'realty_in_us',
   };
 }
