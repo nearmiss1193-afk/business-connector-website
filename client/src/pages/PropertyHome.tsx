@@ -6,6 +6,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
+import { APP_LOGO, APP_TITLE } from '@/const';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,7 +22,7 @@ import {
   Ruler,
   Heart,
   TrendingUp,
-  Home,
+  Home as HomeIcon,
   DollarSign,
   Users,
   ArrowRight,
