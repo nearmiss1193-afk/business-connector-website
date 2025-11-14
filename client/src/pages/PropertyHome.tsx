@@ -619,7 +619,7 @@ export default function PropertyHome() {
                     )}
                     {property.hasVirtualTour && (
                       <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-                        <Home className="w-3 h-3" />
+                        <HomeIcon className="w-3 h-3" />
                         3D Tour
                       </span>
                     )}
@@ -786,7 +786,7 @@ export default function PropertyHome() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Home className="w-6 h-6" />
+                <HomeIcon className="w-6 h-6" />
                 <span className="text-xl font-bold">Central Florida Homes</span>
               </div>
               <p className="text-gray-400">
