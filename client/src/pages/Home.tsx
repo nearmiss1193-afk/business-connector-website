@@ -48,7 +48,7 @@ export default function Home() {
         <div className="container">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <Badge className="mx-auto" variant="secondary">
-              Stop Competing for Shared Zillow Leads
+              Get Exclusive Leads Your Competition Can't Access
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
               Get <span className="text-primary">Exclusive Buyer Leads</span> That Only You Can Close
@@ -78,7 +78,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-accent" />
-                <span>60-80% Cheaper Than Zillow</span>
+                <span>60-80% Lower Cost</span>
               </div>
             </div>
           </div>
