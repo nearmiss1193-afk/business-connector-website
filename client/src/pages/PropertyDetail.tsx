@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRoute, Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
-import { addToRecentlyViewed } from '@/components/RecentlyViewed';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import NeighborhoodInfo from '@/components/NeighborhoodInfo';
 import PropertyMap from '@/components/PropertyMap';
@@ -35,23 +34,6 @@ export default function PropertyDetail() {
     { id: propertyId },
     { enabled: !!propertyId }
   );
-
-  // Track property view in recently viewed
-  useEffect(() => {
-    if (property) {
-      addToRecentlyViewed({
-        id: property.id,
-        address: property.address,
-        city: property.city,
-        state: property.state,
-        price: property.price,
-        bedrooms: property.bedrooms,
-        bathrooms: property.bathrooms,
-        sqft: property.sqft,
-        primaryImage: property.primaryImage,
-      });
-    }
-  }, [property]);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showLightbox, setShowLightbox] = useState(false);

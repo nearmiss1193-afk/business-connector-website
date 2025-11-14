@@ -31,7 +31,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { trpc } from '@/lib/trpc';
 import BuyerRegistrationModal from '@/components/BuyerRegistrationModal';
-import RecentlyViewed from '@/components/RecentlyViewed';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function PropertiesNew() {
@@ -374,9 +373,6 @@ export default function PropertiesNew() {
           </div>
         )}
       </div>
-
-      {/* Recently Viewed Section */}
-      <RecentlyViewed />
 
       {/* Buyer Registration Modal */}
       <BuyerRegistrationModal

@@ -26,8 +26,5 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 // Property listings tables (for centralfloridahomes.com)
-export * from './schema-properties';
-export * from './schema-property-reports';
+export * from './schema-properties';export * from './schema-property-reports';
 export * from './schema-agent-ads';
-// Revenue system tables (agent subscriptions, leads, payments)
-export * from './schema-revenue';

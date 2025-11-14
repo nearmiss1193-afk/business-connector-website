@@ -6,7 +6,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
-import { APP_LOGO } from '@/const';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -346,17 +345,7 @@ export default function PropertyHome() {
                     <Button
                       onClick={() => {
                         setShowFilters(false);
-                        // Build query params from filters
-                        const params = new URLSearchParams();
-                        if (searchQuery) params.set('location', searchQuery);
-                        if (priceMin) params.set('minPrice', priceMin);
-                        if (priceMax) params.set('maxPrice', priceMax);
-                        if (beds !== 'any') params.set('beds', beds);
-                        if (baths !== 'any') params.set('baths', baths);
-                        if (homeTypes.length > 0) params.set('types', homeTypes.join(','));
-                        if (drawnPolygon) params.set('polygon', JSON.stringify(drawnPolygon));
-                        // Navigate to properties page with filters
-                        setLocation(`/properties?${params.toString()}`);
+                        // Apply filters logic here
                       }}
                       className="bg-blue-600 hover:bg-blue-700 text-white"
                     >

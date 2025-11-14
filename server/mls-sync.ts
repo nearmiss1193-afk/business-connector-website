@@ -45,14 +45,6 @@ export async function syncMLSData(options?: {
   try {
     console.log('[MLS Sync] Starting sync...');
     
-    // Log sync start
-    await db.insert(mlsSyncLog).values({
-      source: 'simplyrets',
-      syncType: 'incremental',
-      status: 'started',
-      startedAt: new Date(),
-    });
-    
     // Test connection first
     const connectionTest = await testConnection();
     if (!connectionTest.success) {
