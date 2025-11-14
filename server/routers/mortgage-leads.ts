@@ -38,7 +38,7 @@ export const mortgageLeadsRouter = router({
 
       return {
         success: result.success,
-        message: result.success ? 'Mortgage lead submitted successfully' : 'Lead submitted but GoHighLevel integration not available',
+        message: 'Mortgage lead submitted successfully',
       };
     }),
 });
