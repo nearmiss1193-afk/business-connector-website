@@ -202,6 +202,33 @@ async function insertProperty(property, images) {
       
       // Clear old images before adding new ones
       await db.query(`DELETE FROM property_images WHERE property_id = ?`, [propertyId]);
+      
+      // Insert ALL images for this property with duplicate prevention
+      if (images.length > 0) {
+        for (let i = 0; i < images.length; i++) {
+          // Handle both string URLs and image objects with url property
+          const imageUrl = typeof images[i] === 'string' ? images[i] : images[i]?.url || images[i]?.src;
+          if (imageUrl) {
+            try {
+              // Check if this exact image URL is already used by a DIFFERENT property
+              const [existingImage] = await db.query(
+                `SELECT property_id FROM property_images WHERE image_url = ? AND property_id != ? LIMIT 1`,
+                [imageUrl, propertyId]
+              );
+              
+              // Only insert if this image is not used by another property
+              if (existingImage.length === 0) {
+                await db.query(
+                  `INSERT INTO property_images (property_id, image_url, \`order\`) VALUES (?, ?, ?)`,
+                  [propertyId, imageUrl, i]
+                );
+              }
+            } catch (imgError) {
+              console.warn(`  ⚠️  Error inserting image for property ${propertyId}: ${imgError.message}`);
+            }
+          }
+        }
+      }
     } else {
       // Insert new property
       const [result] = await db.query(
@@ -228,16 +255,29 @@ async function insertProperty(property, images) {
         ]
       );
 
-      // Insert images (extract URL from image objects)
+      // Insert ALL images for this property with duplicate prevention
       if (images.length > 0) {
         for (let i = 0; i < images.length; i++) {
           // Handle both string URLs and image objects with url property
           const imageUrl = typeof images[i] === 'string' ? images[i] : images[i]?.url || images[i]?.src;
           if (imageUrl) {
-            await db.query(
-              `INSERT INTO property_images (property_id, image_url, \`order\`) VALUES (?, ?, ?)`,
-              [result.insertId, imageUrl, i]
-            );
+            try {
+              // Check if this exact image URL is already used by a DIFFERENT property
+              const [existingImage] = await db.query(
+                `SELECT property_id FROM property_images WHERE image_url = ? AND property_id != ? LIMIT 1`,
+                [imageUrl, result.insertId]
+              );
+              
+              // Only insert if this image is not used by another property
+              if (existingImage.length === 0) {
+                await db.query(
+                  `INSERT INTO property_images (property_id, image_url, \`order\`) VALUES (?, ?, ?)`,
+                  [result.insertId, imageUrl, i]
+                );
+              }
+            } catch (imgError) {
+              console.warn(`  ⚠️  Error inserting image for property ${result.insertId}: ${imgError.message}`);
+            }
           }
         }
       }
