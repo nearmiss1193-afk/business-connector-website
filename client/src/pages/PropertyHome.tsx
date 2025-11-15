@@ -618,7 +618,7 @@ export default function PropertyHome() {
                 {/* Property Image */}
                 <div className="relative h-56 bg-gray-100 overflow-hidden">
                   <img
-                    src={property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
+                    src={property.firstImage || property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
                     alt={property.address}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
