@@ -709,12 +709,16 @@ export default function PropertyHome() {
               <p className="text-gray-600 mb-6 leading-relaxed">
                 A real estate agent can provide you with a clear breakdown of costs so that you can avoid surprise expenses.
               </p>
-              <Button 
-                variant="outline" 
-                className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold"
-              >
-                Find a local agent
-              </Button>
+              <Link href="/contact">
+                <a>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold"
+                  >
+                    Find a local agent
+                  </Button>
+                </a>
+              </Link>
             </Card>
 
             {/* Finance a home */}
@@ -728,7 +732,7 @@ export default function PropertyHome() {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Finance a home</h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Zillow Home Loans can get you pre-approved so you're ready to make an offer quickly when you find the right home.
+                looking to get pre-approved so you're ready to make an offer quickly when you find the right home?
               </p>
               <Button 
                 variant="outline" 
@@ -756,6 +760,7 @@ export default function PropertyHome() {
               <Button 
                 variant="outline" 
                 className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold"
+                onClick={() => window.location.href = '/rentals'}
               >
                 Find rentals
               </Button>

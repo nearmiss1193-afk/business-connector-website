@@ -22,6 +22,8 @@ import Zestimates from "./pages/Zestimates";
 import About from "./pages/About";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
+import Rentals from "./pages/Rentals";
+import Sell from "./pages/Sell";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -45,6 +47,8 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/careers" component={Careers} />
       <Route path="/contact" component={Contact} />
+      <Route path="/rentals" component={Rentals} />
+      <Route path="/sell" component={Sell} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

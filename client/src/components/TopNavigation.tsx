@@ -11,8 +11,8 @@ export default function TopNavigation() {
 
   const navItems = [
     { label: "Buy", href: "/properties", active: location === "/properties" },
-    { label: "Rent", href: "#", active: false },
-    { label: "Sell", href: "#", active: false },
+    { label: "Rent", href: "/rentals", active: location === "/rentals" },
+    { label: "Sell", href: "/sell", active: location === "/sell" },
     { label: "Find an agent", href: "/contact", active: location === "/contact" },
     { label: "Advertise", href: "/advertise", active: location === "/advertise" },
     { label: "Get help", href: "/contact", active: location === "/contact" },
@@ -47,7 +47,7 @@ export default function TopNavigation() {
                     }`}
                   >
                     {item.label}
-                    <ChevronDown className="w-4 h-4" />
+                    {item.hasDropdown && <ChevronDown className="w-4 h-4" />}
                   </button>
                   
                   {/* Dropdown Menu */}
