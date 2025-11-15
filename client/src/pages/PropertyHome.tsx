@@ -504,12 +504,13 @@ export default function PropertyHome() {
                   </div>
                 </div>
                 
-                <Button 
-                  onClick={() => setShowMortgageModal(true)}
-                  className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold"
-                >
-                  Let's get started
-                </Button>
+                <Link href="/mortgage-calculator">
+                  <Button 
+                    className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold"
+                  >
+                    Let's get started
+                  </Button>
+                </Link>
               </div>
               
               {/* Placeholder property cards with "Within BuyAbility" badge */}
