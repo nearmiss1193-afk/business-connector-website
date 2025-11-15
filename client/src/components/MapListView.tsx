@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
 import { MapView } from '@/components/Map';
+import NoPictureAvailable from '@/components/NoPictureAvailable';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Bed, Bath, Maximize, MapIcon, List, LayoutGrid } from 'lucide-react';
@@ -300,16 +301,20 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                     >
                       <div className="flex">
                         {/* Property Image */}
-                        <div className="w-64 h-48 bg-gray-100 flex-shrink-0 relative">
-                          <img
-                            src={(property as any).firstImage || property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
-                            alt={property.address}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              const img = e.target as HTMLImageElement;
-                              img.src = '/properties/pQT9duRUSVYo.jpg';
-                            }}
-                          />
+                        <div className="w-64 h-48 bg-gray-900 flex-shrink-0 relative">
+                          {(property as any).firstImage || property.primaryImage ? (
+                            <img
+                              src={(property as any).firstImage || property.primaryImage}
+                              alt={property.address}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                const img = e.target as HTMLImageElement;
+                                img.style.display = 'none';
+                              }}
+                            />
+                          ) : (
+                            <NoPictureAvailable size="md" />
+                          )}
                           {/* Status & Feature Badges */}
                           <div className="absolute top-2 left-2 flex flex-col gap-1">
                             {/* Status Badges */}

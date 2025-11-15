@@ -184,9 +184,6 @@ export async function searchProperties(params: PropertySearchParams) {
     })
   );
   
-  // Filter out properties without real images - only show properties with actual images
-  const propertiesWithRealImages = resultsWithImages.filter(property => property.firstImage !== null);
-
   // Count properties with virtual tours
   const virtualToursResult = await db
     .select({ count: sql<number>`count(*)` })
@@ -196,12 +193,12 @@ export async function searchProperties(params: PropertySearchParams) {
   const virtualTours = Number(virtualToursResult[0]?.count || 0);
 
   return {
-    items: propertiesWithRealImages as any,
-    total: propertiesWithRealImages.length,
+    items: resultsWithImages as any,
+    total: total,
     virtualTours,
     page,
     limit,
-    totalPages: Math.ceil(propertiesWithRealImages.length / limit),
+    totalPages: Math.ceil(total / limit),
   };
 }
 

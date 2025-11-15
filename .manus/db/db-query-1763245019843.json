@@ -1,0 +1,26 @@
+{
+  "query": "SELECT city, COUNT(*) as count FROM properties WHERE city IN ('Lakeland', 'Clermont', 'Tampa', 'Orlando') GROUP BY city ORDER BY count DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT city, COUNT(*) as count FROM properties WHERE city IN ('Lakeland', 'Clermont', 'Tampa', 'Orlando') GROUP BY city ORDER BY count DESC;",
+  "rows": [
+    {
+      "city": "Orlando",
+      "count": "5887"
+    },
+    {
+      "city": "Tampa",
+      "count": "5438"
+    },
+    {
+      "city": "Lakeland",
+      "count": "2472"
+    },
+    {
+      "city": "Clermont",
+      "count": "1076"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\tcount\nOrlando\t5887\nTampa\t5438\nLakeland\t2472\nClermont\t1076\n",
+  "stderr": "",
+  "execution_time_ms": 58
+}

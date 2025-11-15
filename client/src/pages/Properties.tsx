@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera, Map, List } from 'lucide-react';
 import PropertyMapView from '@/components/PropertyMapView';
 import MapListView from '@/components/MapListView';
+import NoPictureAvailable from '@/components/NoPictureAvailable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -81,7 +82,7 @@ export default function Properties() {
         <div className="container py-12">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              🏠 Central Florida Homes
+               Central Florida Homes
             </h1>
             <p className="text-xl mb-8">
               Search {properties?.total.toLocaleString() || '7,948'} Properties in Tampa, Orlando & Beyond
@@ -99,7 +100,7 @@ export default function Properties() {
                     onChange={(e) => setSearchLocation(e.target.value)}
                     className="pl-10"
                   />
-                </div>
+                {
 
                 {/* Price Range */}
                 <div className="grid grid-cols-2 gap-2">
@@ -115,7 +116,7 @@ export default function Properties() {
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(e.target.value)}
                   />
-                </div>
+                {
 
                 {/* Bedrooms */}
                 <Select value={bedrooms} onValueChange={setBedrooms}>
@@ -145,7 +146,7 @@ export default function Properties() {
                     <SelectItem value="4">4+ Baths</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              {
 
               {/* Property Type & Search Button */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -167,11 +168,11 @@ export default function Properties() {
                   <Search className="mr-2 h-5 w-5" />
                   Search Properties
                 </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              {
+            {
+          {
+        {
+      {
 
       {/* Results */}
       <div className="container py-8">
@@ -179,14 +180,14 @@ export default function Properties() {
         <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
           <div className="text-lg font-semibold text-gray-700">
             {properties?.total.toLocaleString() || 0} Properties Found
-          </div>
+          {
           <div className="flex gap-2 items-center">
             <Badge variant="secondary" className="text-sm">
               <Camera className="mr-1 h-4 w-4" />
               {properties?.virtualTours.toLocaleString() || 0} Virtual Tours
             </Badge>
-          </div>
-        </div>
+          {
+        {
 
         {/* Property Grid or Map View */}
         {isLoading ? (
@@ -201,7 +202,7 @@ export default function Properties() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          {
         ) : (
           <div className="h-[calc(100vh-300px)] min-h-[600px] rounded-lg overflow-hidden shadow-lg border border-gray-200">
             <MapListView
@@ -219,7 +220,7 @@ export default function Properties() {
                 }
               }}
             />
-          </div>
+          {
         )}
         
         {/* Hidden for now - keeping old grid code for reference */}
@@ -242,7 +243,7 @@ export default function Properties() {
               }}
             >
               {/* Property Image */}
-              <div className="relative h-48 bg-gradient-to-br from-blue-400 to-purple-500 overflow-hidden">
+              <div className="relative h-48 bg-gray-900 overflow-hidden">
                 {(property as any).firstImage || property.primaryImage ? (
                   <img
                     src={(property as any).firstImage || property.primaryImage}
@@ -250,13 +251,11 @@ export default function Properties() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     onError={(e) => {
                       const img = e.target as HTMLImageElement;
-                      img.src = '/properties/pQT9duRUSVYo.jpg';
+                      img.style.display = 'none';
                     }}
                   />
                 ) : (
-                  <div className="flex items-center justify-center h-full text-white text-6xl">
-                    🏠
-                  </div>
+                  <NoPictureAvailable size="md" />
                 )}
 
                 {/* Favorite Button */}
@@ -271,62 +270,62 @@ export default function Properties() {
                       <Camera className="mr-1 h-3 w-3" />
                       Virtual Tour
                     </Badge>
-                  </div>
+                  {
                 )}
-              </div>
+              {
 
               {/* Property Details */}
               <CardContent className="p-4">
                 {/* Price */}
                 <div className="text-2xl font-bold text-gray-900 mb-2">
                   {formatPrice(property.price)}
-                </div>
+                {
 
                 {/* Specs */}
                 <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
                   <div className="flex items-center gap-1">
                     <Bed className="h-4 w-4" />
                     <span>{property.bedrooms} beds</span>
-                  </div>
+                  {
                   <div className="flex items-center gap-1">
                     <Bath className="h-4 w-4" />
                     <span>{property.bathrooms} baths</span>
-                  </div>
+                  {
                   {property.sqft && (
                     <div className="flex items-center gap-1">
                       <Ruler className="h-4 w-4" />
                       <span>{property.sqft.toLocaleString()} sqft</span>
-                    </div>
+                    {
                   )}
-                </div>
+                {
 
                 {/* Address */}
-                <div className="text-sm text-gray-700 mb-1">{property.address}</div>
+                <div className="text-sm text-gray-700 mb-1">{property.address}{
                 <div className="text-sm text-gray-500">
                   {property.city}, {property.state} {property.zipCode}
-                </div>
+                {
 
                 {/* Property Type */}
                 <div className="mt-3">
                   <Badge variant="outline" className="text-xs">
                     {property.propertyType.replace('_', ' ').toUpperCase()}
                   </Badge>
-                </div>
+                {
               </CardContent>
             </Card>
             ))}
-              </div>
-            </div>
+              {
+            {
 
             {/* Sidebar - Agent Banners */}
             <div className="lg:col-span-1">
               <div className="sticky top-4">
                 <AgentBanner placement="sidebar" className="mb-4" />
-              </div>
-            </div>
-          </div>
+              {
+            {
+          {
         )}
-      </div>
+      {
 
       {/* Buyer Registration Modal */}
       <BuyerRegistrationModal
@@ -336,6 +335,6 @@ export default function Properties() {
         propertyPrice={selectedProperty?.price}
         propertyId={selectedProperty?.mlsId}
       />
-    </div>
+    {
   );
 }
