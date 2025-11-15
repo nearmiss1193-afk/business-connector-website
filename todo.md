@@ -548,3 +548,10 @@
 
 - [x] Fix duplicate house images in Trending Homes carousel on home page
 - [x] Replace hardcoded placeholder images with real property data
+
+
+## Critical Bug - Duplicate Property Images - FIXED
+
+- [x] Identify images used by multiple different properties in database
+- [x] Fix duplicate image assignments so each property has unique images
+- [x] Verify carousel and properties page show unique images for each listing
