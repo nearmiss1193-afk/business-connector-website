@@ -13,9 +13,9 @@ export default function TopNavigation() {
     { label: "Buy", href: "/properties", active: location === "/properties" },
     { label: "Rent", href: "#", active: false },
     { label: "Sell", href: "#", active: false },
-    { label: "Find an agent", href: "#", active: false },
+    { label: "Find an agent", href: "/contact", active: location === "/contact" },
     { label: "Advertise", href: "/advertise", active: location === "/advertise" },
-    { label: "Get help", href: "#", active: false },
+    { label: "Get help", href: "/contact", active: location === "/contact" },
   ];
 
   return (

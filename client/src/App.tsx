@@ -21,6 +21,7 @@ import Research from "./pages/Research";
 import Zestimates from "./pages/Zestimates";
 import About from "./pages/About";
 import Careers from "./pages/Careers";
+import Contact from "./pages/Contact";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/zestimates" component={Zestimates} />
       <Route path="/about" component={About} />
       <Route path="/careers" component={Careers} />
+      <Route path="/contact" component={Contact} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
