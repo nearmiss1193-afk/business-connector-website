@@ -243,17 +243,28 @@ export default function Properties() {
               }}
             >
               {/* Property Image */}
-              <div className="relative h-48 bg-gray-900 overflow-hidden">
+              <div className="relative h-48 bg-gray-900 overflow-hidden" key={`img-${property.id}`}>
                 {(property as any).firstImage || property.primaryImage ? (
-                  <img
-                    src={(property as any).firstImage || property.primaryImage}
-                    alt={property.address}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      const img = e.target as HTMLImageElement;
-                      img.style.display = 'none';
-                    }}
-                  />
+                  <>
+                    <img
+                      key={`img-${property.id}`}
+                      src={`${(property as any).firstImage || property.primaryImage}?t=${property.id}`}
+                      alt={property.address}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      onError={(e) => {
+                        const img = e.target as HTMLImageElement;
+                        img.style.display = 'none';
+                        const parent = img.parentElement;
+                        if (parent && !parent.querySelector('[data-no-image]')) {
+                          const fallback = document.createElement('div');
+                          fallback.setAttribute('data-no-image', 'true');
+                          fallback.className = 'absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gray-900';
+                          fallback.innerHTML = '<svg class="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg><div class="text-center"><p class="text-gray-300 font-medium">No Picture Available</p><p class="text-gray-500 text-xs mt-1">Image coming soon</p></div>';
+                          parent.appendChild(fallback);
+                        }
+                      }}
+                    />
+                  </>
                 ) : (
                   <NoPictureAvailable size="md" />
                 )}
