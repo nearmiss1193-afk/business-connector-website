@@ -1,0 +1,70 @@
+{
+  "query": "SELECT city, COUNT(*) as properties, SUM(COALESCE((SELECT COUNT(*) FROM property_images WHERE property_images.property_id = properties.id), 0)) as total_images FROM properties WHERE source = 'zillow' GROUP BY city ORDER BY properties DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT city, COUNT(*) as properties, SUM(COALESCE((SELECT COUNT(*) FROM property_images WHERE property_images.property_id = properties.id), 0)) as total_images FROM properties WHERE source = 'zillow' GROUP BY city ORDER BY properties DESC;",
+  "rows": [
+    {
+      "city": "Orlando",
+      "properties": "115",
+      "total_images": "4153"
+    },
+    {
+      "city": "Tampa",
+      "properties": "60",
+      "total_images": "2591"
+    },
+    {
+      "city": "Clearwater",
+      "properties": "31",
+      "total_images": "1450"
+    },
+    {
+      "city": "Winter Park",
+      "properties": "26",
+      "total_images": "1044"
+    },
+    {
+      "city": "Lakeland",
+      "properties": "24",
+      "total_images": "1109"
+    },
+    {
+      "city": "Daytona Beach",
+      "properties": "23",
+      "total_images": "813"
+    },
+    {
+      "city": "Port Orange",
+      "properties": "21",
+      "total_images": "800"
+    },
+    {
+      "city": "NAPLES",
+      "properties": "21",
+      "total_images": "912"
+    },
+    {
+      "city": "Fort Myers",
+      "properties": "20",
+      "total_images": "742"
+    },
+    {
+      "city": "CAPE CORAL",
+      "properties": "9",
+      "total_images": "286"
+    },
+    {
+      "city": "Pt Orange",
+      "properties": "2",
+      "total_images": "47"
+    },
+    {
+      "city": "Lehigh Acres",
+      "properties": "1",
+      "total_images": "14"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\tproperties\ttotal_images\nOrlando\t115\t4153\nTampa\t60\t2591\nClearwater\t31\t1450\nWinter Park\t26\t1044\nLakeland\t24\t1109\nDaytona Beach\t23\t813\nPort Orange\t21\t800\nNAPLES\t21\t912\nFort Myers\t20\t742\nCAPE CORAL\t9\t286\nPt Orange\t2\t47\nLehigh Acres\t1\t14\n",
+  "stderr": "",
+  "execution_time_ms": 124
+}

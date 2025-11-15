@@ -234,7 +234,7 @@ async function syncCity(city) {
   let totalProperties = 0;
   let successCount = 0;
   let page = 1;
-  const maxPages = 5; // Fetch up to 5 pages per city
+  const maxPages = 999; // Fetch ALL available pages until API returns no results
 
   while (page <= maxPages) {
     console.log(`  📄 Fetching page ${page}...`);
@@ -262,8 +262,8 @@ async function syncCity(city) {
         console.log(`  ⏭️  Skipping ${property.address} (no images)`);
       }
 
-      // Rate limiting - 1 second between requests
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Rate limiting - 2 seconds between requests to avoid throttling
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     }
 
     page++;
@@ -289,8 +289,8 @@ async function main() {
     totalStats.total += stats.total;
     totalStats.success += stats.success;
 
-    // Rate limiting between cities - 2 seconds
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Rate limiting between cities - 5 seconds to avoid throttling
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 
   console.log("\n" + "=".repeat(50));
