@@ -102,7 +102,7 @@ export default function Contact() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600">Call us during business hours</p>
-              <p className="text-lg font-semibold text-blue-600 mt-2">(407) 555-0123</p>
+              <p className="text-lg font-semibold text-blue-600 mt-2">+1 863-320-3921</p>
             </CardContent>
           </Card>
 
@@ -113,7 +113,7 @@ export default function Contact() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600">Send us an email</p>
-              <p className="text-lg font-semibold text-blue-600 mt-2">info@businessconnector.com</p>
+              <p className="text-lg font-semibold text-blue-600 mt-2">danielcoffman@businessconector.com</p>
             </CardContent>
           </Card>
 
