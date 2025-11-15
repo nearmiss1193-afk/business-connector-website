@@ -243,11 +243,15 @@ export default function Properties() {
             >
               {/* Property Image */}
               <div className="relative h-48 bg-gradient-to-br from-blue-400 to-purple-500 overflow-hidden">
-                {property.primaryImage ? (
+                {(property as any).firstImage || property.primaryImage ? (
                   <img
-                    src={property.primaryImage}
+                    src={(property as any).firstImage || property.primaryImage}
                     alt={property.address}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    onError={(e) => {
+                      const img = e.target as HTMLImageElement;
+                      img.src = '/properties/pQT9duRUSVYo.jpg';
+                    }}
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full text-white text-6xl">

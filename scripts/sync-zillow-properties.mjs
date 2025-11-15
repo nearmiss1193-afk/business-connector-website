@@ -15,28 +15,58 @@ if (!RAPIDAPI_KEY) {
   process.exit(1);
 }
 
-// Central Florida cities to sync
+// Central Florida and surrounding areas - expanded list for maximum listings
 const CENTRAL_FLORIDA_CITIES = [
+  // Major Tampa Bay Area
   "Tampa, FL",
-  "Orlando, FL",
   "St. Petersburg, FL",
-  "Lakeland, FL",
   "Clearwater, FL",
+  "Largo, FL",
+  "Pinellas Park, FL",
+  "Bradenton, FL",
+  "Sarasota, FL",
+  "Lakeland, FL",
+  "Winter Haven, FL",
+  "Plant City, FL",
+  
+  // Major Orlando Area
+  "Orlando, FL",
   "Winter Park, FL",
+  "Kissimmee, FL",
+  "Altamonte Springs, FL",
+  "Sanford, FL",
+  "Deland, FL",
   "Daytona Beach, FL",
   "Port Orange, FL",
-  "Sarasota, FL",
-  "Bradenton, FL",
+  "Deltona, FL",
+  "Apopka, FL",
+  "Oviedo, FL",
+  "Longwood, FL",
+  "Casselberry, FL",
+  
+  // Southwest Florida
   "Naples, FL",
   "Fort Myers, FL",
   "Cape Coral, FL",
-  "Kissimmee, FL",
-  "Winter Haven, FL",
+  "Lehigh Acres, FL",
+  "Bonita Springs, FL",
+  "Estero, FL",
+  "Immokalee, FL",
+  
+  // Additional surrounding areas
   "Ocala, FL",
   "Leesburg, FL",
-  "Deland, FL",
-  "Sanford, FL",
-  "Altamonte Springs, FL",
+  "The Villages, FL",
+  "Eustis, FL",
+  "Tavares, FL",
+  "Wildwood, FL",
+  "Sebring, FL",
+  "Avon Park, FL",
+  "Lake Wales, FL",
+  "Bartow, FL",
+  "Arcadia, FL",
+  "Punta Gorda, FL",
+  "Port Charlotte, FL",
 ];
 
 let db;
@@ -262,8 +292,8 @@ async function syncCity(city) {
         console.log(`  ⏭️  Skipping ${property.address} (no images)`);
       }
 
-      // Rate limiting - 2 seconds between requests to avoid throttling
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Rate limiting - 1 second between requests (optimized for speed while respecting API limits)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     page++;

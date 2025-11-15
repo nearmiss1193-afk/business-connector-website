@@ -1,0 +1,22 @@
+{
+  "query": "SELECT source, COUNT(*) as count FROM properties GROUP BY source;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT source, COUNT(*) as count FROM properties GROUP BY source;",
+  "rows": [
+    {
+      "source": "sample",
+      "count": "4"
+    },
+    {
+      "source": "realty_in_us",
+      "count": "56293"
+    },
+    {
+      "source": "zillow",
+      "count": "856"
+    }
+  ],
+  "messages": [],
+  "stdout": "source\tcount\nsample\t4\nrealty_in_us\t56293\nzillow\t856\n",
+  "stderr": "",
+  "execution_time_ms": 88
+}

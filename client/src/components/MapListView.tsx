@@ -302,9 +302,13 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                         {/* Property Image */}
                         <div className="w-64 h-48 bg-gray-100 flex-shrink-0 relative">
                           <img
-                            src={property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
+                            src={(property as any).firstImage || property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
                             alt={property.address}
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const img = e.target as HTMLImageElement;
+                              img.src = '/properties/pQT9duRUSVYo.jpg';
+                            }}
                           />
                           {/* Status & Feature Badges */}
                           <div className="absolute top-2 left-2 flex flex-col gap-1">
