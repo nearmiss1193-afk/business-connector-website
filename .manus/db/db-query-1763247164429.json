@@ -1,0 +1,30 @@
+{
+  "query": "SELECT image_url, COUNT(DISTINCT property_id) as count FROM property_images GROUP BY image_url HAVING count > 1 ORDER BY count DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT image_url, COUNT(DISTINCT property_id) as count FROM property_images GROUP BY image_url HAVING count > 1 ORDER BY count DESC LIMIT 5;",
+  "rows": [
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/78c863613085fb37c1cad7278d5c7b05-cc_ft_1536.jpg",
+      "count": "34"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/95f23a731392dc6051775179937115fb-cc_ft_1536.jpg",
+      "count": "34"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/19f9612aaaa0a692f685425a58a6345c-cc_ft_1536.jpg",
+      "count": "34"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/bb9275a17abfc2103633873c13142320-cc_ft_1536.jpg",
+      "count": "34"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/4b4dac705db0c71df95ab32a457718a5-cc_ft_1536.jpg",
+      "count": "33"
+    }
+  ],
+  "messages": [],
+  "stdout": "image_url\tcount\nhttps://photos.zillowstatic.com/fp/78c863613085fb37c1cad7278d5c7b05-cc_ft_1536.jpg\t34\nhttps://photos.zillowstatic.com/fp/95f23a731392dc6051775179937115fb-cc_ft_1536.jpg\t34\nhttps://photos.zillowstatic.com/fp/19f9612aaaa0a692f685425a58a6345c-cc_ft_1536.jpg\t34\nhttps://photos.zillowstatic.com/fp/bb9275a17abfc2103633873c13142320-cc_ft_1536.jpg\t34\nhttps://photos.zillowstatic.com/fp/4b4dac705db0c71df95ab32a457718a5-cc_ft_1536.jpg\t33\n",
+  "stderr": "",
+  "execution_time_ms": 448
+}
