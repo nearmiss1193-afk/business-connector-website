@@ -167,6 +167,23 @@ export async function searchProperties(params: PropertySearchParams) {
     }).slice(0, limit); // Limit after filtering
   }
 
+  // Fetch first image for each property from property_images table
+  const resultsWithImages = await Promise.all(
+    results.map(async (property) => {
+      const images = await db
+        .select({ imageUrl: propertyImages.imageUrl })
+        .from(propertyImages)
+        .where(eq(propertyImages.propertyId, property.id))
+        .orderBy(asc(propertyImages.order))
+        .limit(1);
+      
+      return {
+        ...property,
+        firstImage: images[0]?.imageUrl || property.primaryImage || null,
+      };
+    })
+  );
+
   // Count properties with virtual tours
   const virtualToursResult = await db
     .select({ count: sql<number>`count(*)` })
@@ -176,7 +193,7 @@ export async function searchProperties(params: PropertySearchParams) {
   const virtualTours = Number(virtualToursResult[0]?.count || 0);
 
   return {
-    items: results,
+    items: resultsWithImages as any,
     total,
     virtualTours,
     page,

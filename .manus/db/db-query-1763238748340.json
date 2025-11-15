@@ -1,0 +1,16 @@
+{
+  "query": "SELECT \n  COUNT(*) as total_properties,\n  SUM(CASE WHEN primary_image IS NOT NULL AND primary_image != '' THEN 1 ELSE 0 END) as with_images,\n  COUNT(DISTINCT p.id) as unique_properties,\n  (SELECT COUNT(*) FROM property_images) as total_images\nFROM properties p;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  COUNT(*) as total_properties,\n  SUM(CASE WHEN primary_image IS NOT NULL AND primary_image != '' THEN 1 ELSE 0 END) as with_images,\n  COUNT(DISTINCT p.id) as unique_properties,\n  (SELECT COUNT(*) FROM property_images) as total_images\nFROM properties p;",
+  "rows": [
+    {
+      "total_properties": "56297",
+      "with_images": "0",
+      "unique_properties": "56297",
+      "total_images": "54329"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_properties\twith_images\tunique_properties\ttotal_images\n56297\t0\t56297\t54329\n",
+  "stderr": "",
+  "execution_time_ms": 154
+}
