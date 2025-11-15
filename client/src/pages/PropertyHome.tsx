@@ -14,6 +14,7 @@ import MortgageLeadModal from '@/components/MortgageLeadModal';
 import Footer from '@/components/Footer';
 import TopNavigation from '@/components/TopNavigation';
 import DrawMapModal from '@/components/DrawMapModal';
+import SearchLocationDropdown from '@/components/SearchLocationDropdown';
 import {
   Search,
   MapPin,
@@ -182,12 +183,15 @@ export default function PropertyHome() {
                 <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
                   <div className="flex-1 flex items-center gap-3 px-5">
                     <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                    <input
-                      type="text"
-                      placeholder="Enter an address, neighborhood, city, or ZIP code"
+                    <SearchLocationDropdown
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="flex-1 py-4 text-base outline-none text-gray-900 placeholder:text-gray-500"
+                      onChange={setSearchQuery}
+                      onSelect={() => {
+                        setTimeout(() => {
+                          const form = document.querySelector('form');
+                          if (form) form.requestSubmit();
+                        }, 100);
+                      }}
                     />
                   </div>
                   <Button

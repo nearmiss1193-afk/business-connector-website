@@ -100,4 +100,27 @@ export const propertiesRouter = router({
     .query(async ({ input }) => {
       return await getFeaturedPropertiesByLocation(input);
     }),
+
+  /**
+   * Get all available cities and zip codes for search dropdown
+   */
+  getAvailableLocations: publicProcedure
+    .query(async () => {
+      const { getDb } = await import('../db');
+      const db = await getDb();
+      if (!db) return [];
+
+      try {
+        const [locations] = await db.query(`
+          SELECT DISTINCT city, zip_code
+          FROM properties
+          WHERE city IS NOT NULL AND city != ''
+          ORDER BY city ASC
+        `);
+        return locations || [];
+      } catch (error) {
+        console.error('Error fetching available locations:', error);
+        return [];
+      }
+    }),
 });
