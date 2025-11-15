@@ -1,8 +1,0 @@
-{
-  "query": "SELECT imageUrl, COUNT(DISTINCT propertyId) as propertyCount, GROUP_CONCAT(DISTINCT propertyId SEPARATOR ',') as propertyIds FROM property_images GROUP BY imageUrl HAVING propertyCount > 1 ORDER BY propertyCount DESC LIMIT 5;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT imageUrl, COUNT(DISTINCT propertyId) as propertyCount, GROUP_CONCAT(DISTINCT propertyId SEPARATOR ',') as propertyIds FROM property_images GROUP BY imageUrl HAVING propertyCount > 1 ORDER BY propertyCount DESC LIMIT 5;",
-  "returncode": 1,
-  "logs": [
-    "ERROR 1054 (42S22) at line 1: Unknown column 'imageurl' in 'group statement'"
-  ]
-}

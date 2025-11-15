@@ -228,25 +228,16 @@ async function insertProperty(property, images) {
         ]
       );
 
-      // Insert ONLY the first image to ensure uniqueness across properties
+      // Insert images (extract URL from image objects)
       if (images.length > 0) {
-        // Handle both string URLs and image objects with url property
-        const imageUrl = typeof images[0] === 'string' ? images[0] : images[0]?.url || images[0]?.src;
-        if (imageUrl) {
-          // Check if this image is already used by another property
-          const [existingImage] = await db.query(
-            `SELECT property_id FROM property_images WHERE image_url = ? LIMIT 1`,
-            [imageUrl]
-          );
-          
-          // Only insert if this image hasn't been used before
-          if (existingImage.length === 0) {
+        for (let i = 0; i < images.length; i++) {
+          // Handle both string URLs and image objects with url property
+          const imageUrl = typeof images[i] === 'string' ? images[i] : images[i]?.url || images[i]?.src;
+          if (imageUrl) {
             await db.query(
               `INSERT INTO property_images (property_id, image_url, \`order\`) VALUES (?, ?, ?)`,
-              [result.insertId, imageUrl, 0]
+              [result.insertId, imageUrl, i]
             );
-          } else {
-            console.log(`  ⚠️  Image already used by property ${existingImage[0].property_id}, skipping`);
           }
         }
       }
