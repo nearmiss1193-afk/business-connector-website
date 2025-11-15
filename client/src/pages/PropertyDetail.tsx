@@ -9,6 +9,8 @@ import AgentBanner from '@/components/AgentBanner';
 import { ReportPropertyDialog } from '@/components/ReportPropertyDialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import ImageCarousel from '@/components/ImageCarousel';
+import LazyImage from '@/components/LazyImage';
 import {
   Heart,
   Share2,
@@ -55,6 +57,7 @@ export default function PropertyDetail() {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showLightbox, setShowLightbox] = useState(false);
+  const [showCarousel, setShowCarousel] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   if (isLoading) {

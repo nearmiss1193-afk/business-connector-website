@@ -32,6 +32,7 @@ import { Badge } from '@/components/ui/badge';
 import { trpc } from '@/lib/trpc';
 import BuyerRegistrationModal from '@/components/BuyerRegistrationModal';
 import RecentlyViewed from '@/components/RecentlyViewed';
+import LazyImage from '@/components/LazyImage';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function PropertiesNew() {
@@ -298,10 +299,10 @@ export default function PropertiesNew() {
               >
                 {/* Property Image */}
                 <div className="relative h-56 bg-gray-100 overflow-hidden">
-                  <img
+                  <LazyImage
                     src={property.firstImage || property.primaryImage || '/properties/pQT9duRUSVYo.jpg'}
                     alt={property.address}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => {
                       e.currentTarget.src = '/properties/pQT9duRUSVYo.jpg';
                     }}
@@ -318,6 +319,11 @@ export default function PropertiesNew() {
                     {property.listingStatus === 'pending' && (
                       <Badge className="bg-yellow-500 text-white shadow-lg">
                         Pending
+                      </Badge>
+                    )}
+                    {property.daysOnMarket && property.daysOnMarket <= 7 && (
+                      <Badge className="bg-red-600 text-white shadow-lg">
+                        New Listing
                       </Badge>
                     )}
                   </div>
