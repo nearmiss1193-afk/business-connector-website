@@ -14,7 +14,6 @@ export default function TopNavigation() {
     { label: "Rent", href: "#", active: false },
     { label: "Sell", href: "#", active: false },
     { label: "Find an agent", href: "#", active: false },
-    { label: "Manage rentals", href: "#", active: false },
     { label: "Advertise", href: "/advertise", active: location === "/advertise" },
     { label: "Get help", href: "#", active: false },
   ];
