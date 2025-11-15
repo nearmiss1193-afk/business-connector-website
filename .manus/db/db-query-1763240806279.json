@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(DISTINCT p.id) as properties_with_images FROM properties p INNER JOIN property_images pi ON p.id = pi.property_id WHERE p.source = 'zillow';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT COUNT(DISTINCT p.id) as properties_with_images FROM properties p INNER JOIN property_images pi ON p.id = pi.property_id WHERE p.source = 'zillow';",
+  "rows": [
+    {
+      "properties_with_images": "76"
+    }
+  ],
+  "messages": [],
+  "stdout": "properties_with_images\n76\n",
+  "stderr": "",
+  "execution_time_ms": 76
+}

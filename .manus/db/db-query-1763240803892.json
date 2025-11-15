@@ -1,0 +1,18 @@
+{
+  "query": "SELECT city, COUNT(*) as count FROM properties WHERE source = 'zillow' GROUP BY city ORDER BY count DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT city, COUNT(*) as count FROM properties WHERE source = 'zillow' GROUP BY city ORDER BY count DESC LIMIT 20;",
+  "rows": [
+    {
+      "city": "Tampa",
+      "count": "55"
+    },
+    {
+      "city": "Orlando",
+      "count": "19"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\tcount\nTampa\t55\nOrlando\t19\n",
+  "stderr": "",
+  "execution_time_ms": 72
+}
