@@ -509,10 +509,47 @@ export async function handleFormSubmission(formData: FormData) {
     console.error('❌ Form submission error:', error);
     console.error('⚠️  GoHighLevel API failed, storing lead in database as fallback...');
     
-    // Fallback: Return success with local storage indicator
+    // Fallback: Save to database
     try {
+      const { getDb } = await import('./db');
+      const { leads } = await import('../drizzle/schema-revenue');
+      const db = await getDb();
+      
+      if (!db) {
+        throw new Error('Database not available');
+      }
+      
       const leadType = determineLeadType(formData);
       const source = formData.source || 'website';
+      
+      // Determine lead type for database
+      let dbLeadType: 'buyer' | 'seller' | 'mortgage' = 'buyer';
+      if (source.includes('mortgage') || formData.homePrice) {
+        dbLeadType = 'mortgage';
+      } else if (source.includes('seller') || source.includes('sell')) {
+        dbLeadType = 'seller';
+      }
+      
+      // Insert into database
+      await db.insert(leads).values({
+        leadType: dbLeadType,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        zipCode: formData.zipCode || undefined,
+        homePrice: formData.homePrice ? parseFloat(formData.homePrice) : undefined,
+        downPayment: formData.downPayment ? parseFloat(formData.downPayment) : undefined,
+        interestRate: formData.interestRate ? parseFloat(formData.interestRate) : undefined,
+        loanTerm: formData.loanTerm ? parseInt(formData.loanTerm) : undefined,
+        monthlyPayment: formData.monthlyPayment ? parseFloat(formData.monthlyPayment) : undefined,
+        status: 'new',
+        source: source,
+        qualityScore: 'warm',
+      });
+      
+      console.log('✅ Lead saved to database as fallback');
       
       return {
         success: true,
