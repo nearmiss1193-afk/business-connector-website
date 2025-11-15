@@ -179,6 +179,7 @@ async function insertProperty(property, images) {
 
     if (existing.length > 0) {
       // Update existing property
+      const propertyId = existing[0].id;
       await db.query(
         `UPDATE properties SET 
         price = ?, bedrooms = ?, bathrooms = ?, sqft = ?, 
@@ -194,6 +195,9 @@ async function insertProperty(property, images) {
           propertyData.mlsId,
         ]
       );
+      
+      // Clear old images before adding new ones
+      await db.query(`DELETE FROM property_images WHERE property_id = ?`, [propertyId]);
     } else {
       // Insert new property
       const [result] = await db.query(
@@ -220,13 +224,17 @@ async function insertProperty(property, images) {
         ]
       );
 
-      // Insert images
+      // Insert images (extract URL from image objects)
       if (images.length > 0) {
         for (let i = 0; i < images.length; i++) {
-          await db.query(
-            `INSERT INTO property_images (property_id, image_url, \`order\`) VALUES (?, ?, ?)`,
-            [result.insertId, images[i], i]
-          );
+          // Handle both string URLs and image objects with url property
+          const imageUrl = typeof images[i] === 'string' ? images[i] : images[i]?.url || images[i]?.src;
+          if (imageUrl) {
+            await db.query(
+              `INSERT INTO property_images (property_id, image_url, \`order\`) VALUES (?, ?, ?)`,
+              [result.insertId, imageUrl, i]
+            );
+          }
         }
       }
     }

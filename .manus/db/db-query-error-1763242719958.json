@@ -1,0 +1,8 @@
+{
+  "query": "SELECT \n  p.id,\n  p.address,\n  p.city,\n  COUNT(pi.id) as image_count,\n  GROUP_CONCAT(SUBSTRING(pi.imageUrl, 1, 80) SEPARATOR ' | ') as sample_urls\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nWHERE p.source = 'zillow'\nGROUP BY p.id\nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  p.id,\n  p.address,\n  p.city,\n  COUNT(pi.id) as image_count,\n  GROUP_CONCAT(SUBSTRING(pi.imageUrl, 1, 80) SEPARATOR ' | ') as sample_urls\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nWHERE p.source = 'zillow'\nGROUP BY p.id\nLIMIT 10;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'pi.imageurl' in 'where clause'"
+  ]
+}
