@@ -530,24 +530,28 @@ export async function handleFormSubmission(formData: FormData) {
         dbLeadType = 'seller';
       }
       
-      // Insert into database
-      await db.insert(leads).values({
+      // Insert into database - build values object to avoid undefined fields
+      const leadValues: Record<string, any> = {
         leadType: dbLeadType,
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        phone: formData.phone,
-        city: formData.city,
-        zipCode: formData.zipCode || undefined,
-        homePrice: formData.homePrice ? parseFloat(formData.homePrice) : undefined,
-        downPayment: formData.downPayment ? parseFloat(formData.downPayment) : undefined,
-        interestRate: formData.interestRate ? parseFloat(formData.interestRate) : undefined,
-        loanTerm: formData.loanTerm ? parseInt(formData.loanTerm) : undefined,
-        monthlyPayment: formData.monthlyPayment ? parseFloat(formData.monthlyPayment) : undefined,
         status: 'new',
         source: source,
         qualityScore: 'warm',
-      });
+      };
+      
+      // Only add optional fields if they have values
+      if (formData.phone) leadValues.phone = formData.phone;
+      if (formData.city) leadValues.city = formData.city;
+      if (formData.zipCode) leadValues.zipCode = formData.zipCode;
+      if (formData.homePrice) leadValues.homePrice = parseFloat(formData.homePrice);
+      if (formData.downPayment) leadValues.downPayment = parseFloat(formData.downPayment);
+      if (formData.interestRate) leadValues.interestRate = parseFloat(formData.interestRate);
+      if (formData.loanTerm) leadValues.loanTerm = parseInt(formData.loanTerm);
+      if (formData.monthlyPayment) leadValues.monthlyPayment = parseFloat(formData.monthlyPayment);
+      
+      await db.insert(leads).values(leadValues as any);
       
       console.log('✅ Lead saved to database as fallback');
       
