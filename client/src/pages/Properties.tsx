@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera, Map, List } from 'lucide-react';
+import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera, Map, List, Calculator } from 'lucide-react';
 import PropertyMapView from '@/components/PropertyMapView';
 import MapListView from '@/components/MapListView';
 import NoPictureAvailable from '@/components/NoPictureAvailable';
@@ -22,6 +22,7 @@ import { Badge } from '@/components/ui/badge';
 import { trpc } from '@/lib/trpc';
 import BuyerRegistrationModal from '@/components/BuyerRegistrationModal';
 import AgentBanner from '@/components/AgentBanner';
+import MortgageCalculatorModal from '@/components/MortgageCalculatorModal';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Properties() {
@@ -35,6 +36,8 @@ export default function Properties() {
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [sessionId, setSessionId] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'map' | 'split'>('split');
+  const [showMortgageCalculator, setShowMortgageCalculator] = useState(false);
+  const [calculatorProperty, setCalculatorProperty] = useState<any>(null);
 
   // Initialize session ID
   useEffect(() => {
@@ -219,6 +222,10 @@ export default function Properties() {
                   }
                 }
               }}
+              onCalculatorOpen={(property) => {
+                setCalculatorProperty(property);
+                setShowMortgageCalculator(true);
+              }}
             />
           {
         )}
@@ -345,6 +352,14 @@ export default function Properties() {
         propertyAddress={selectedProperty?.address}
         propertyPrice={selectedProperty?.price}
         propertyId={selectedProperty?.mlsId}
+      />
+      
+      {/* Mortgage Calculator Modal */}
+      <MortgageCalculatorModal
+        isOpen={showMortgageCalculator}
+        onClose={() => setShowMortgageCalculator(false)}
+        propertyPrice={calculatorProperty?.price || 0}
+        propertyAddress={calculatorProperty?.address}
       />
     {
   );

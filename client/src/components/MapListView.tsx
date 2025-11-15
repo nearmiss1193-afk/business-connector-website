@@ -4,7 +4,7 @@ import { MapView } from '@/components/Map';
 import NoPictureAvailable from '@/components/NoPictureAvailable';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Bed, Bath, Maximize, MapIcon, List, LayoutGrid } from 'lucide-react';
+import { Bed, Bath, Maximize, MapIcon, List, LayoutGrid, Calculator } from 'lucide-react';
 
 interface Property {
   id: number;
@@ -28,11 +28,12 @@ interface MapListViewProps {
   properties: Property[];
   onPropertyHover?: (propertyId: number | null) => void;
   onPropertyClick?: (propertyId: number) => void;
+  onCalculatorOpen?: (property: Property) => void;
 }
 
 type ViewMode = 'split' | 'map' | 'list';
 
-export default function MapListView({ properties, onPropertyHover, onPropertyClick }: MapListViewProps) {
+export default function MapListView({ properties, onPropertyHover, onPropertyClick, onCalculatorOpen }: MapListViewProps) {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<Map<number, google.maps.Marker>>(new Map());
   const [hoveredPropertyId, setHoveredPropertyId] = useState<number | null>(null);
@@ -416,6 +417,25 @@ export default function MapListView({ properties, onPropertyHover, onPropertyCli
                               MLS ID #{property.mlsId}
                             </div>
                           )}
+                          
+                          {/* Action Buttons */}
+                          <div className="mt-4 pt-3 border-t border-gray-100 flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-1 gap-2"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (onCalculatorOpen) {
+                                  onCalculatorOpen(property);
+                                }
+                              }}
+                            >
+                              <Calculator className="h-4 w-4" />
+                              Calculate
+                            </Button>
+                          </div>
                         </CardContent>
                       </div>
                     </Card>
