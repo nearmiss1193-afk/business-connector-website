@@ -183,6 +183,9 @@ export async function searchProperties(params: PropertySearchParams) {
       };
     })
   );
+  
+  // Filter out properties without real images - only show properties with actual images
+  const propertiesWithRealImages = resultsWithImages.filter(property => property.firstImage !== null);
 
   // Count properties with virtual tours
   const virtualToursResult = await db
@@ -193,12 +196,12 @@ export async function searchProperties(params: PropertySearchParams) {
   const virtualTours = Number(virtualToursResult[0]?.count || 0);
 
   return {
-    items: resultsWithImages as any,
-    total,
+    items: propertiesWithRealImages as any,
+    total: propertiesWithRealImages.length,
     virtualTours,
     page,
     limit,
-    totalPages: Math.ceil(total / limit),
+    totalPages: Math.ceil(propertiesWithRealImages.length / limit),
   };
 }
 
@@ -408,16 +411,38 @@ export async function getFeaturedPropertiesByLocation(params: {
     );
   }
 
-  // Get properties
+  // Get properties - fetch more to account for filtering
   const results = await db
     .select()
     .from(properties)
     .where(and(...conditions))
     .orderBy(desc(properties.createdAt))
-    .limit(limit);
+    .limit(limit * 2);
+
+  // Fetch images for each property and filter out those without images
+  const resultsWithImages = await Promise.all(
+    results.map(async (property) => {
+      const images = await db
+        .select({ imageUrl: propertyImages.imageUrl })
+        .from(propertyImages)
+        .where(eq(propertyImages.propertyId, property.id))
+        .orderBy(asc(propertyImages.order))
+        .limit(1);
+      
+      return {
+        ...property,
+        firstImage: images[0]?.imageUrl || property.primaryImage || null,
+      };
+    })
+  );
+
+  // Filter out properties without real images
+  const propertiesWithImages = resultsWithImages
+    .filter(property => property.firstImage !== null)
+    .slice(0, limit);
 
   return {
-    properties: results,
+    properties: propertiesWithImages,
     city: city || 'Central Florida',
   };
 }

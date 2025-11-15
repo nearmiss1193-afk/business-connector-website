@@ -555,3 +555,13 @@
 - [x] Identify images used by multiple different properties in database
 - [x] Fix duplicate image assignments so each property has unique images
 - [x] Verify carousel and properties page show unique images for each listing
+
+
+## Hide Properties Without Real Images - COMPLETE
+
+- [x] Filter out properties without images from database queries
+- [x] Update searchProperties to only return properties with actual images
+- [x] Update featured properties query to only show properties with images
+- [x] Add "Image not available" placeholder for edge cases
+- [x] Test properties page shows only properties with real images
+- [x] Verify carousel displays only properties with images

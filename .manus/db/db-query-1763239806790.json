@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as total_duplicate_images, SUM(property_count) as total_duplicate_assignments FROM (SELECT image_url, COUNT(DISTINCT property_id) as property_count FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1) as duplicates;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT COUNT(*) as total_duplicate_images, SUM(property_count) as total_duplicate_assignments FROM (SELECT image_url, COUNT(DISTINCT property_id) as property_count FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1) as duplicates;",
+  "rows": [
+    {
+      "total_duplicate_images": "0",
+      "total_duplicate_assignments": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_duplicate_images\ttotal_duplicate_assignments\n0\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 190
+}
