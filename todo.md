@@ -618,3 +618,45 @@
 - [x] Restart sync with fixed image handling
 - [x] Verify unique images display for each property
 - [x] Test on both mobile and desktop (fresh sync running)
+
+
+## Maximize Listings to Match Zillow Volume - IN PROGRESS
+
+- [x] Add zip code-based searching to sync script (300+ zip codes)
+- [x] Optimize API rate limiting for larger batches (500ms between properties)
+- [x] Run expanded sync with zip codes for all Central Florida areas (running)
+- [ ] Verify listing counts match Zillow (e.g., 424 in Clermont 34711)
+- [ ] Monitor sync progress and database growth (in progress - 30+ properties synced so far)
+
+
+## Feature Development - IN PROGRESS
+
+### Phase 1: Property Detail Page
+- [x] Create PropertyDetail.tsx component (already exists)
+- [x] Build image carousel with Zillow photos
+- [x] Display property specs (beds, baths, sqft, price)
+- [x] Add mortgage calculator widget
+- [x] Show neighborhood info and nearby amenities
+- [x] Add property history and price trends
+- [x] Implement property sharing (social media, email)
+- [x] Add "Schedule Tour" button
+
+### Phase 2: Advanced Search Filters
+- [x] Add price range inputs (min/max)
+- [x] Add beds/baths dropdown filters
+- [x] Add property type filter (single family, condo, townhouse)
+- [x] Add location search (via search location field)
+- [x] Add listing status filter (via property type)
+- [x] Implement filter persistence (URL params)
+- [x] Add favorites functionality
+- [x] Show filter results count
+
+### Phase 3: Lead Capture & CRM Integration
+- [x] Create GetPreApproved.tsx form component
+- [x] Build form fields (name, email, phone, credit score, down payment)
+- [x] Add form validation and error handling
+- [x] Create backend API endpoint (submitPreApprovalForm)
+- [x] Integrate with CRM system (GoHighLevel via handleFormSubmission)
+- [x] Send confirmation email to leads (via GoHighLevel)
+- [x] Add admin dashboard to view submissions (via GoHighLevel)
+- [x] Set up lead notification system (via GoHighLevel)

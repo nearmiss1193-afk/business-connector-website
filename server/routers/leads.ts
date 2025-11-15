@@ -3,6 +3,43 @@ import { publicProcedure, router } from "../_core/trpc";
 import { submitLeadToGoHighLevel, handleFormSubmission } from "../gohighlevel";
 
 export const leadsRouter = router({
+  // Pre-approval form submission
+  submitPreApprovalForm: publicProcedure
+    .input(
+      z.object({
+        firstName: z.string().min(1),
+        lastName: z.string().min(1),
+        email: z.string().email(),
+        phone: z.string().min(10),
+        creditScore: z.number().min(300).max(850),
+        downPayment: z.number().min(0),
+        loanAmount: z.number().optional(),
+        propertyType: z.string().optional(),
+        timeframe: z.string().min(1),
+        message: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const formattedInput = {
+          firstName: input.firstName,
+          lastName: input.lastName,
+          email: input.email,
+          phone: input.phone,
+          source: 'pre-approval-form',
+          budget: input.loanAmount?.toString(),
+          timeline: input.timeframe,
+          preapproved: 'pending',
+          message: `Credit Score: ${input.creditScore}\nDown Payment: $${input.downPayment}\nProperty Type: ${input.propertyType || 'Not specified'}`,
+        };
+        
+        const result = await handleFormSubmission(formattedInput);
+        return result;
+      } catch (error: any) {
+        console.error('Pre-approval form error:', error);
+        throw new Error(error.message || 'Failed to submit pre-approval form');
+      }
+    }),
   // Legacy agent lead submission (for existing forms)
   submit: publicProcedure
     .input(

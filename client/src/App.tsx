@@ -25,6 +25,7 @@ import Contact from "./pages/Contact";
 import Rentals from "./pages/Rentals";
 import Sell from "./pages/Sell";
 import MortgageCalculator from "./pages/MortgageCalculator";
+import GetPreApproved from "./pages/GetPreApproved";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/rentals" component={Rentals} />
       <Route path="/sell" component={Sell} />
       <Route path="/mortgage-calculator" component={MortgageCalculator} />
+      <Route path="/get-pre-approved" component={GetPreApproved} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
