@@ -8,6 +8,7 @@ import { Search, Bed, Bath, Ruler, MapPin, Heart, Camera, Map, List, Calculator 
 import PropertyMapView from '@/components/PropertyMapView';
 import MapListView from '@/components/MapListView';
 import NoPictureAvailable from '@/components/NoPictureAvailable';
+import AdvancedSearchFilters from '@/components/AdvancedSearchFilters';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -38,6 +39,7 @@ export default function Properties() {
   const [viewMode, setViewMode] = useState<'list' | 'map' | 'split'>('split');
   const [showMortgageCalculator, setShowMortgageCalculator] = useState(false);
   const [calculatorProperty, setCalculatorProperty] = useState<any>(null);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // Initialize session ID
   useEffect(() => {
@@ -57,6 +59,16 @@ export default function Properties() {
       }
     },
   });
+
+  const handleAdvancedFiltersChange = (filters: any) => {
+    if (filters.minPrice !== undefined) setMinPrice(filters.minPrice.toString());
+    if (filters.maxPrice !== undefined) setMaxPrice(filters.maxPrice.toString());
+    if (filters.bedrooms !== undefined) setBedrooms(filters.bedrooms.toString());
+    if (filters.bathrooms !== undefined) setBathrooms(filters.bathrooms.toString());
+    if (filters.propertyTypes !== undefined && filters.propertyTypes.length > 0) {
+      setPropertyType(filters.propertyTypes[0]);
+    }
+  };
 
   // Fetch properties from API
   const { data: properties, isLoading } = trpc.properties.search.useQuery({
@@ -179,6 +191,13 @@ export default function Properties() {
 
       {/* Results */}
       <div className="container py-8">
+        {/* Advanced Filters */}
+        <AdvancedSearchFilters
+          isOpen={showAdvancedFilters}
+          onToggle={() => setShowAdvancedFilters(!showAdvancedFilters)}
+          onFiltersChange={handleAdvancedFiltersChange}
+        />
+
         {/* Stats Bar */}
         <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
           <div className="text-lg font-semibold text-gray-700">

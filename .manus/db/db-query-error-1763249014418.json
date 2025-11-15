@@ -1,0 +1,8 @@
+{
+  "query": "SELECT \n  COUNT(DISTINCT p.id) as properties_with_images,\n  COUNT(pi.id) as total_images,\n  ROUND(COUNT(pi.id) / COUNT(DISTINCT p.id), 1) as avg_images_per_property,\n  MIN(COUNT(pi.id)) as min_images,\n  MAX(COUNT(pi.id)) as max_images\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nWHERE p.source = 'zillow' AND pi.id IS NOT NULL\nGROUP BY p.source;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  COUNT(DISTINCT p.id) as properties_with_images,\n  COUNT(pi.id) as total_images,\n  ROUND(COUNT(pi.id) / COUNT(DISTINCT p.id), 1) as avg_images_per_property,\n  MIN(COUNT(pi.id)) as min_images,\n  MAX(COUNT(pi.id)) as max_images\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nWHERE p.source = 'zillow' AND pi.id IS NOT NULL\nGROUP BY p.source;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1111 (HY000) at line 1: Invalid use of group function"
+  ]
+}
