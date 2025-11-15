@@ -7,6 +7,8 @@ import NeighborhoodInfo from '@/components/NeighborhoodInfo';
 import PropertyMap from '@/components/PropertyMap';
 import AgentBanner from '@/components/AgentBanner';
 import { ReportPropertyDialog } from '@/components/ReportPropertyDialog';
+import PropertyDetailLeadForm from '@/components/PropertyDetailLeadForm';
+import PropertyViewTracker from '@/components/PropertyViewTracker';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import ImageCarousel from '@/components/ImageCarousel';
@@ -32,6 +34,7 @@ import {
 export default function PropertyDetail() {
   const [, params] = useRoute('/properties/:id');
   const propertyId = params?.id ? parseInt(params.id) : 0;
+  const [viewCount, setViewCount] = useState(0);
 
   const { data: property, isLoading } = trpc.properties.getById.useQuery(
     { id: propertyId },
@@ -85,22 +88,27 @@ export default function PropertyDetail() {
     );
   }
 
-  // Gallery images (primary + additional images)
-  const galleryImages = [
+  // Gallery images from database
+  const galleryImages = property.images && property.images.length > 0
+    ? property.images.map((img: any) => img.imageUrl)
+    : [property.primaryImage || '/properties/pQT9duRUSVYo.jpg'];
+  
+  // Fallback if no images
+  const displayImages = galleryImages.length > 0 ? galleryImages : [
     property.primaryImage || '/properties/pQT9duRUSVYo.jpg',
-    '/properties/HgIroWElMYoD.jpg', // Living room
-    '/properties/7CzYMmDBFQ3i.jpg', // Kitchen
-    '/properties/bUHg6EduxiQU.jpg', // Pool
-    '/properties/ZJAwbnXTGzRi.jpg', // Interior 2
-    '/properties/y1fgGAdJxKKA.jpg', // Kitchen 2
+    '/properties/HgIroWElMYoD.jpg',
+    '/properties/7CzYMmDBFQ3i.jpg',
+    '/properties/bUHg6EduxiQU.jpg',
+    '/properties/ZJAwbnXTGzRi.jpg',
+    '/properties/y1fgGAdJxKKA.jpg',
   ];
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+    setCurrentImageIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
   };
 
   const formatPrice = (price: string) => {
@@ -113,6 +121,13 @@ export default function PropertyDetail() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Track property view for lead capture trigger */}
+      {propertyId > 0 && (
+        <PropertyViewTracker
+          propertyId={propertyId}
+          onViewCountChange={setViewCount}
+        />
+      )}
       {/* Header with Back Button */}
       <div className="bg-white border-b sticky top-0 z-40">
         <div className="container mx-auto px-4 py-3">
@@ -137,7 +152,7 @@ export default function PropertyDetail() {
             }}
           >
             <img
-              src={galleryImages[0]}
+              src={displayImages[0]}
               alt="Property main view"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
@@ -145,7 +160,7 @@ export default function PropertyDetail() {
           </div>
 
           {/* Smaller images grid */}
-          {galleryImages.slice(1, 5).map((img, idx) => (
+          {displayImages.slice(1, 5).map((img, idx) => (
             <div
               key={idx}
               className="relative cursor-pointer overflow-hidden group"
@@ -160,10 +175,10 @@ export default function PropertyDetail() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-              {idx === 3 && galleryImages.length > 5 && (
+              {idx === 3 && displayImages.length > 5 && (
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                   <span className="text-white font-semibold text-lg">
-                    +{galleryImages.length - 5} more
+                    +{displayImages.length - 5} more
                   </span>
                 </div>
               )}
@@ -177,7 +192,7 @@ export default function PropertyDetail() {
           onClick={() => setShowLightbox(true)}
         >
           <Home className="w-4 h-4" />
-          View all {galleryImages.length} photos
+          View all {displayImages.length} photos
         </Button>
       </div>
 
@@ -201,7 +216,7 @@ export default function PropertyDetail() {
           </Button>
 
           <img
-            src={galleryImages[currentImageIndex]}
+            src={displayImages[currentImageIndex]}
             alt="Property"
             className="max-h-[90vh] max-w-[90vw] object-contain"
           />
@@ -215,7 +230,7 @@ export default function PropertyDetail() {
           </Button>
 
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white">
-            {currentImageIndex + 1} / {galleryImages.length}
+            {currentImageIndex + 1} / {displayImages.length}
           </div>
         </div>
       )}
@@ -420,70 +435,17 @@ export default function PropertyDetail() {
             <AgentBanner placement="property_detail" propertyId={property.id} />
           </div>
 
-          {/* Right Column - Contact Form */}
-          <div className="lg:col-span-1">
-            <Card className="p-6 sticky top-24">
-              <h3 className="text-xl font-bold mb-4">Contact Agent</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                  <input
-                    type="tel"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="(555) 123-4567"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="I'm interested in this property..."
-                  />
-                </div>
-
-                <Button className="w-full gap-2">
-                  <MessageSquare className="w-4 h-4" />
-                  Request Information
-                </Button>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant="outline" className="gap-2">
-                    <Phone className="w-4 h-4" />
-                    Call
-                  </Button>
-                  <Button variant="outline" className="gap-2">
-                    <Mail className="w-4 h-4" />
-                    Email
-                  </Button>
-                </div>
-
-                <div className="pt-4 border-t">
-                  <Button variant="outline" className="w-full">
-                    Schedule a Tour
-                  </Button>
-                </div>
-              </div>
-            </Card>
+          {/* Right Column - Lead Capture Form */}
+          <div className="lg:col-span-1" id="property-lead-form">
+            <PropertyDetailLeadForm
+              propertyId={property.id}
+              propertyAddress={`${property.address}, ${property.city}, ${property.state}`}
+              propertyPrice={property.price}
+              propertyBeds={property.bedrooms}
+              propertyBaths={parseInt(property.bathrooms)}
+              propertySqft={property.sqft || 0}
+              city={property.city}
+            />
           </div>
         </div>
       </div>

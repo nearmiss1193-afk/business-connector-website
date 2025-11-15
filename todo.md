@@ -105,10 +105,14 @@
 
 ### Lead Capture System
 - [x] Track property views with session ID
-- [x] Show registration modal after 3 clicks
+- [x] Show registration modal after 3 property views
 - [x] Buyer registration form (name, email, phone, budget, timeline, pre-approval)
 - [x] Submit to GoHighLevel buyer pipeline
 - [x] Store registration state to prevent re-prompting
+- [x] Property detail page lead form with CRM integration
+- [x] Form validation and error handling
+- [x] Success/error feedback to user
+- [x] TCPA compliance messaging
 
 ### MLS Integration
 - [ ] Research MLS API options (Zillow, Realtor.com, Bridge Interactive)
@@ -150,19 +154,23 @@
 
 ### Property Detail Page
 - [x] Professional property detail page layout
-- [x] Image gallery with lightbox/carousel
+- [x] Image gallery with lightbox/carousel (using database images)
 - [x] Property overview section (price, beds, baths, sqft)
 - [x] Property description
 - [x] Key features list
-- [x] Contact agent form
+- [x] Contact agent form (PropertyDetailLeadForm)
 - [x] Schedule tour button
 - [x] Share property button
 - [x] Back to search navigation
-- [ ] Neighborhood information
-- [ ] School information
-- [ ] Map with property location
+- [x] Neighborhood information (NeighborhoodInfo component)
+- [x] School information (included in NeighborhoodInfo)
+- [x] Map with property location (PropertyMap component)
+- [x] Lead capture form with GoHighLevel integration
+- [x] Property view tracking system
+- [x] 3-view lead capture modal (PropertyViewTracker)
+- [x] Mortgage calculator (MortgageCalculator component)
 - [ ] Similar properties section
-- [ ] Mortgage calculator
+- [ ] Save favorites functionality
 
 ### Homepage Zillow-Quality Redesign
 - [x] Create stunning hero section with background image
