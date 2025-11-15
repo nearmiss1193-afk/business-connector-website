@@ -7,13 +7,12 @@ import { ChevronDown } from "lucide-react";
 export default function TopNavigation() {
   const { isAuthenticated, user } = useAuth();
   const [location] = useLocation();
-  const [showMortgageDropdown, setShowMortgageDropdown] = useState(false);
+
 
   const navItems = [
     { label: "Buy", href: "/properties", active: location === "/properties" },
     { label: "Rent", href: "#", active: false },
     { label: "Sell", href: "#", active: false },
-    { label: "Get a mortgage", href: "#mortgage", active: false, hasDropdown: true },
     { label: "Find an agent", href: "#", active: false },
     { label: "Manage rentals", href: "#", active: false },
     { label: "Advertise", href: "/advertise", active: location === "/advertise" },
