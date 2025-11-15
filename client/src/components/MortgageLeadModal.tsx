@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { trpc } from '@/lib/trpc';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
+import PaymentBreakdown from './PaymentBreakdown';
 
 interface MortgageLeadModalProps {
   open: boolean;
@@ -96,8 +97,19 @@ export default function MortgageLeadModal({ open, onOpenChange, mortgageData }: 
               </div>
             </div>
 
+            {/* Payment Breakdown Component */}
+            <PaymentBreakdown
+              homePrice={parseFloat(mortgageData.homePrice)}
+              downPayment={parseFloat(mortgageData.downPayment)}
+              interestRate={parseFloat(mortgageData.interestRate)}
+              loanTerm={parseInt(mortgageData.loanTerm)}
+              propertyTaxRate={0.012}
+              insuranceMonthly={150}
+              hoaMonthly={0}
+            />
+
             {/* Lead Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 mt-6">
               <div>
                 <Label htmlFor="name">Full Name *</Label>
                 <Input
@@ -139,7 +151,7 @@ export default function MortgageLeadModal({ open, onOpenChange, mortgageData }: 
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-blue-600 hover:bg-blue-700"
+                className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
                 disabled={submitLead.isPending}
               >
                 {submitLead.isPending ? (
