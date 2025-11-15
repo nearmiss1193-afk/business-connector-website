@@ -9,7 +9,12 @@
 import axios from 'axios';
 import { ENV } from './_core/env';
 
-const GHL_API_BASE = 'https://services.leadconnectorhq.com';
+// GoHighLevel API v2.0 endpoint (correct endpoint for Private Integration tokens)
+const GHL_API_BASE = 'https://rest.gohighlevel.com/v1';
+
+// Private Integration Token (from GoHighLevel Settings → Private Integrations)
+// This is the Manus/Pipedream integration token that has full API access
+const GHL_API_TOKEN = process.env.GOHIGHLEVEL_API_KEY || 'pit-b0a41b0b-24e5-4cee-8126-ee7b80b4c89e';
 
 // Agent Client Pipeline (existing)
 const AGENT_PIPELINE_ID = 'ypWCzagQK0pINOc2sTay';
@@ -83,10 +88,9 @@ type LeadType = 'AGENT' | 'BUYER';
  * Legacy function for backwards compatibility
  */
 export async function submitLeadToGoHighLevel(data: LeadData) {
-  const apiKey = ENV.gohighlevelApiKey;
   const locationId = ENV.gohighlevelLocationId;
 
-  if (!apiKey || !locationId) {
+  if (!GHL_API_TOKEN || !locationId) {
     console.warn("GoHighLevel credentials not configured. Lead will be logged only.");
     console.log("Lead data:", JSON.stringify(data, null, 2));
     
@@ -97,7 +101,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
   }
 
   try {
-    // Create contact in GoHighLevel
+    // Create contact in GoHighLevel using API v2.0
     const response = await axios.post(
       `${GHL_API_BASE}/contacts/`,
       {
@@ -117,8 +121,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
       },
       {
         headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Version: '2021-07-28',
+          Authorization: `Bearer ${GHL_API_TOKEN}`,
           'Content-Type': 'application/json',
         },
       }
@@ -138,8 +141,7 @@ export async function submitLeadToGoHighLevel(data: LeadData) {
       },
       {
         headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Version: '2021-07-28',
+          Authorization: `Bearer ${GHL_API_TOKEN}`,
           'Content-Type': 'application/json',
         },
       }
@@ -208,10 +210,9 @@ function determineLeadType(formData: FormData): LeadType {
  * Create contact in GoHighLevel
  */
 async function createContact(contactData: ContactData) {
-  const apiKey = ENV.gohighlevelApiKey;
   const locationId = ENV.gohighlevelLocationId;
 
-  if (!apiKey || !locationId) {
+  if (!GHL_API_TOKEN || !locationId) {
     throw new Error('GoHighLevel credentials not configured');
   }
 
@@ -230,8 +231,7 @@ async function createContact(contactData: ContactData) {
       },
       {
         headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Version: '2021-07-28',
+          Authorization: `Bearer ${GHL_API_TOKEN}`,
           'Content-Type': 'application/json',
         },
       }
@@ -259,8 +259,7 @@ async function createContact(contactData: ContactData) {
             email: contactData.email,
           },
           headers: {
-            Authorization: `Bearer ${apiKey}`,
-            Version: '2021-07-28',
+            Authorization: `Bearer ${GHL_API_TOKEN}`,
           },
         }
       );
@@ -282,7 +281,6 @@ async function addToPipeline(
   monetaryValue: number,
   leadType: LeadType
 ) {
-  const apiKey = ENV.gohighlevelApiKey;
   const locationId = ENV.gohighlevelLocationId;
 
   const opportunityName = leadType === 'BUYER' ? 'Home Buyer Lead' : 'Agent Client Lead';
@@ -300,8 +298,7 @@ async function addToPipeline(
     },
     {
       headers: {
-        Authorization: `Bearer ${apiKey}`,
-        Version: '2021-07-28',
+        Authorization: `Bearer ${GHL_API_TOKEN}`,
         'Content-Type': 'application/json',
       },
     }
@@ -491,6 +488,58 @@ async function handleBuyerLead(formData: FormData) {
 }
 
 /**
+ * Send lead to Pipedream webhook for GoHighLevel integration
+ */
+async function sendToPipedreamWebhook(formData: FormData, leadType: LeadType) {
+  const WEBHOOK_URL = 'https://eomhc.m.pipedream.net';
+  const WEBHOOK_ID = 'pit-b0a41b0b-24e5-4cee-8126-ee7b80b4c89e';
+  
+  try {
+    const payload = {
+      webhook_id: WEBHOOK_ID,
+      lead_type: leadType,
+      timestamp: new Date().toISOString(),
+      source: formData.source || 'website',
+      contact: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone || '',
+      },
+      // Agent-specific fields
+      ...(formData.brokerageName && { brokerage: formData.brokerageName }),
+      ...(formData.yearsExperience && { yearsExperience: formData.yearsExperience }),
+      ...(formData.selectedPlan && { plan: formData.selectedPlan }),
+      // Buyer-specific fields
+      ...(formData.propertyAddress && { propertyAddress: formData.propertyAddress }),
+      ...(formData.propertyPrice && { propertyPrice: formData.propertyPrice }),
+      ...(formData.budget && { budget: formData.budget }),
+      ...(formData.timeline && { timeline: formData.timeline }),
+      // Mortgage-specific fields
+      ...(formData.homePrice && { homePrice: formData.homePrice }),
+      ...(formData.downPayment && { downPayment: formData.downPayment }),
+      ...(formData.interestRate && { interestRate: formData.interestRate }),
+      ...(formData.loanTerm && { loanTerm: formData.loanTerm }),
+      ...(formData.monthlyPayment && { monthlyPayment: formData.monthlyPayment }),
+    };
+    
+    const response = await axios.post(WEBHOOK_URL, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      timeout: 5000,
+    });
+    
+    console.log('✅ Lead sent to Pipedream webhook:', response.status);
+    return true;
+  } catch (error: any) {
+    console.error('⚠️  Failed to send to Pipedream webhook:', error.message);
+    // Don't throw - webhook failure shouldn't block lead capture
+    return false;
+  }
+}
+
+/**
  * Main handler function for smart form routing
  */
 export async function handleFormSubmission(formData: FormData) {
@@ -531,7 +580,7 @@ export async function handleFormSubmission(formData: FormData) {
       }
       
       // Insert into database - build values object to avoid undefined fields
-      const leadValues: Record<string, any> = {
+      const leadValues: any = {
         leadType: dbLeadType,
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -551,17 +600,24 @@ export async function handleFormSubmission(formData: FormData) {
       if (formData.loanTerm) leadValues.loanTerm = parseInt(formData.loanTerm);
       if (formData.monthlyPayment) leadValues.monthlyPayment = parseFloat(formData.monthlyPayment);
       
-      await db.insert(leads).values(leadValues as any);
+      // Note: createdAt and updatedAt have database defaults, don't include them
+      await db.insert(leads).values([leadValues]);
       
       console.log('✅ Lead saved to database as fallback');
+      
+      // Send to Pipedream webhook for GoHighLevel integration
+      const webhookSent = await sendToPipedreamWebhook(formData, leadType);
       
       return {
         success: true,
         contactId: `LOCAL-${Date.now()}`,
         leadType,
-        pipeline: 'Database (GoHighLevel Sync Pending)',
-        message: 'Lead captured and stored locally. Will sync to GoHighLevel when API is available.',
-        fallback: true
+        pipeline: webhookSent ? 'Pipedream → GoHighLevel' : 'Database (Webhook Pending)',
+        message: webhookSent 
+          ? 'Lead captured and sent to GoHighLevel via Pipedream webhook.'
+          : 'Lead captured and stored locally. Will sync to GoHighLevel when webhook is available.',
+        fallback: true,
+        webhookSent
       };
     } catch (fallbackError: any) {
       console.error('❌ Fallback storage also failed:', fallbackError);
