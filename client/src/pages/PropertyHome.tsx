@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@/_core/hooks/useAuth';
 import { Link, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { APP_LOGO } from '@/const';
@@ -34,6 +35,7 @@ import {
 } from 'lucide-react';
 
 export default function PropertyHome() {
+  const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'buy' | 'mortgage'>('buy');
@@ -105,11 +107,13 @@ export default function PropertyHome() {
   }, [locationDetected]);
 
   // Fetch featured properties based on location
-  const { data: featuredData } = trpc.properties.getFeaturedByLocation.useQuery({
-    city: userCity,
-    maxPrice: 500000,
-    limit: 8,
-  });
+  const { data: featuredData } = trpc.properties.getFeaturedByLocation.useQuery(
+    {
+      city: userCity || 'Tampa',
+      limit: 8,
+    },
+    { enabled: !!userCity }
+  );
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
