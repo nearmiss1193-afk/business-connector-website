@@ -749,3 +749,12 @@
 - [ ] Alert when import fails
 - [ ] Alert when market heat changes significantly
 - [ ] Email notifications to admin
+
+
+## Distributed Worker Scraper System (NEW)
+- [ ] Set up worker scraper infrastructure
+- [ ] Integrate Base44 API for property storage
+- [ ] Integrate GHL API for lead creation
+- [ ] Create master coordinator for workers
+- [ ] Add monitoring and progress tracking
+- [ ] Test bulk import workflow

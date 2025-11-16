@@ -128,17 +128,11 @@ export const propertiesRouter = router({
       if (!db) return [];
 
       try {
-        const { properties } = await import('../drizzle/schema');
-        const locations = await db
-          .selectDistinct({
-            city: properties.city,
-            zipCode: properties.zipCode,
-          })
-          .from(properties)
-          .where(sql`${properties.city} IS NOT NULL AND ${properties.city} != ''`)
-          .orderBy(properties.city);
+        const locations = await db.execute(
+          sql`SELECT DISTINCT city FROM properties WHERE city IS NOT NULL AND city != '' ORDER BY city`
+        );
         
-        return locations || [];
+        return (locations as any[]) || [];
       } catch (error) {
         console.error('Error fetching available locations:', error);
         return [];
