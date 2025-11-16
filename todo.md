@@ -668,3 +668,36 @@
 - [x] Send confirmation email to leads (via GoHighLevel)
 - [x] Add admin dashboard to view submissions (via GoHighLevel)
 - [x] Set up lead notification system (via GoHighLevel)
+
+
+## Zillow API Improvements (from Grok Code Review)
+
+### API Enhancement
+- [x] Update Zillow API client with optional search filters (status_type, home_type, price range, beds/baths)
+- [x] Make RAPIDAPI_KEY required with error handling
+- [x] Add auto-image fetching in getZillowPropertyDetails
+- [x] Implement getZillowPropertyImages function
+- [x] Add coordinate-based search (searchZillowByCoordinates)
+- [x] Add polygon-based search (searchZillowByPolygon)
+
+### GHL Integration
+- [x] Create exportPropertiesToJSON function for bulk import
+- [x] Add exportPropertiesToCSV function for GHL compatibility
+- [ ] Create bulk import workflow in GHL
+- [ ] Map property fields to GHL custom fields
+- [ ] Test property import to Opportunities pipeline
+
+### Rate Limiting & Reliability
+- [x] Implement rate limiting to respect RapidAPI quotas
+- [ ] Add retry logic with exponential backoff
+- [ ] Add request queuing for bulk operations
+- [ ] Monitor RapidAPI dashboard for quota usage
+- [ ] Add error logging and alerts
+
+### Testing & Validation
+- [ ] Test searchZillowProperties with filters
+- [ ] Test image fetching for property details
+- [ ] Test coordinate-based search
+- [ ] Test polygon-based search
+- [ ] Validate GHL bulk import workflow
+- [ ] Test rate limiting under load
