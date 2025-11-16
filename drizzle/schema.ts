@@ -31,3 +31,5 @@ export * from './schema-property-reports';
 export * from './schema-agent-ads';
 // Revenue system tables (agent subscriptions, leads, payments)
 export * from './schema-revenue';
+// Analytics and lead scoring tables
+export * from './schema-analytics';

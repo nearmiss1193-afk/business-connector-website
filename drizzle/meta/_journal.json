@@ -43,6 +43,13 @@
       "when": 1763078902210,
       "tag": "0005_shallow_zeigeist",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1763254244040,
+      "tag": "0006_strange_blur",
+      "breakpoints": true
     }
   ]
 }

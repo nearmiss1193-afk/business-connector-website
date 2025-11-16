@@ -701,3 +701,51 @@
 - [ ] Test polygon-based search
 - [ ] Validate GHL bulk import workflow
 - [ ] Test rate limiting under load
+
+
+## Lead Scoring Dashboard (New Feature)
+
+### Database Schema
+- [ ] Create propertyMetrics table (property_id, views, leads, conversions, score)
+- [ ] Create importLogs table (import_date, location, count, success_rate, status)
+- [ ] Create leadScores table (lead_id, property_id, score, factors, timestamp)
+- [ ] Create marketAnalytics table (city, avg_price, avg_days_on_market, market_heat)
+
+### Backend API Endpoints
+- [ ] Get property metrics (views, leads, conversion rate)
+- [ ] Get import success rates by location and date
+- [ ] Calculate lead scores based on engagement
+- [ ] Get hot markets ranking
+- [ ] Get top performing properties
+- [ ] Get import history and trends
+
+### Lead Scoring Algorithm
+- [ ] Score based on property views
+- [ ] Score based on lead inquiries
+- [ ] Score based on conversion rate
+- [ ] Score based on market trends
+- [ ] Score based on price competitiveness
+- [ ] Score based on days on market
+
+### Dashboard UI Components
+- [ ] Property Performance table (top 10 properties)
+- [ ] Import Success Rate chart
+- [ ] Lead Score distribution chart
+- [ ] Hot Markets map/list
+- [ ] Time series chart for leads over time
+- [ ] Conversion funnel visualization
+- [ ] Real-time metrics cards (total leads, avg score, success rate)
+
+### Analytics Features
+- [ ] Filter by date range
+- [ ] Filter by location/city
+- [ ] Filter by property type
+- [ ] Export data to CSV
+- [ ] Compare periods (week-over-week, month-over-month)
+- [ ] Identify trends and patterns
+
+### Monitoring & Alerts
+- [ ] Alert when property gets 10+ leads
+- [ ] Alert when import fails
+- [ ] Alert when market heat changes significantly
+- [ ] Email notifications to admin

@@ -11,6 +11,7 @@ import { mortgageLeadsRouter } from "./routers/mortgage-leads";
 import { adminAgentAdsRouter } from "./routers/admin-agent-ads";
 import { agentAdsPublicRouter } from "./routers/agent-ads-public";
 import { revenueRouter } from "./routers/revenue";
+import { analyticsRouter } from "./routers/analytics";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -24,6 +25,7 @@ export const appRouter = router({
   adminAgentAds: adminAgentAdsRouter,
   agentAds: agentAdsPublicRouter,
   revenue: revenueRouter,
+  analytics: analyticsRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
