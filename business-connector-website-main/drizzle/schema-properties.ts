@@ -31,3 +31,69 @@ export const properties = mysqlTable("properties", {
   priceIndex: index("price_idx").on(table.price), // For filters
   statusIndex: index("status_idx").on(table.listing_status), // For active listings
 }));
+
+/**
+ * Property images table
+ * Stores multiple images per property
+ */
+export const propertyImages = mysqlTable("property_images", {
+  id: int("id").autoincrement().primaryKey(),
+  propertyId: int("property_id").notNull(),
+  imageUrl: varchar("image_url", { length: 500 }).notNull(),
+  caption: varchar("caption", { length: 500 }),
+  order: int("order").default(0).notNull(), // display order
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  propertyIdIdx: index("property_id_idx").on(table.propertyId),
+}));
+
+/**
+ * MLS sync log table
+ * Tracks synchronization history
+ */
+export const mlsSyncLog = mysqlTable("mls_sync_log", {
+  id: int("id").autoincrement().primaryKey(),
+  source: varchar("source", { length: 100 }).notNull(), // zillow, realtor.com, etc.
+  syncType: mysqlEnum("sync_type", ["full", "incremental"]).notNull(),
+  status: mysqlEnum("status", ["started", "completed", "failed"]).notNull(),
+
+  // Stats
+  propertiesAdded: int("properties_added").default(0),
+  propertiesUpdated: int("properties_updated").default(0),
+  propertiesRemoved: int("properties_removed").default(0),
+
+  // Error tracking
+  errorMessage: text("error_message"),
+  errorDetails: text("error_details"), // JSON string
+
+  startedAt: timestamp("started_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+}, (table) => ({
+  sourceIdx: index("source_idx").on(table.source),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+/**
+ * Property views tracking
+ * Track which properties users view (for analytics)
+ */
+export const propertyViews = mysqlTable("property_views", {
+  id: int("id").autoincrement().primaryKey(),
+  propertyId: int("property_id").notNull(),
+  sessionId: varchar("session_id", { length: 100 }), // anonymous tracking
+  userId: int("user_id"), // if user is registered
+  viewedAt: timestamp("viewed_at").defaultNow().notNull(),
+}, (table) => ({
+  propertyIdIdx: index("property_id_idx").on(table.propertyId),
+  sessionIdIdx: index("session_id_idx").on(table.sessionId),
+}));
+
+// Type exports
+export type Property = typeof properties.$inferSelect;
+export type InsertProperty = typeof properties.$inferInsert;
+export type PropertyImage = typeof propertyImages.$inferSelect;
+export type InsertPropertyImage = typeof propertyImages.$inferInsert;
+export type MlsSyncLog = typeof mlsSyncLog.$inferSelect;
+export type InsertMlsSyncLog = typeof mlsSyncLog.$inferInsert;
+export type PropertyView = typeof propertyViews.$inferSelect;
+export type InsertPropertyView = typeof propertyViews.$inferInsert;
