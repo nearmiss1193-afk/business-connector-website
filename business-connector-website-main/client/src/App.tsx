@@ -7,12 +7,12 @@ function App() {
   useEffect(() => {
     axios.get('https://zillow-com1.p.rapidapi.com/propertyExtendedSearch', {
       params: { location: 'Central Florida' },
-      headers: { 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY }
+      headers: { 'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_KEY }
     }).then(res => setListings(res.data.props));
   }, []);
 
   const sendToGHL = (l) => {
-    axios.post('https://your-ghl-domain/webhooks/lead', { property: l, key: process.env.GHL_API_KEY });
+    axios.post('https://your-ghl-domain/webhooks/lead', { property: l, key: import.meta.env.VITE_GHL_API_KEY });
   };
 
   return (
