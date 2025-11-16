@@ -3,20 +3,5 @@
   "outputDirectory": "dist",
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "server/_core/index.ts": {
-      "runtime": "@vercel/node@18"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/.*",
-      "dest": "/index.js"
-    },
-    {
-      "src": "/.*",
-      "dest": "/index.js"
-    }
-  ]
+  }
 }
