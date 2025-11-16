@@ -5,6 +5,8 @@
 
 import { z } from 'zod';
 import { publicProcedure, router } from '../_core/trpc';
+import { getDb } from '../db';
+import { sql } from 'drizzle-orm';
 import {
   searchProperties,
   getPropertyById,
@@ -121,19 +123,21 @@ export const propertiesRouter = router({
   /**
    * Get all available cities and zip codes for search dropdown
    */
-  getAvailableLocations: publicProcedure
-    .query(async () => {
-      const { getDb } = await import('../db');
+  getAvailableLocations: publicProcedure.query(async () => {
       const db = await getDb();
       if (!db) return [];
 
       try {
-        const [locations] = await db.query(`
-          SELECT DISTINCT city, zip_code
-          FROM properties
-          WHERE city IS NOT NULL AND city != ''
-          ORDER BY city ASC
-        `);
+        const { properties } = await import('../drizzle/schema');
+        const locations = await db
+          .selectDistinct({
+            city: properties.city,
+            zipCode: properties.zipCode,
+          })
+          .from(properties)
+          .where(sql`${properties.city} IS NOT NULL AND ${properties.city} != ''`)
+          .orderBy(properties.city);
+        
         return locations || [];
       } catch (error) {
         console.error('Error fetching available locations:', error);

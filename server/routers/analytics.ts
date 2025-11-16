@@ -33,7 +33,7 @@ export const analyticsRouter = router({
   getTopProperties: publicProcedure
     .input(
       z.object({
-        limit: z.number().default(10).max(50),
+        limit: z.number().min(1).max(50).default(10),
         city: z.string().optional(),
       })
     )
@@ -56,7 +56,7 @@ export const analyticsRouter = router({
   getImportSuccessRates: publicProcedure
     .input(
       z.object({
-        days: z.number().default(30).max(365),
+        days: z.number().min(1).max(365).default(30),
       })
     )
     .query(async ({ input }) => {
@@ -83,7 +83,7 @@ export const analyticsRouter = router({
   getHotMarkets: publicProcedure
     .input(
       z.object({
-        limit: z.number().default(10).max(50),
+        limit: z.number().min(1).max(50).default(10),
       })
     )
     .query(async ({ input }) => {
@@ -97,7 +97,7 @@ export const analyticsRouter = router({
     .input(
       z.object({
         propertyId: z.number(),
-        limit: z.number().default(20).max(100),
+        limit: z.number().min(1).max(100).default(20),
       })
     )
     .query(async ({ input }) => {
@@ -110,7 +110,7 @@ export const analyticsRouter = router({
   getDailyMetricsSummary: publicProcedure
     .input(
       z.object({
-        days: z.number().default(30).max(365),
+        days: z.number().min(1).max(365).default(30),
       })
     )
     .query(async ({ input }) => {
@@ -123,7 +123,7 @@ export const analyticsRouter = router({
   getLeadQualityDistribution: publicProcedure
     .input(
       z.object({
-        days: z.number().default(30).max(365),
+        days: z.number().min(1).max(365).default(30),
       })
     )
     .query(async ({ input }) => {
@@ -136,7 +136,7 @@ export const analyticsRouter = router({
   getConversionFunnel: publicProcedure
     .input(
       z.object({
-        days: z.number().default(30).max(365),
+        days: z.number().min(1).max(365).default(30),
       })
     )
     .query(async ({ input }) => {
@@ -149,7 +149,7 @@ export const analyticsRouter = router({
   getAlerts: publicProcedure
     .input(
       z.object({
-        limit: z.number().default(20).max(100),
+        limit: z.number().min(1).max(100).default(20),
         severity: z.enum(['info', 'warning', 'critical']).optional(),
       })
     )
