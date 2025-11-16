@@ -25,6 +25,12 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+// Saved properties for user dashboards
+export const savedProperties = mysqlTable("saved_properties", {
+  userId: int("user_id").references(() => users.id),
+  propertyId: int("property_id").references(() => properties.id),
+});
+
 // Property listings tables (for centralfloridahomes.com)
 export * from './schema-properties';
 export * from './schema-property-reports';
