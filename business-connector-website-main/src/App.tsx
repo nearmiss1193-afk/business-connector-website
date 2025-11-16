@@ -12,7 +12,7 @@ function App() {
   }, []);
 
   const sendToGHL = (l) => {
-    axios.post('https://your-ghl-domain/webhooks/lead', { property: l, key: import.meta.env.VITE_GHL_API_KEY });
+    axios.post('https://your-ghl-domain/webhooks/lead', { property: l, key: import.meta.env.VITE_GOHIGHLEVEL_API_KEY });
   };
 
   return (
