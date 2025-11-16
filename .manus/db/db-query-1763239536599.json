@@ -1,0 +1,15 @@
+{
+  "query": "SELECT image_url, COUNT(DISTINCT property_id) as property_count, GROUP_CONCAT(DISTINCT property_id) as property_ids FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1 ORDER BY property_count DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT image_url, COUNT(DISTINCT property_id) as property_count, GROUP_CONCAT(DISTINCT property_id) as property_ids FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1 ORDER BY property_count DESC LIMIT 20;",
+  "rows": [
+    {
+      "image_url": "https://ap.rdcpix.com/d80a669f3fecfb650f8d57c1783582ccl-b1377679174s.jpg",
+      "property_count": "2",
+      "property_ids": "150883,150884"
+    }
+  ],
+  "messages": [],
+  "stdout": "image_url\tproperty_count\tproperty_ids\nhttps://ap.rdcpix.com/d80a669f3fecfb650f8d57c1783582ccl-b1377679174s.jpg\t2\t150883,150884\n",
+  "stderr": "",
+  "execution_time_ms": 324
+}

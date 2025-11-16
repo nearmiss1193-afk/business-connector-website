@@ -1,0 +1,70 @@
+{
+  "query": "SELECT p.id, p.address, p.primary_image, COUNT(pi.id) as image_count\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nGROUP BY p.id\nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT p.id, p.address, p.primary_image, COUNT(pi.id) as image_count\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nGROUP BY p.id\nLIMIT 10;",
+  "rows": [
+    {
+      "id": "1",
+      "address": "598 Maple St",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "2",
+      "address": "509 Lake St",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "30003",
+      "address": "1234 Ocean Drive",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "30004",
+      "address": "789 Pine Avenue",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "90001",
+      "address": "2806 N Morgan St",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "90002",
+      "address": "2723 N Ridgewood Ave",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "90003",
+      "address": "2308 N Morgan St",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "90004",
+      "address": "2804 N Morgan St",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "90005",
+      "address": "2402 N Ridgewood Ave",
+      "primary_image": "NULL",
+      "image_count": "0"
+    },
+    {
+      "id": "90006",
+      "address": "510 E Robles St",
+      "primary_image": "NULL",
+      "image_count": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\taddress\tprimary_image\timage_count\n1\t598 Maple St\tNULL\t0\n2\t509 Lake St\tNULL\t0\n30003\t1234 Ocean Drive\tNULL\t0\n30004\t789 Pine Avenue\tNULL\t0\n90001\t2806 N Morgan St\tNULL\t0\n90002\t2723 N Ridgewood Ave\tNULL\t0\n90003\t2308 N Morgan St\tNULL\t0\n90004\t2804 N Morgan St\tNULL\t0\n90005\t2402 N Ridgewood Ave\tNULL\t0\n90006\t510 E Robles St\tNULL\t0\n",
+  "stderr": "",
+  "execution_time_ms": 65
+}

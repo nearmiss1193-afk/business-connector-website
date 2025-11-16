@@ -1,0 +1,24 @@
+{
+  "query": "SELECT pi.image_url, p.id, p.address, p.price, ROW_NUMBER() OVER (PARTITION BY pi.image_url ORDER BY p.id) as row_num FROM properties p JOIN property_images pi ON p.id = pi.property_id WHERE pi.image_url IN (SELECT image_url FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT pi.image_url, p.id, p.address, p.price, ROW_NUMBER() OVER (PARTITION BY pi.image_url ORDER BY p.id) as row_num FROM properties p JOIN property_images pi ON p.id = pi.property_id WHERE pi.image_url IN (SELECT image_url FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1);",
+  "rows": [
+    {
+      "image_url": "https://ap.rdcpix.com/d80a669f3fecfb650f8d57c1783582ccl-b1377679174s.jpg",
+      "id": "150883",
+      "address": "175 Yorktowne Dr Apt 26",
+      "price": "149900.00",
+      "row_num": "1"
+    },
+    {
+      "image_url": "https://ap.rdcpix.com/d80a669f3fecfb650f8d57c1783582ccl-b1377679174s.jpg",
+      "id": "150884",
+      "address": "175 Yorktowne Dr # UT26",
+      "price": "149900.00",
+      "row_num": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "image_url\tid\taddress\tprice\trow_num\nhttps://ap.rdcpix.com/d80a669f3fecfb650f8d57c1783582ccl-b1377679174s.jpg\t150883\t175 Yorktowne Dr Apt 26\t149900.00\t1\nhttps://ap.rdcpix.com/d80a669f3fecfb650f8d57c1783582ccl-b1377679174s.jpg\t150884\t175 Yorktowne Dr # UT26\t149900.00\t2\n",
+  "stderr": "",
+  "execution_time_ms": 234
+}

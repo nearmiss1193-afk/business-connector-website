@@ -1,0 +1,16 @@
+{
+  "query": "SELECT \n  COUNT(*) as total_properties,\n  COUNT(DISTINCT CASE WHEN id IN (SELECT DISTINCT property_id FROM property_images) THEN id END) as properties_with_images,\n  COUNT(DISTINCT CASE WHEN id NOT IN (SELECT DISTINCT property_id FROM property_images) THEN id END) as properties_without_images,\n  ROUND(COUNT(DISTINCT CASE WHEN id IN (SELECT DISTINCT property_id FROM property_images) THEN id END) * 100.0 / COUNT(*), 1) as coverage_percentage\nFROM properties WHERE source = 'zillow';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  COUNT(*) as total_properties,\n  COUNT(DISTINCT CASE WHEN id IN (SELECT DISTINCT property_id FROM property_images) THEN id END) as properties_with_images,\n  COUNT(DISTINCT CASE WHEN id NOT IN (SELECT DISTINCT property_id FROM property_images) THEN id END) as properties_without_images,\n  ROUND(COUNT(DISTINCT CASE WHEN id IN (SELECT DISTINCT property_id FROM property_images) THEN id END) * 100.0 / COUNT(*), 1) as coverage_percentage\nFROM properties WHERE source = 'zillow';",
+  "rows": [
+    {
+      "total_properties": "2319",
+      "properties_with_images": "318",
+      "properties_without_images": "2001",
+      "coverage_percentage": "13.7"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_properties\tproperties_with_images\tproperties_without_images\tcoverage_percentage\n2319\t318\t2001\t13.7\n",
+  "stderr": "",
+  "execution_time_ms": 78
+}

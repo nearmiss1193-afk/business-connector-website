@@ -1,0 +1,80 @@
+{
+  "query": "SELECT COUNT(*) as total_properties, city, COUNT(*) as count FROM properties GROUP BY city ORDER BY count DESC LIMIT 20",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT COUNT(*) as total_properties, city, COUNT(*) as count FROM properties GROUP BY city ORDER BY count DESC LIMIT 20",
+  "rows": [
+    {
+      "total_properties": "199",
+      "city": "Saint Petersburg",
+      "count": "199"
+    },
+    {
+      "total_properties": "198",
+      "city": "Tampa",
+      "count": "198"
+    },
+    {
+      "total_properties": "197",
+      "city": "Winter Haven",
+      "count": "197"
+    },
+    {
+      "total_properties": "197",
+      "city": "Lakeland",
+      "count": "197"
+    },
+    {
+      "total_properties": "193",
+      "city": "Clearwater",
+      "count": "193"
+    },
+    {
+      "total_properties": "192",
+      "city": "Winter Park",
+      "count": "192"
+    },
+    {
+      "total_properties": "187",
+      "city": "Orlando",
+      "count": "187"
+    },
+    {
+      "total_properties": "185",
+      "city": "Kissimmee",
+      "count": "185"
+    },
+    {
+      "total_properties": "160",
+      "city": "Daytona Beach",
+      "count": "160"
+    },
+    {
+      "total_properties": "117",
+      "city": "Port Orange",
+      "count": "117"
+    },
+    {
+      "total_properties": "41",
+      "city": "Ponce Inlet",
+      "count": "41"
+    },
+    {
+      "total_properties": "1",
+      "city": "Largo",
+      "count": "1"
+    },
+    {
+      "total_properties": "1",
+      "city": "Wilbur By the Sea",
+      "count": "1"
+    },
+    {
+      "total_properties": "1",
+      "city": "St. Petersburg",
+      "count": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_properties\tcity\tcount\n199\tSaint Petersburg\t199\n198\tTampa\t198\n197\tWinter Haven\t197\n197\tLakeland\t197\n193\tClearwater\t193\n192\tWinter Park\t192\n187\tOrlando\t187\n185\tKissimmee\t185\n160\tDaytona Beach\t160\n117\tPort Orange\t117\n41\tPonce Inlet\t41\n1\tLargo\t1\n1\tWilbur By the Sea\t1\n1\tSt. Petersburg\t1\n",
+  "stderr": "",
+  "execution_time_ms": 968
+}

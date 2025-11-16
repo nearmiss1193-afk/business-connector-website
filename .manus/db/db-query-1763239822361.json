@@ -1,0 +1,15 @@
+{
+  "query": "SELECT (SELECT COUNT(*) FROM properties) as total_properties, (SELECT COUNT(DISTINCT image_url) FROM property_images) as unique_images, (SELECT COUNT(*) FROM property_images) as total_image_assignments;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT (SELECT COUNT(*) FROM properties) as total_properties, (SELECT COUNT(DISTINCT image_url) FROM property_images) as unique_images, (SELECT COUNT(*) FROM property_images) as total_image_assignments;",
+  "rows": [
+    {
+      "total_properties": "56297",
+      "unique_images": "54328",
+      "total_image_assignments": "54328"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_properties\tunique_images\ttotal_image_assignments\n56297\t54328\t54328\n",
+  "stderr": "",
+  "execution_time_ms": 160
+}

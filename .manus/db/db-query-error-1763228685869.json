@@ -1,0 +1,8 @@
+{
+  "query": "SELECT * FROM leads WHERE email = 'test@example.com' ORDER BY createdAt DESC LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT * FROM leads WHERE email = 'test@example.com' ORDER BY createdAt DESC LIMIT 1;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table '4ktxbxcbzp6dmasnemq3tt.leads' doesn't exist"
+  ]
+}

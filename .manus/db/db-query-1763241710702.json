@@ -1,0 +1,100 @@
+{
+  "query": "SELECT \n  p.city,\n  COUNT(DISTINCT p.id) as total_properties,\n  COUNT(DISTINCT CASE WHEN pi.id IS NOT NULL THEN p.id END) as properties_with_images\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nWHERE p.source = 'zillow'\nGROUP BY p.city\nORDER BY properties_with_images DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  p.city,\n  COUNT(DISTINCT p.id) as total_properties,\n  COUNT(DISTINCT CASE WHEN pi.id IS NOT NULL THEN p.id END) as properties_with_images\nFROM properties p\nLEFT JOIN property_images pi ON p.id = pi.property_id\nWHERE p.source = 'zillow'\nGROUP BY p.city\nORDER BY properties_with_images DESC;",
+  "rows": [
+    {
+      "city": "Orlando",
+      "total_properties": "115",
+      "properties_with_images": "115"
+    },
+    {
+      "city": "Kissimmee",
+      "total_properties": "74",
+      "properties_with_images": "74"
+    },
+    {
+      "city": "Clearwater",
+      "total_properties": "69",
+      "properties_with_images": "69"
+    },
+    {
+      "city": "Tampa",
+      "total_properties": "60",
+      "properties_with_images": "60"
+    },
+    {
+      "city": "Winter Park",
+      "total_properties": "49",
+      "properties_with_images": "49"
+    },
+    {
+      "city": "Bradenton",
+      "total_properties": "42",
+      "properties_with_images": "42"
+    },
+    {
+      "city": "Port Orange",
+      "total_properties": "39",
+      "properties_with_images": "39"
+    },
+    {
+      "city": "Sarasota",
+      "total_properties": "28",
+      "properties_with_images": "28"
+    },
+    {
+      "city": "NAPLES",
+      "total_properties": "27",
+      "properties_with_images": "27"
+    },
+    {
+      "city": "Lakeland",
+      "total_properties": "24",
+      "properties_with_images": "24"
+    },
+    {
+      "city": "Cape Coral",
+      "total_properties": "24",
+      "properties_with_images": "24"
+    },
+    {
+      "city": "Daytona Beach",
+      "total_properties": "23",
+      "properties_with_images": "23"
+    },
+    {
+      "city": "FORT MYERS",
+      "total_properties": "20",
+      "properties_with_images": "20"
+    },
+    {
+      "city": "Celebration",
+      "total_properties": "10",
+      "properties_with_images": "10"
+    },
+    {
+      "city": "Pt Orange",
+      "total_properties": "2",
+      "properties_with_images": "2"
+    },
+    {
+      "city": "Coral",
+      "total_properties": "2",
+      "properties_with_images": "2"
+    },
+    {
+      "city": "Winter Garden",
+      "total_properties": "1",
+      "properties_with_images": "1"
+    },
+    {
+      "city": "Lehigh Acres",
+      "total_properties": "1",
+      "properties_with_images": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\ttotal_properties\tproperties_with_images\nOrlando\t115\t115\nKissimmee\t74\t74\nClearwater\t69\t69\nTampa\t60\t60\nWinter Park\t49\t49\nBradenton\t42\t42\nPort Orange\t39\t39\nSarasota\t28\t28\nNAPLES\t27\t27\nLakeland\t24\t24\nCape Coral\t24\t24\nDaytona Beach\t23\t23\nFORT MYERS\t20\t20\nCelebration\t10\t10\nPt Orange\t2\t2\nCoral\t2\t2\nWinter Garden\t1\t1\nLehigh Acres\t1\t1\n",
+  "stderr": "",
+  "execution_time_ms": 116
+}

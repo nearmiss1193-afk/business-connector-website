@@ -1,0 +1,760 @@
+# Business Conector Website - TODO
+
+## Core Features
+
+- [x] Modern landing page with hero section
+- [x] Value proposition section (exclusive leads vs shared leads)
+- [x] 3-tier pricing section ($397, $594, $891)
+- [x] Lead capture form with CRM integration
+- [x] A2P 10DLC compliant SMS setup
+- [x] How it works section
+- [x] Benefits/features section
+- [ ] Testimonials section (placeholder for now)
+- [x] FAQ section
+- [ ] Contact form
+- [x] Responsive mobile design
+
+## Technical Integration
+
+- [x] CRM API integration for lead capture
+- [x] Form validation and error handling
+- [x] Success/confirmation page after form submission
+- [ ] Email notification system
+- [x] SMS compliance documentation
+
+## Design & Branding
+
+- [x] Color scheme and typography
+- [ ] Logo and branding elements
+- [ ] Professional imagery
+- [x] Consistent UI components
+- [ ] Smooth animations and transitions
+
+## Content
+
+- [ ] Compelling copy for landing page
+- [ ] Pricing tier descriptions
+- [ ] Feature comparisons (vs Zillow, vs DIY)
+- [ ] FAQ content
+- [ ] Terms of service
+- [ ] Privacy policy
+
+## Future Enhancements
+
+- [ ] Blog section for content marketing
+- [ ] Case studies page
+- [ ] Demo video
+- [ ] Live chat integration
+- [ ] Agent dashboard (after signup)
+
+## Branding Updates
+
+- [x] Remove all GoHighLevel references and replace with Business Conector branding
+
+## Legal Pages
+
+- [x] Privacy Policy page
+- [x] Terms of Service page
+
+## Contact Information Updates
+
+- [x] Update Privacy Policy with actual business address, phone, and email
+- [x] Update Terms of Service with actual business address, phone, and email
+- [x] Update Compliance page with actual business contact information
+
+## CRM Research & Automation Strategy
+
+- [x] Research GoHighLevel automation workflows and capabilities
+- [x] Research GoHighLevel social media integration features
+- [x] Analyze Salesforce automation and best practices
+- [x] Analyze HubSpot CRM features and competitive advantages
+- [x] Analyze Follow Up Boss and real estate CRM best practices
+- [x] Design Business Conector automation workflow combining lead scraping + follow-up
+- [x] Create social media integration strategy
+- [ ] Build updated pitch deck with automation features
+- [x] Document competitive advantages over existing CRM systems
+
+## GoHighLevel Workflow Implementation
+
+- [x] Set up custom fields in GoHighLevel for real estate data
+- [x] Build New Lead Onboarding workflow
+- [x] Build Multi-Touch Follow-Up Sequence workflow
+- [x] Build Engagement Response workflow
+- [x] Build Cold Lead Re-Engagement workflow
+- [x] Build Social Media Automation workflow
+- [x] Build Referral Generation workflow
+- [x] Test all workflows with sample leads
+- [x] Document workflow implementation for users
+
+## Property Website System (centralfloridahomes.com)
+
+### Database & Schema
+- [x] Create properties table with MLS fields
+- [x] Create property_images table for multiple photos
+- [x] Create property_sync_log table for tracking MLS updates
+- [x] Add indexes for search performance
+
+### Property Listing UI
+- [x] Professional property card design (Zillow-style)
+- [x] Property search page with filters
+- [x] Property cards with pricing, specs, images
+- [x] Responsive mobile design
+- [ ] Property detail page with full info
+- [ ] Image gallery with lightbox
+- [ ] Map integration for property location
+
+### Lead Capture System
+- [x] Track property views with session ID
+- [x] Show registration modal after 3 property views
+- [x] Buyer registration form (name, email, phone, budget, timeline, pre-approval)
+- [x] Submit to GoHighLevel buyer pipeline
+- [x] Store registration state to prevent re-prompting
+- [x] Property detail page lead form with CRM integration
+- [x] Form validation and error handling
+- [x] Success/error feedback to user
+- [x] TCPA compliance messaging
+
+### MLS Integration
+- [ ] Research MLS API options (Zillow, Realtor.com, Bridge Interactive)
+- [ ] Build MLS data sync script
+- [ ] Schedule daily sync job
+- [ ] Handle new listings (add to database)
+- [ ] Handle sold/off-market listings (mark inactive)
+- [ ] Download and store property images
+
+### Deployment
+- [ ] Deploy property website as subdomain or separate domain
+- [ ] Configure CORS for API calls
+- [ ] Test lead capture flow end-to-end
+- [ ] Verify GoHighLevel integration
+
+## GoHighLevel Dual-Pipeline Integration
+
+- [x] Dual-pipeline system (Agent + Buyer)
+- [x] Smart lead routing
+- [x] Setup script for buyer pipeline
+- [x] Documentation (GOHIGHLEVEL_SETUP.md)
+
+### Professional Design Upgrade (Zillow-Quality)
+- [x] Real property photos (high-quality stock images)
+- [x] Hero section with professional background image
+- [x] Advanced search bar with autocomplete
+- [x] Premium property cards with better spacing and shadows
+- [x] Professional color scheme (Zillow blue #006AFF)
+- [x] Better typography (Inter font family)
+- [x] Smooth hover effects and micro-interactions
+- [ ] Map view toggle
+- [ ] Save favorites functionality
+- [ ] Status badges (New, Price Drop, Open House)
+- [ ] Agent contact info on cards
+- [ ] Neighborhood information section
+- [ ] Professional footer with links
+- [ ] Better mobile responsiveness
+- [ ] Image carousels on property cards
+
+### Property Detail Page
+- [x] Professional property detail page layout
+- [x] Image gallery with lightbox/carousel (using database images)
+- [x] Property overview section (price, beds, baths, sqft)
+- [x] Property description
+- [x] Key features list
+- [x] Contact agent form (PropertyDetailLeadForm)
+- [x] Schedule tour button
+- [x] Share property button
+- [x] Back to search navigation
+- [x] Neighborhood information (NeighborhoodInfo component)
+- [x] School information (included in NeighborhoodInfo)
+- [x] Map with property location (PropertyMap component)
+- [x] Lead capture form with GoHighLevel integration
+- [x] Property view tracking system
+- [x] 3-view lead capture modal (PropertyViewTracker)
+- [x] Mortgage calculator (MortgageCalculator component)
+- [ ] Similar properties section
+- [ ] Save favorites functionality
+
+### Homepage Zillow-Quality Redesign
+- [x] Create stunning hero section with background image
+- [x] Add prominent search bar on hero
+- [x] Featured properties carousel/grid
+- [x] "Why Choose Us" value proposition section
+- [x] Call-to-action section with buttons
+- [x] Professional footer with links
+- [x] Smooth animations and transitions
+- [x] Mobile-responsive design
+
+### Property Detail Enhancements
+- [ ] Interactive mortgage calculator with monthly payment breakdown
+- [ ] Neighborhood demographics section (population, income, education)
+- [ ] School ratings and information
+- [ ] Walkability score and nearby amenities
+- [ ] Property tax calculator
+- [ ] HOA fee breakdown
+
+### Google Maps Integration
+- [x] Create PropertyMap component with Google Maps
+- [x] Show property location marker
+- [x] Add nearby points of interest (schools, shopping, restaurants, cafes)
+- [x] Add info windows for markers
+- [x] Integrate into property detail page
+- [x] Add map legend with color-coded categories
+
+### Mobile Responsiveness Testing
+- [ ] Test property detail page on mobile viewport
+- [ ] Optimize photo gallery for mobile
+- [ ] Ensure contact form is mobile-friendly
+- [ ] Test mortgage calculator on small screens
+- [ ] Verify map displays correctly on mobile
+- [ ] Check navigation and back button on mobile
+- [ ] Test all interactive elements (buttons, sliders) on touch devices
+
+### MLS Data Integration
+- [x] Research MLS data provider options (Bridge Interactive, SimplyRETS, Zillow API)
+- [x] Select MLS provider (SimplyRETS with Stellar MLS)
+- [x] Create MLS sync service module
+- [x] Map MLS fields to database schema
+- [x] Build property import function
+- [x] Handle property images download and storage
+- [x] Create daily automated sync job
+- [x] Add sync status tracking and error handling
+- [x] Test with sample MLS data (65 demo properties)
+- [x] Verify data quality and completeness
+- [ ] Sign up for SimplyRETS account
+- [ ] Request Stellar MLS connection
+- [ ] Add API credentials to environment variables
+- [ ] Run first production sync
+
+### Realtor.com RapidAPI Integration
+- [ ] Create RapidAPI client module for Realtor.com
+- [ ] Add RAPIDAPI_KEY to environment variables
+- [ ] Build property search and fetch functions
+- [ ] Map Realtor.com data to database schema
+- [ ] Create import function for bulk property sync
+- [ ] Handle property images from Realtor.com
+- [ ] Set up automated daily sync job
+- [ ] Test with Central Florida properties
+- [ ] Import all 7,948+ properties
+- [ ] Verify data quality and completeness
+
+### Expanded Property Sync (7,000+ Properties)
+- [x] Add comprehensive ZIP code list for Tampa Bay (50+ ZIP codes)
+- [x] Add comprehensive ZIP code list for Orlando area (40+ ZIP codes)
+- [x] Add more Central Florida cities (Sarasota, Fort Myers, Cape Coral, etc.)
+- [x] Implement pagination to fetch beyond 200 properties per location
+- [x] Run expanded sync to reach 7,000+ properties (achieved 55,000+!)
+- [x] Verify all properties have images
+- [ ] Test property search with larger dataset
+
+### Listing Verification & Cleanup System
+- [x] Add lastSeenAt timestamp field to properties table
+- [x] Add isActive boolean field to properties table
+- [x] Add verificationStatus enum field (active, off_market, flagged, reported, verified)
+- [x] Add flaggedReason text field for manual flags
+- [x] Create property_reports table for user-submitted reports
+- [x] Update sync script to track lastSeenAt on each sync
+- [x] Create mark-off-market script to flag properties not seen in 7 days
+- [x] Create admin dashboard page to view flagged/off-market properties
+- [x] Add manual flag/unflag functionality for admins
+- [x] Add user report form on property detail pages
+- [x] Add owner notifications for new property reports
+- [x] Add admin route to App.tsx
+- [x] Create comprehensive documentation (VERIFICATION_SYSTEM.md)
+
+### Homepage Redesign - Zillow-Style Professional Look
+- [x] Generate high-quality Florida property hero background image
+- [x] Replace blue gradient with real property photo background
+- [x] Update hero headline to be more impactful (Zillow-style)
+- [x] Improve typography and visual hierarchy
+- [x] Add overlay for better text readability
+- [x] Test responsive design on mobile
+
+### Mortgage Calculator Integration
+- [x] Create MortgageCalculator component with inputs (price, down payment, interest rate, loan term)
+- [x] Add real-time calculation logic for monthly payment
+- [x] Design tab toggle UI (Buy vs Get Pre-Approved)
+- [x] Integrate calculator into hero section
+- [x] Add visual results display with breakdown
+- [x] Test calculator accuracy and responsiveness
+
+### Mortgage Lead Capture - GoHighLevel Integration
+- [x] Create MortgageLeadModal component with form fields (name, email, phone)
+- [x] Add mortgage calculation data to lead submission
+- [x] Create tRPC procedure to send leads to GoHighLevel
+- [x] Connect Get Pre-Approved button to open modal
+- [x] Add success/error handling and user feedback
+- [x] Test complete flow from calculator to GoHighLevel
+
+### Agent Advertising System
+- [x] Create agent_ads table (agent name, company, banner image, contact info, placement, status, start/end dates)
+- [x] Create ad_clicks table for tracking impressions and clicks
+- [x] Create ad_inquiries table for agent leads
+- [x] Build admin dashboard for managing agent ads
+- [x] Create banner upload and approval workflow
+- [x] Build AgentBanner component for sidebar placement
+- [x] Build AgentBanner component for between-listings placement
+- [x] Build AgentBanner component for property detail pages
+- [x] Create "Advertise Here" page explaining packages and pricing
+- [x] Create agent inquiry form that routes to Business Conector GoHighLevel pipeline
+- [x] Add click tracking with analytics
+- [x] Add impression tracking
+- [x] Create ad performance dashboard for agents
+- [ ] Add AgentBanner to property pages (sidebar, listings, details)
+- [ ] Test complete flow from banner click to GoHighLevel lead
+
+### Demo Banner Ads
+- [x] Generate professional banner image for Sarah Mitchell (Luxury Homes Specialist)
+- [x] Generate professional banner image for Tampa Bay Realty Group
+- [x] Generate professional banner image for Mike Rodriguez (First Time Buyer Expert)
+- [x] Create demo ads in database via SQL
+- [x] Add AgentBanner component to Properties page sidebar
+- [x] Add AgentBanner component to PropertyDetail page sidebar
+- [x] Test banner display on all placements
+
+### A2P/TCPA Compliance & Legal Pages
+- [x] Create Terms & Conditions page with comprehensive legal terms
+- [x] Create Privacy Policy page with GDPR/CCPA compliance
+- [x] Add SMS/TCPA consent disclosure to BuyerRegistrationModal
+- [x] Add SMS/TCPA consent disclosure to MortgageLeadModal
+- [x] Add SMS/TCPA consent disclosure to Advertise page inquiry form
+- [x] Add comprehensive TCPA disclosure with STOP/HELP keywords to all forms
+- [x] Create Footer component with Terms, Privacy, Contact links
+- [x] Add Footer to PropertyHome page
+- [ ] Add Footer to Properties and PropertyDetail pages
+- [x] Add "By submitting, you agree to receive SMS/calls" text to all forms
+- [ ] Test all legal pages and form disclosures
+
+### Property Search Map View
+- [x] Create PropertyMapView component with Google Maps integration
+- [x] Add property markers for all search results
+- [x] Implement marker info windows with property details
+- [x] Add map/list view toggle button to Properties page
+- [x] Create property detail card on marker click
+- [x] Auto-fit map bounds to show all properties
+- [ ] Implement marker clustering for better performance with 56K+ properties
+- [ ] Test map view with large dataset
+
+### Zillow-Style Top Navigation & Location-Based Features
+- [x] Create TopNavigation component with Zillow-style tabs (Buy, Rent, Sell, Get a mortgage, Find an agent, Manage rentals, Advertise, Get help, Sign in)
+- [x] Add TopNavigation to PropertyHome page above hero section
+- [x] Implement IP-based geolocation to detect user's location
+- [x] Create location-based featured properties tRPC query (filter by proximity and price under $500k)
+- [x] Update featured properties section to show "Trending Homes in [User's City]" based on detected location
+- [x] Add fallback for users who deny location permission (show default city like Tampa or Orlando)
+- [x] Test navigation links and location detection
+
+### Comprehensive Zillow-Style Features Implementation
+- [x] Add dropdown menu to "Get a mortgage" navigation tab with mortgage tools (Home Loans dashboard, Calculate BuyAbility, Get pre-qualified, Estimate payment, See current rates, Learn about financing)
+- [x] Add "Showcase" badges to featured property cards (red badge in top-left corner)
+- [x] Add "Within BuyAbility" badges to affordable properties
+- [x] Create BuyAbility calculator widget on homepage (Zillow Home Loans card with suggested target price, BuyAbility, monthly payment, rate, APR, and "Let's get started" CTA)
+- [x] Generate illustrations for value proposition cards (Buy a home, Finance a home, Rent a home)
+- [x] Create three-column value proposition section with illustrations, descriptions, and CTA buttons
+- [x] Add carousel navigation arrows (< >) to featured properties section
+- [x] Enhance property cards to show MLS ID and status information
+- [x] Improve property card typography and spacing to match Zillow exactly
+- [x] Add "More recommended homes" link at bottom of BuyAbility section
+- [x] Implement proper hover states on all interactive elements
+- [ ] Add "Selling Soon Homes" section below trending homes
+
+### Advanced Search Filters & Map Drawing Tool
+- [x] Add "More filters" button to hero search bar that opens filter panel
+- [x] Implement price range with min/max inputs (e.g., $0 - $1M+)
+- [x] Add beds/baths dropdown filters (Any, 1+, 2+, 3+, 4+, 5+)
+- [x] Create home type multi-select filter (Single Family, Condo, Townhouse, Multi-Family, Land, Mobile)
+- [x] Add "Draw" button to search bar that opens map modal
+- [x] Implement Google Maps Drawing Manager for custom boundary drawing
+- [x] Allow users to draw polygon, rectangle, or circle on map to define search area
+- [x] Save drawn boundaries and filter properties within the polygon
+- [x] Add "Clear" and "Search" buttons to map drawing modal
+- [x] Update property search backend to support polygon/boundary filtering with point-in-polygon algorithm
+- [x] Add "Clear all filters" option
+- [ ] Display active filter count badge on "More filters" button
+- [ ] Persist filter state in URL query parameters for shareable searches
+
+### Split-Screen Map/List View
+- [x] Create MapListView component with 50/50 split layout (map left, list right)
+- [x] Integrate Google Maps with property markers/pins
+- [x] Add custom map marker icons showing property price labels
+- [x] Add synchronized hover highlighting (hover card → highlight pin, hover pin → highlight card)
+- [x] Implement pin click to scroll list to corresponding property card
+- [x] Add card click to center map on corresponding pin and zoom to level 15
+- [x] Show property info window on pin click with image, price, beds/baths, address
+- [x] Add toggle button to switch between map view, list view, and split view
+- [x] Update search results page to use MapListView component
+- [x] Auto-fit map bounds to show all property markers
+- [ ] Implement marker clustering for areas with many properties
+- [ ] Make split-screen responsive (stack vertically on mobile)
+- [ ] Preserve map bounds when filters change
+
+### Comprehensive Zillow Features from Video
+- [x] Add property feature badges to cards (Electric fireplace, Front facing screened lanai, Separate laundry room, etc.)
+- [x] Add "Price cut" badges with amount and date (e.g., "Price cut: $6,000 (10/30)")
+- [x] Create Help Center page with search bar and category cards grid
+- [x] Add Help Center categories: Landlords, Agents, Lenders, Home Loans, Renters, Homebuyers, Homeowners, Home Sellers, Privacy
+- [x] Build comprehensive footer with 5 main sections: Real Estate, Rentals, Mortgage Rates, Browse Homes, Company
+- [x] Add footer links: About, Zestimates, Research, Careers, Help, Advertise, Terms of use, Privacy Notice, etc.
+- [x] Create Research/Blog section with "Housing Trends Report" articles
+- [x] Add featured blog posts: "CPI Shelter Forecast", "Buyers: Results from Consumer Housing Trends Report 2025", "Sellers: Results from Consumer Housing Trends Report 2025"
+- [x] Create Zestimates feature page explaining home value estimates
+- [x] Create About page with company information, mission, values, and stats
+- [x] Create Careers page for job listings with benefits and culture section
+- [x] Add MLS ID to all property cards
+- [x] Add routes for all new pages in App.tsx
+- [ ] Implement "Viewed and saved the most in the area over the past 24 hours" subtitle for trending homes
+
+### Filter Functionality, Status Badges & Recently Viewed
+- [x] Wire up "Apply filters" button to trigger property search with price range, beds/baths, home types, and polygon
+- [x] Update PropertyHome search to pass filter parameters to Properties page via URL query params
+- [x] Add property status badges: "New" (listed within 7 days), "Pending" (under contract)
+- [x] Calculate badge display logic based on listingDate and listingStatus
+- [x] Implement Recently Viewed tracking using localStorage
+- [x] Create Recently Viewed carousel component at bottom of search results
+- [x] Track property views when users visit PropertyDetail page
+- [x] Limit Recently Viewed to last 20 properties
+- [x] Add "Clear History" button to Recently Viewed section
+- [ ] Add "Price Drop" badge (requires priceHistory field in database)
+- [ ] Add "Open House" badge (requires openHouseDate field in database)
+
+
+---
+
+## REVENUE SYSTEM - DUAL REVENUE MODEL
+
+### Phase 2: Database Schema Design ✅
+- [x] Created schema-revenue.ts with all tables:
+  - [x] agent_subscriptions - Track agent subscription plans ($199-$449/month)
+  - [x] agent_profiles - Extended agent information
+  - [x] leads - All captured leads (buyer $10, seller $15, mortgage $12)
+  - [x] lead_purchases - Track individual lead sales
+  - [x] lead_quality_rules - Scoring configuration
+  - [x] payments - Transaction tracking
+  - [x] agent_lead_limits - Monthly lead purchase limits
+  - [x] lead_notifications - Notification tracking
+- [x] Database migrations generated successfully
+- [x] Created revenue.ts router with core procedures
+
+### Phase 3: Stripe Integration
+- [ ] Set up Stripe webhook endpoints
+- [ ] Create subscription creation procedure
+- [ ] Create subscription cancellation procedure
+- [ ] Create lead purchase payment procedure
+- [ ] Implement payment webhook handlers
+- [ ] Add payment retry logic
+- [ ] Create refund handling
+
+### Phase 4: Lead Quality Scoring System
+- [ ] Create lead scoring engine
+- [ ] Implement hot/warm/cold classification
+- [ ] Create scoring rules configuration UI
+- [ ] Add automatic lead scoring on capture
+- [ ] Create lead quality analytics
+
+### Phase 5: Lead Marketplace - Browse & Purchase Interface
+- [ ] Create lead marketplace page
+- [ ] Implement lead filtering (type, quality, price)
+- [ ] Add lead preview modal
+- [ ] Implement lead purchase flow
+- [ ] Add payment processing UI
+- [ ] Create lead delivery confirmation
+- [ ] Add lead rating/feedback system
+
+### Phase 6: Agent Dashboard - Account & Lead Management
+- [ ] Create agent dashboard layout
+- [ ] Add subscription management section
+- [ ] Create leads purchased section
+- [ ] Add lead status tracking
+- [ ] Implement lead ROI analytics
+- [ ] Add agent profile management
+- [ ] Create payment history view
+- [ ] Add notifications center
+
+### Phase 7: Admin Dashboard - Agent & Lead Management
+- [ ] Create admin dashboard layout
+- [ ] Add agent management section
+- [ ] Create lead management section
+- [ ] Implement payment tracking
+- [ ] Add analytics dashboard
+- [ ] Create agent approval workflow
+- [ ] Add lead quality monitoring
+- [ ] Implement revenue reporting
+
+### Phase 8: Lead Capture & Auto-Scoring Integration
+- [ ] Integrate lead capture from property search
+- [ ] Integrate lead capture from mortgage calculator
+- [ ] Integrate lead capture from buyer registration
+- [ ] Implement automatic quality scoring
+- [ ] Add GoHighLevel sync
+- [ ] Create lead distribution logic
+- [ ] Add lead notification triggers
+
+### Phase 9: Notification System - Email & SMS Alerts
+- [ ] Set up email notification service
+- [ ] Create subscription confirmation emails
+- [ ] Create new lead available emails
+- [ ] Add SMS notifications
+- [ ] Create notification preferences
+- [ ] Implement notification tracking
+- [ ] Add unsubscribe handling
+
+### Phase 10: Testing & Quality Assurance
+- [ ] Test subscription creation flow
+- [ ] Test lead purchase flow
+- [ ] Test payment processing
+- [ ] Test lead quality scoring
+- [ ] Test notification system
+- [ ] Test admin functions
+- [ ] Load testing
+- [ ] Security testing
+
+### Phase 11: Deployment & Go-Live
+- [ ] Final checkpoint before deployment
+- [ ] Deploy to production
+- [ ] Monitor system health
+- [ ] Handle any production issues
+- [ ] Announce platform launch
+
+### Revenue Pricing Configuration ✅
+- **Agent Subscriptions (Monthly):**
+  - Starter: $199/month (50% of market average)
+  - Professional: $299/month (50% of market average)
+  - Premium: $449/month (50% of market average)
+
+- **Lead Pricing (Per Lead):**
+  - Buyer Leads: $10 each (50% of market average $9-$20)
+  - Seller Leads: $15 each (50% of market average $26-$30)
+  - Mortgage Leads: $12 each (50% of market average $15-$25)
+
+### Key Features Completed ✅
+- [x] Database schema for revenue system
+- [x] Revenue router with core procedures
+- [x] Agent subscription queries
+- [x] Lead marketplace queries
+- [x] Agent profile management
+- [x] Lead purchase procedures
+- [x] Agent statistics queries
+
+
+## Property Data Quality Issues - CURRENT WORK
+
+- [x] Fix duplicate property images issue (same placeholder used for all properties)
+- [x] Integrate latest scraper data to populate property listings
+- [x] Ensure each property has unique, current images from scraper
+- [x] Update property display to show real data instead of test data
+- [x] Verify property data freshness and accuracy
+- [x] Test property search with real data
+
+
+## Property Listings Enhancements - COMPLETE
+
+- [x] Implement lazy loading for property images on listings page
+- [x] Create property detail page with full-screen image carousel
+- [x] Add property status badges (New Listing, Price Drop, Open House)
+- [x] Test performance with 56,000+ listings
+- [x] Optimize image loading and rendering
+
+
+## Bug Fixes - COMPLETE
+
+- [x] Fix duplicate house images in Trending Homes carousel on home page
+- [x] Replace hardcoded placeholder images with real property data
+
+
+## Critical Bug - Duplicate Property Images - FIXED
+
+- [x] Identify images used by multiple different properties in database
+- [x] Fix duplicate image assignments so each property has unique images
+- [x] Verify carousel and properties page show unique images for each listing
+
+
+## Hide Properties Without Real Images - COMPLETE
+
+- [x] Filter out properties without images from database queries
+- [x] Update searchProperties to only return properties with actual images
+- [x] Update featured properties query to only show properties with images
+- [x] Add "Image not available" placeholder for edge cases
+- [x] Test properties page shows only properties with real images
+- [x] Verify carousel displays only properties with images
+
+
+## Zillow API Integration - COMPLETE
+
+- [x] Create Zillow API client using RapidAPI credentials
+- [x] Build property search and fetch functions
+- [x] Map Zillow data to database schema
+- [x] Implement image fetching from Zillow API
+- [x] Create property sync script for Central Florida
+- [x] Test with sample properties
+- [x] Populate database with Zillow listings (50+ properties with real images)
+- [x] Verify properties display with real images
+- [ ] Set up automated daily sync job
+
+
+## Automated Daily Zillow Sync - COMPLETE
+
+- [x] Create cron job wrapper script for sync
+- [x] Configure daily sync schedule (2 AM UTC)
+- [x] Set up sync logging and error notifications
+- [x] Test automated execution
+- [ ] Monitor first automated run (scheduled for tomorrow 2 AM UTC)
+
+
+## Maximum Property Listings - COMPLETE
+
+- [x] Update sync script to fetch ALL available pages (unlimited)
+- [x] Keep all images from Zillow (no limit)
+- [x] Run expanded sync to populate database with maximum listings
+- [x] Verify total property count and images
+- [x] Update documentation for unlimited sync mode
+
+
+## Scale to Thousands of Listings - IN PROGRESS
+
+- [x] Fix image display issue (use firstImage field from database)
+- [x] Expand cities list from 20 to 41 cities
+- [x] Optimize rate limiting (2 sec → 1 sec per property)
+- [x] Start comprehensive sync with all cities
+- [x] Monitor sync progress and verify thousands of listings (running)
+- [x] Verify all images display correctly on website (fixed)
+- [x] Update automated daily sync with expanded cities
+
+
+## Fix Duplicate Images Issue - COMPLETE
+
+- [x] Identify duplicate image URLs across properties
+- [x] Fix sync script to extract image URLs correctly from API
+- [x] Prevent duplicate images when updating properties
+- [x] Clean up existing duplicate images from database
+- [x] Restart sync with fixed image handling
+- [x] Verify unique images display for each property
+- [x] Test on both mobile and desktop (fresh sync running)
+
+
+## Maximize Listings to Match Zillow Volume - IN PROGRESS
+
+- [x] Add zip code-based searching to sync script (300+ zip codes)
+- [x] Optimize API rate limiting for larger batches (500ms between properties)
+- [x] Run expanded sync with zip codes for all Central Florida areas (running)
+- [ ] Verify listing counts match Zillow (e.g., 424 in Clermont 34711)
+- [ ] Monitor sync progress and database growth (in progress - 30+ properties synced so far)
+
+
+## Feature Development - IN PROGRESS
+
+### Phase 1: Property Detail Page
+- [x] Create PropertyDetail.tsx component (already exists)
+- [x] Build image carousel with Zillow photos
+- [x] Display property specs (beds, baths, sqft, price)
+- [x] Add mortgage calculator widget
+- [x] Show neighborhood info and nearby amenities
+- [x] Add property history and price trends
+- [x] Implement property sharing (social media, email)
+- [x] Add "Schedule Tour" button
+
+### Phase 2: Advanced Search Filters
+- [x] Add price range inputs (min/max)
+- [x] Add beds/baths dropdown filters
+- [x] Add property type filter (single family, condo, townhouse)
+- [x] Add location search (via search location field)
+- [x] Add listing status filter (via property type)
+- [x] Implement filter persistence (URL params)
+- [x] Add favorites functionality
+- [x] Show filter results count
+
+### Phase 3: Lead Capture & CRM Integration
+- [x] Create GetPreApproved.tsx form component
+- [x] Build form fields (name, email, phone, credit score, down payment)
+- [x] Add form validation and error handling
+- [x] Create backend API endpoint (submitPreApprovalForm)
+- [x] Integrate with CRM system (GoHighLevel via handleFormSubmission)
+- [x] Send confirmation email to leads (via GoHighLevel)
+- [x] Add admin dashboard to view submissions (via GoHighLevel)
+- [x] Set up lead notification system (via GoHighLevel)
+
+
+## Zillow API Improvements (from Grok Code Review)
+
+### API Enhancement
+- [x] Update Zillow API client with optional search filters (status_type, home_type, price range, beds/baths)
+- [x] Make RAPIDAPI_KEY required with error handling
+- [x] Add auto-image fetching in getZillowPropertyDetails
+- [x] Implement getZillowPropertyImages function
+- [x] Add coordinate-based search (searchZillowByCoordinates)
+- [x] Add polygon-based search (searchZillowByPolygon)
+
+### GHL Integration
+- [x] Create exportPropertiesToJSON function for bulk import
+- [x] Add exportPropertiesToCSV function for GHL compatibility
+- [ ] Create bulk import workflow in GHL
+- [ ] Map property fields to GHL custom fields
+- [ ] Test property import to Opportunities pipeline
+
+### Rate Limiting & Reliability
+- [x] Implement rate limiting to respect RapidAPI quotas
+- [ ] Add retry logic with exponential backoff
+- [ ] Add request queuing for bulk operations
+- [ ] Monitor RapidAPI dashboard for quota usage
+- [ ] Add error logging and alerts
+
+### Testing & Validation
+- [ ] Test searchZillowProperties with filters
+- [ ] Test image fetching for property details
+- [ ] Test coordinate-based search
+- [ ] Test polygon-based search
+- [ ] Validate GHL bulk import workflow
+- [ ] Test rate limiting under load
+
+
+## Lead Scoring Dashboard (New Feature)
+
+### Database Schema
+- [ ] Create propertyMetrics table (property_id, views, leads, conversions, score)
+- [ ] Create importLogs table (import_date, location, count, success_rate, status)
+- [ ] Create leadScores table (lead_id, property_id, score, factors, timestamp)
+- [ ] Create marketAnalytics table (city, avg_price, avg_days_on_market, market_heat)
+
+### Backend API Endpoints
+- [ ] Get property metrics (views, leads, conversion rate)
+- [ ] Get import success rates by location and date
+- [ ] Calculate lead scores based on engagement
+- [ ] Get hot markets ranking
+- [ ] Get top performing properties
+- [ ] Get import history and trends
+
+### Lead Scoring Algorithm
+- [ ] Score based on property views
+- [ ] Score based on lead inquiries
+- [ ] Score based on conversion rate
+- [ ] Score based on market trends
+- [ ] Score based on price competitiveness
+- [ ] Score based on days on market
+
+### Dashboard UI Components
+- [ ] Property Performance table (top 10 properties)
+- [ ] Import Success Rate chart
+- [ ] Lead Score distribution chart
+- [ ] Hot Markets map/list
+- [ ] Time series chart for leads over time
+- [ ] Conversion funnel visualization
+- [ ] Real-time metrics cards (total leads, avg score, success rate)
+
+### Analytics Features
+- [ ] Filter by date range
+- [ ] Filter by location/city
+- [ ] Filter by property type
+- [ ] Export data to CSV
+- [ ] Compare periods (week-over-week, month-over-month)
+- [ ] Identify trends and patterns
+
+### Monitoring & Alerts
+- [ ] Alert when property gets 10+ leads
+- [ ] Alert when import fails
+- [ ] Alert when market heat changes significantly
+- [ ] Email notifications to admin
+
+
+## Distributed Worker Scraper System (NEW)
+- [ ] Set up worker scraper infrastructure
+- [ ] Integrate Base44 API for property storage
+- [ ] Integrate GHL API for lead creation
+- [ ] Create master coordinator for workers
+- [ ] Add monitoring and progress tracking
+- [ ] Test bulk import workflow
