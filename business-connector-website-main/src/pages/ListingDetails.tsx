@@ -21,7 +21,7 @@ function ListingDetails() {
       <p>{listing.beds} beds | {listing.baths} baths | {listing.sqft} sqft</p>
       <p>{listing.address}</p>
       <button className="bg-blue-600 text-white px-4 py-2" onClick={() => {
-        axios.post('https://your-ghl-domain/webhooks/lead', { property: listing, key: import.meta.env.VITE_GOHIGHLEVEL_API_KEY });
+        axios.post('https://your-ghl-domain/webhooks/lead', { property: listing });
       }}>Send Lead to GHL</button>
     </div>
   );
