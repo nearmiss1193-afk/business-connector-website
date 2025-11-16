@@ -6,7 +6,7 @@
   },
   "functions": {
     "server/_core/index.ts": {
-      "runtime": "@vercel/node"
+      "runtime": "@vercel/node@18"
     }
   },
   "routes": [
