@@ -1,0 +1,110 @@
+{
+  "query": "SELECT \n  image_url,\n  COUNT(DISTINCT property_id) as num_properties,\n  GROUP_CONCAT(DISTINCT property_id) as property_ids\nFROM property_images\nGROUP BY image_url\nHAVING COUNT(DISTINCT property_id) > 1\nLIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  image_url,\n  COUNT(DISTINCT property_id) as num_properties,\n  GROUP_CONCAT(DISTINCT property_id) as property_ids\nFROM property_images\nGROUP BY image_url\nHAVING COUNT(DISTINCT property_id) > 1\nLIMIT 20;",
+  "rows": [
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/688e16a9d262db92c855af724cce5c3e-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180175,180181"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/1a5746fdc99feb919b299f469c28c57b-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180175,180181"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/91aa0e62bd44bf670a75727cadca82ed-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180175,180181"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/7ad127731a4ee6010fc00e2c23a9bd33-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180175,180181"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/dacdcdbf658770cd31cb6d8dba7786f3-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180175,180181"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/951435ac469134bdc82e8138b263cd59-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/b0dd7c01bd49f422a5c1abcee42c18ed-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/4a1fb8b4b4f8ea8ac3b5c275b476e84a-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/b0cd920dc71c531a332185b7fb5ecf6a-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/6001353cf36e2843c46e0deb074cdacb-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/c64e6fc0cab3df05885528e5ef345c39-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/8a74298329868c7a7d587f132a7c3b9e-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/0dbcff2c0d0dd2f53fa808da6cb95a4b-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/de7f0bf833cb70d99739ebe9568aa9a1-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/54d6b226775118aa0862b7860d389354-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/f83ae72db9de56323cf42073ca583719-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/2a0dc03415f3ace4f575783ef72663d8-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/823b159ffc734e9c11c5f3c57c52b64c-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180263,180723"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/9bf114916bab13a793a0dbb7e9d82e88-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180530,180797"
+    },
+    {
+      "image_url": "https://photos.zillowstatic.com/fp/c6d77094ae8d25c056d8c62a69c88ca8-cc_ft_1536.jpg",
+      "num_properties": "2",
+      "property_ids": "180688,180901"
+    }
+  ],
+  "messages": [],
+  "stdout": "image_url\tnum_properties\tproperty_ids\nhttps://photos.zillowstatic.com/fp/688e16a9d262db92c855af724cce5c3e-cc_ft_1536.jpg\t2\t180175,180181\nhttps://photos.zillowstatic.com/fp/1a5746fdc99feb919b299f469c28c57b-cc_ft_1536.jpg\t2\t180175,180181\nhttps://photos.zillowstatic.com/fp/91aa0e62bd44bf670a75727cadca82ed-cc_ft_1536.jpg\t2\t180175,180181\nhttps://photos.zillowstatic.com/fp/7ad127731a4ee6010fc00e2c23a9bd33-cc_ft_1536.jpg\t2\t180175,180181\nhttps://photos.zillowstatic.com/fp/dacdcdbf658770cd31cb6d8dba7786f3-cc_ft_1536.jpg\t2\t180175,180181\nhttps://photos.zillowstatic.com/fp/951435ac469134bdc82e8138b263cd59-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/b0dd7c01bd49f422a5c1abcee42c18ed-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/4a1fb8b4b4f8ea8ac3b5c275b476e84a-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/b0cd920dc71c531a332185b7fb5ecf6a-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/6001353cf36e2843c46e0deb074cdacb-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/c64e6fc0cab3df05885528e5ef345c39-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/8a74298329868c7a7d587f132a7c3b9e-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/0dbcff2c0d0dd2f53fa808da6cb95a4b-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/de7f0bf833cb70d99739ebe9568aa9a1-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/54d6b226775118aa0862b7860d389354-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/f83ae72db9de56323cf42073ca583719-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/2a0dc03415f3ace4f575783ef72663d8-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/823b159ffc734e9c11c5f3c57c52b64c-cc_ft_1536.jpg\t2\t180263,180723\nhttps://photos.zillowstatic.com/fp/9bf114916bab13a793a0dbb7e9d82e88-cc_ft_1536.jpg\t2\t180530,180797\nhttps://photos.zillowstatic.com/fp/c6d77094ae8d25c056d8c62a69c88ca8-cc_ft_1536.jpg\t2\t180688,180901\n",
+  "stderr": "",
+  "execution_time_ms": 539
+}

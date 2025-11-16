@@ -1,0 +1,1575 @@
+{
+  "query": "SELECT city, zip_code, COUNT(*) as count FROM properties GROUP BY city, zip_code ORDER BY count DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT city, zip_code, COUNT(*) as count FROM properties GROUP BY city, zip_code ORDER BY count DESC;",
+  "rows": [
+    {
+      "city": "Tampa",
+      "zip_code": "",
+      "count": "713"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34108",
+      "count": "584"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34120",
+      "count": "582"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "34746",
+      "count": "575"
+    },
+    {
+      "city": "Apopka",
+      "zip_code": "32712",
+      "count": "569"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34112",
+      "count": "569"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33905",
+      "count": "568"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33810",
+      "count": "564"
+    },
+    {
+      "city": "Haines City",
+      "zip_code": "33844",
+      "count": "562"
+    },
+    {
+      "city": "Winter Haven",
+      "zip_code": "33884",
+      "count": "559"
+    },
+    {
+      "city": "North Fort Myers",
+      "zip_code": "33917",
+      "count": "558"
+    },
+    {
+      "city": "Winter Haven",
+      "zip_code": "33881",
+      "count": "555"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "33909",
+      "count": "554"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33908",
+      "count": "554"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "33993",
+      "count": "553"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34102",
+      "count": "552"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34119",
+      "count": "548"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33919",
+      "count": "548"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "33914",
+      "count": "546"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "33991",
+      "count": "546"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "33904",
+      "count": "539"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34110",
+      "count": "534"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34236",
+      "count": "531"
+    },
+    {
+      "city": "Auburndale",
+      "zip_code": "33823",
+      "count": "529"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33913",
+      "count": "517"
+    },
+    {
+      "city": "Clermont",
+      "zip_code": "34711",
+      "count": "515"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34114",
+      "count": "514"
+    },
+    {
+      "city": "Ormond Beach",
+      "zip_code": "32174",
+      "count": "499"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34231",
+      "count": "472"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34113",
+      "count": "465"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "34758",
+      "count": "465"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34103",
+      "count": "460"
+    },
+    {
+      "city": "Clermont",
+      "zip_code": "34714",
+      "count": "453"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34203",
+      "count": "449"
+    },
+    {
+      "city": "Wesley Chapel",
+      "zip_code": "33545",
+      "count": "436"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "34747",
+      "count": "424"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34242",
+      "count": "421"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34209",
+      "count": "417"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "33990",
+      "count": "413"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "34744",
+      "count": "413"
+    },
+    {
+      "city": "Wesley Chapel",
+      "zip_code": "33543",
+      "count": "408"
+    },
+    {
+      "city": "Apopka",
+      "zip_code": "32703",
+      "count": "404"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34207",
+      "count": "400"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33703",
+      "count": "398"
+    },
+    {
+      "city": "Riverview",
+      "zip_code": "33578",
+      "count": "384"
+    },
+    {
+      "city": "Riverview",
+      "zip_code": "33579",
+      "count": "373"
+    },
+    {
+      "city": "Deltona",
+      "zip_code": "32725",
+      "count": "370"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32822",
+      "count": "370"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34210",
+      "count": "364"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34211",
+      "count": "359"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34117",
+      "count": "359"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "32118",
+      "count": "357"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33801",
+      "count": "352"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34240",
+      "count": "351"
+    },
+    {
+      "city": "Deltona",
+      "zip_code": "32738",
+      "count": "351"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33702",
+      "count": "349"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33647",
+      "count": "346"
+    },
+    {
+      "city": "Port Orange",
+      "zip_code": "32127",
+      "count": "341"
+    },
+    {
+      "city": "Ormond Beach",
+      "zip_code": "32176",
+      "count": "340"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34109",
+      "count": "339"
+    },
+    {
+      "city": "Clearwater Beach",
+      "zip_code": "33767",
+      "count": "338"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33611",
+      "count": "335"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34238",
+      "count": "325"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33803",
+      "count": "323"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34243",
+      "count": "317"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33629",
+      "count": "316"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34241",
+      "count": "316"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34234",
+      "count": "315"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33615",
+      "count": "311"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34105",
+      "count": "310"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33764",
+      "count": "303"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32832",
+      "count": "302"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34208",
+      "count": "299"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32824",
+      "count": "298"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "32124",
+      "count": "298"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33602",
+      "count": "298"
+    },
+    {
+      "city": "Winter Haven",
+      "zip_code": "33880",
+      "count": "293"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33610",
+      "count": "291"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33815",
+      "count": "291"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34212",
+      "count": "289"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33916",
+      "count": "289"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33604",
+      "count": "288"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32835",
+      "count": "288"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "34741",
+      "count": "286"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33709",
+      "count": "285"
+    },
+    {
+      "city": "Plant City",
+      "zip_code": "33565",
+      "count": "280"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33705",
+      "count": "275"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "32114",
+      "count": "275"
+    },
+    {
+      "city": "Port Orange",
+      "zip_code": "32129",
+      "count": "274"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33701",
+      "count": "274"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34205",
+      "count": "269"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32819",
+      "count": "268"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32820",
+      "count": "258"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33901",
+      "count": "258"
+    },
+    {
+      "city": "Saint Pete Beach",
+      "zip_code": "33706",
+      "count": "257"
+    },
+    {
+      "city": "Lakewood Ranch",
+      "zip_code": "34202",
+      "count": "257"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33714",
+      "count": "257"
+    },
+    {
+      "city": "Brandon",
+      "zip_code": "33511",
+      "count": "254"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33907",
+      "count": "247"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32811",
+      "count": "245"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32821",
+      "count": "245"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32827",
+      "count": "244"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33713",
+      "count": "243"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34232",
+      "count": "241"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33710",
+      "count": "241"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33811",
+      "count": "240"
+    },
+    {
+      "city": "Lakewood Ranch",
+      "zip_code": "34211",
+      "count": "239"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33763",
+      "count": "235"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32828",
+      "count": "229"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33809",
+      "count": "228"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33761",
+      "count": "224"
+    },
+    {
+      "city": "Riverview",
+      "zip_code": "33569",
+      "count": "221"
+    },
+    {
+      "city": "Winter Park",
+      "zip_code": "32789",
+      "count": "215"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34239",
+      "count": "215"
+    },
+    {
+      "city": "Treasure Island",
+      "zip_code": "33706",
+      "count": "215"
+    },
+    {
+      "city": "Port Orange",
+      "zip_code": "32128",
+      "count": "214"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32808",
+      "count": "210"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33711",
+      "count": "208"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33813",
+      "count": "207"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33609",
+      "count": "207"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32839",
+      "count": "207"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33704",
+      "count": "203"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32825",
+      "count": "200"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33755",
+      "count": "200"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33715",
+      "count": "197"
+    },
+    {
+      "city": "Minneola",
+      "zip_code": "34715",
+      "count": "197"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34104",
+      "count": "196"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33912",
+      "count": "195"
+    },
+    {
+      "city": "Winter Park",
+      "zip_code": "32792",
+      "count": "194"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32806",
+      "count": "191"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32801",
+      "count": "187"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32833",
+      "count": "186"
+    },
+    {
+      "city": "Altamonte Springs",
+      "zip_code": "32714",
+      "count": "185"
+    },
+    {
+      "city": "Ocoee",
+      "zip_code": "34761",
+      "count": "185"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32837",
+      "count": "185"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "32117",
+      "count": "185"
+    },
+    {
+      "city": "Madeira Beach",
+      "zip_code": "33708",
+      "count": "184"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33756",
+      "count": "184"
+    },
+    {
+      "city": "Lutz",
+      "zip_code": "33558",
+      "count": "184"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32836",
+      "count": "183"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33614",
+      "count": "174"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33606",
+      "count": "170"
+    },
+    {
+      "city": "Wesley Chapel",
+      "zip_code": "33544",
+      "count": "169"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32804",
+      "count": "169"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33805",
+      "count": "169"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33624",
+      "count": "169"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33712",
+      "count": "169"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33603",
+      "count": "168"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34233",
+      "count": "168"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33619",
+      "count": "168"
+    },
+    {
+      "city": "South Daytona",
+      "zip_code": "32119",
+      "count": "162"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34235",
+      "count": "162"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33607",
+      "count": "160"
+    },
+    {
+      "city": "Altamonte Springs",
+      "zip_code": "32701",
+      "count": "158"
+    },
+    {
+      "city": "Gulfport",
+      "zip_code": "33707",
+      "count": "158"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33605",
+      "count": "157"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32818",
+      "count": "157"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32803",
+      "count": "157"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33618",
+      "count": "157"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "34237",
+      "count": "152"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "32119",
+      "count": "148"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32829",
+      "count": "148"
+    },
+    {
+      "city": "Plant City",
+      "zip_code": "33566",
+      "count": "147"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33612",
+      "count": "144"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32812",
+      "count": "141"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33708",
+      "count": "140"
+    },
+    {
+      "city": "Plant City",
+      "zip_code": "33563",
+      "count": "140"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33625",
+      "count": "137"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32826",
+      "count": "136"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33760",
+      "count": "135"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33759",
+      "count": "135"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33635",
+      "count": "133"
+    },
+    {
+      "city": "Holly Hill",
+      "zip_code": "32117",
+      "count": "129"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33616",
+      "count": "127"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "34743",
+      "count": "127"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33613",
+      "count": "126"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32807",
+      "count": "124"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32810",
+      "count": "124"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32817",
+      "count": "122"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33626",
+      "count": "121"
+    },
+    {
+      "city": "Naples",
+      "zip_code": "34116",
+      "count": "121"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33617",
+      "count": "118"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "",
+      "count": "116"
+    },
+    {
+      "city": "South Pasadena",
+      "zip_code": "33707",
+      "count": "116"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "",
+      "count": "115"
+    },
+    {
+      "city": "Lutz",
+      "zip_code": "33549",
+      "count": "114"
+    },
+    {
+      "city": "Brandon",
+      "zip_code": "33510",
+      "count": "113"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34202",
+      "count": "112"
+    },
+    {
+      "city": "Clermont",
+      "zip_code": "34715",
+      "count": "108"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32805",
+      "count": "106"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33707",
+      "count": "106"
+    },
+    {
+      "city": "Daytona Beach Shores",
+      "zip_code": "32118",
+      "count": "103"
+    },
+    {
+      "city": "Ponce Inlet",
+      "zip_code": "32127",
+      "count": "100"
+    },
+    {
+      "city": "Redington Shores",
+      "zip_code": "33708",
+      "count": "97"
+    },
+    {
+      "city": "FORT MYERS",
+      "zip_code": "",
+      "count": "92"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33765",
+      "count": "91"
+    },
+    {
+      "city": "Tierra Verde",
+      "zip_code": "33715",
+      "count": "89"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32809",
+      "count": "88"
+    },
+    {
+      "city": "Deland",
+      "zip_code": "",
+      "count": "86"
+    },
+    {
+      "city": "Temple Terrace",
+      "zip_code": "33617",
+      "count": "85"
+    },
+    {
+      "city": "Dover",
+      "zip_code": "33527",
+      "count": "82"
+    },
+    {
+      "city": "Celebration",
+      "zip_code": "34747",
+      "count": "75"
+    },
+    {
+      "city": "Belleair",
+      "zip_code": "33756",
+      "count": "74"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33812",
+      "count": "73"
+    },
+    {
+      "city": "Reunion",
+      "zip_code": "34747",
+      "count": "72"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "",
+      "count": "69"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33762",
+      "count": "69"
+    },
+    {
+      "city": "Sarasota",
+      "zip_code": "",
+      "count": "69"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33716",
+      "count": "69"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33634",
+      "count": "67"
+    },
+    {
+      "city": "Clearwater",
+      "zip_code": "33767",
+      "count": "59"
+    },
+    {
+      "city": "Plant City",
+      "zip_code": "33567",
+      "count": "55"
+    },
+    {
+      "city": "Miromar Lakes",
+      "zip_code": "33913",
+      "count": "53"
+    },
+    {
+      "city": "Lutz",
+      "zip_code": "33559",
+      "count": "53"
+    },
+    {
+      "city": "Redington Beach",
+      "zip_code": "33708",
+      "count": "50"
+    },
+    {
+      "city": "Winter Park",
+      "zip_code": "",
+      "count": "49"
+    },
+    {
+      "city": "Lutz",
+      "zip_code": "33548",
+      "count": "46"
+    },
+    {
+      "city": "University Park",
+      "zip_code": "34201",
+      "count": "44"
+    },
+    {
+      "city": "Cape Coral",
+      "zip_code": "",
+      "count": "43"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "",
+      "count": "42"
+    },
+    {
+      "city": "Port Orange",
+      "zip_code": "",
+      "count": "39"
+    },
+    {
+      "city": "Kenneth City",
+      "zip_code": "33709",
+      "count": "39"
+    },
+    {
+      "city": "Tampa",
+      "zip_code": "33637",
+      "count": "37"
+    },
+    {
+      "city": "Temple Terrace",
+      "zip_code": "33637",
+      "count": "36"
+    },
+    {
+      "city": "Ocala",
+      "zip_code": "",
+      "count": "28"
+    },
+    {
+      "city": "NAPLES",
+      "zip_code": "",
+      "count": "27"
+    },
+    {
+      "city": "North Redington Beach",
+      "zip_code": "33708",
+      "count": "26"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "",
+      "count": "24"
+    },
+    {
+      "city": "Bradenton",
+      "zip_code": "34201",
+      "count": "24"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "",
+      "count": "23"
+    },
+    {
+      "city": "Winter Haven",
+      "zip_code": "",
+      "count": "22"
+    },
+    {
+      "city": "Gulfport",
+      "zip_code": "33711",
+      "count": "20"
+    },
+    {
+      "city": "Lakewood Ranch",
+      "zip_code": "34240",
+      "count": "18"
+    },
+    {
+      "city": "Lake Hamilton",
+      "zip_code": "33844",
+      "count": "17"
+    },
+    {
+      "city": "Saint Petersburg",
+      "zip_code": "33706",
+      "count": "16"
+    },
+    {
+      "city": "Belle Isle",
+      "zip_code": "32812",
+      "count": "16"
+    },
+    {
+      "city": "Celebration",
+      "zip_code": "",
+      "count": "13"
+    },
+    {
+      "city": "Matlacha",
+      "zip_code": "33993",
+      "count": "10"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33917",
+      "count": "9"
+    },
+    {
+      "city": "Belle Isle",
+      "zip_code": "32809",
+      "count": "9"
+    },
+    {
+      "city": "Enterprise",
+      "zip_code": "32725",
+      "count": "9"
+    },
+    {
+      "city": "Lakewood Ranch",
+      "zip_code": "34212",
+      "count": "9"
+    },
+    {
+      "city": "Zephyrhills",
+      "zip_code": "33543",
+      "count": "8"
+    },
+    {
+      "city": "Golden Oak",
+      "zip_code": "32836",
+      "count": "7"
+    },
+    {
+      "city": "Saint Pete",
+      "zip_code": "33708",
+      "count": "7"
+    },
+    {
+      "city": "Matlacha Isles",
+      "zip_code": "33991",
+      "count": "6"
+    },
+    {
+      "city": "Siesta Key",
+      "zip_code": "34242",
+      "count": "6"
+    },
+    {
+      "city": "Largo",
+      "zip_code": "33756",
+      "count": "5"
+    },
+    {
+      "city": "Seminole",
+      "zip_code": "33708",
+      "count": "4"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "34761",
+      "count": "3"
+    },
+    {
+      "city": "Saint Pete Beach",
+      "zip_code": "33707",
+      "count": "3"
+    },
+    {
+      "city": "Coral",
+      "zip_code": "",
+      "count": "3"
+    },
+    {
+      "city": "Zephyrhills",
+      "zip_code": "33544",
+      "count": "3"
+    },
+    {
+      "city": "Lehigh Acres",
+      "zip_code": "",
+      "count": "2"
+    },
+    {
+      "city": "Rocky Point",
+      "zip_code": "",
+      "count": "2"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "32821",
+      "count": "2"
+    },
+    {
+      "city": "Lithia",
+      "zip_code": "33579",
+      "count": "2"
+    },
+    {
+      "city": "Wilbur By the Sea",
+      "zip_code": "32127",
+      "count": "2"
+    },
+    {
+      "city": "Poinciana",
+      "zip_code": "34758",
+      "count": "2"
+    },
+    {
+      "city": "Winter Haven",
+      "zip_code": "33844",
+      "count": "2"
+    },
+    {
+      "city": "Pt Orange",
+      "zip_code": "",
+      "count": "2"
+    },
+    {
+      "city": "Zephyrhills",
+      "zip_code": "33545",
+      "count": "2"
+    },
+    {
+      "city": "Winter H",
+      "zip_code": "33884",
+      "count": "1"
+    },
+    {
+      "city": "Lakeland",
+      "zip_code": "33603",
+      "count": "1"
+    },
+    {
+      "city": "Valrico",
+      "zip_code": "33511",
+      "count": "1"
+    },
+    {
+      "city": "Other City Not In The State Of Florida",
+      "zip_code": "",
+      "count": "1"
+    },
+    {
+      "city": "Eloise",
+      "zip_code": "33880",
+      "count": "1"
+    },
+    {
+      "city": "Saint Pete",
+      "zip_code": "33709",
+      "count": "1"
+    },
+    {
+      "city": "Dunnellon",
+      "zip_code": "",
+      "count": "1"
+    },
+    {
+      "city": "Winter Garden",
+      "zip_code": "",
+      "count": "1"
+    },
+    {
+      "city": "Pinellas Park",
+      "zip_code": "33709",
+      "count": "1"
+    },
+    {
+      "city": "Daytona Beach Shores",
+      "zip_code": "32119",
+      "count": "1"
+    },
+    {
+      "city": "Fl 33566",
+      "zip_code": "33565",
+      "count": "1"
+    },
+    {
+      "city": "Midway Road",
+      "zip_code": "33844",
+      "count": "1"
+    },
+    {
+      "city": "Lehigh Acres",
+      "zip_code": "33905",
+      "count": "1"
+    },
+    {
+      "city": "Lehigh Acres",
+      "zip_code": "33907",
+      "count": "1"
+    },
+    {
+      "city": "Waldo",
+      "zip_code": "34231",
+      "count": "1"
+    },
+    {
+      "city": "De Leon Springs",
+      "zip_code": "",
+      "count": "1"
+    },
+    {
+      "city": "US Highway 17",
+      "zip_code": "33844",
+      "count": "1"
+    },
+    {
+      "city": "Lutz",
+      "zip_code": "",
+      "count": "1"
+    },
+    {
+      "city": "Jennings Rd",
+      "zip_code": "33844",
+      "count": "1"
+    },
+    {
+      "city": "Davenport",
+      "zip_code": "",
+      "count": "1"
+    },
+    {
+      "city": "Saint Pete",
+      "zip_code": "33713",
+      "count": "1"
+    },
+    {
+      "city": "Zep",
+      "zip_code": "33543",
+      "count": "1"
+    },
+    {
+      "city": "Florida Ridge",
+      "zip_code": "34113",
+      "count": "1"
+    },
+    {
+      "city": "Daytona Beach",
+      "zip_code": "32127",
+      "count": "1"
+    },
+    {
+      "city": "Miromar Lakes",
+      "zip_code": "33919",
+      "count": "1"
+    },
+    {
+      "city": "Hialeah",
+      "zip_code": "33909",
+      "count": "1"
+    },
+    {
+      "city": "St. Petersburg",
+      "zip_code": "33738",
+      "count": "1"
+    },
+    {
+      "city": "Everglades City",
+      "zip_code": "34108",
+      "count": "1"
+    },
+    {
+      "city": "Hugh Price Reduced For Quick Sale",
+      "zip_code": "33565",
+      "count": "1"
+    },
+    {
+      "city": "Kissimmee",
+      "zip_code": "33051",
+      "count": "1"
+    },
+    {
+      "city": "Edgewood",
+      "zip_code": "32839",
+      "count": "1"
+    },
+    {
+      "city": "Florida Ridge",
+      "zip_code": "34231",
+      "count": "1"
+    },
+    {
+      "city": "Orlando",
+      "zip_code": "32831",
+      "count": "1"
+    },
+    {
+      "city": "Estero",
+      "zip_code": "33905",
+      "count": "1"
+    },
+    {
+      "city": "Owner Financing",
+      "zip_code": "33565",
+      "count": "1"
+    },
+    {
+      "city": "Everglades City",
+      "zip_code": "34110",
+      "count": "1"
+    },
+    {
+      "city": "Largo",
+      "zip_code": "33764",
+      "count": "1"
+    },
+    {
+      "city": "Lockhart",
+      "zip_code": "32810",
+      "count": "1"
+    },
+    {
+      "city": "Edgewood",
+      "zip_code": "32809",
+      "count": "1"
+    },
+    {
+      "city": "Palatka",
+      "zip_code": "32129",
+      "count": "1"
+    },
+    {
+      "city": "North Fort Myers",
+      "zip_code": "33901",
+      "count": "1"
+    },
+    {
+      "city": "Fort Myers",
+      "zip_code": "33991",
+      "count": "1"
+    },
+    {
+      "city": "Cusseta",
+      "zip_code": "32805",
+      "count": "1"
+    },
+    {
+      "city": "Ormond Beach",
+      "zip_code": "32118",
+      "count": "1"
+    },
+    {
+      "city": "Mirom",
+      "zip_code": "33913",
+      "count": "1"
+    },
+    {
+      "city": "De Leon Springs",
+      "zip_code": "32120",
+      "count": "1"
+    },
+    {
+      "city": "North Port",
+      "zip_code": "34236",
+      "count": "1"
+    },
+    {
+      "city": "North Fort Myers",
+      "zip_code": "33909",
+      "count": "1"
+    },
+    {
+      "city": "Largo",
+      "zip_code": "33755",
+      "count": "1"
+    },
+    {
+      "city": "Lehigh Acres",
+      "zip_code": "33913",
+      "count": "1"
+    },
+    {
+      "city": "Ruskin",
+      "zip_code": "33619",
+      "count": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\tzip_code\tcount\nTampa\t\t713\nNaples\t34108\t584\nNaples\t34120\t582\nKissimmee\t34746\t575\nApopka\t32712\t569\nNaples\t34112\t569\nFort Myers\t33905\t568\nLakeland\t33810\t564\nHaines City\t33844\t562\nWinter Haven\t33884\t559\nNorth Fort Myers\t33917\t558\nWinter Haven\t33881\t555\nCape Coral\t33909\t554\nFort Myers\t33908\t554\nCape Coral\t33993\t553\nNaples\t34102\t552\nNaples\t34119\t548\nFort Myers\t33919\t548\nCape Coral\t33914\t546\nCape Coral\t33991\t546\nCape Coral\t33904\t539\nNaples\t34110\t534\nSarasota\t34236\t531\nAuburndale\t33823\t529\nFort Myers\t33913\t517\nClermont\t34711\t515\nNaples\t34114\t514\nOrmond Beach\t32174\t499\nSarasota\t34231\t472\nNaples\t34113\t465\nKissimmee\t34758\t465\nNaples\t34103\t460\nClermont\t34714\t453\nBradenton\t34203\t449\nWesley Chapel\t33545\t436\nKissimmee\t34747\t424\nSarasota\t34242\t421\nBradenton\t34209\t417\nCape Coral\t33990\t413\nKissimmee\t34744\t413\nWesley Chapel\t33543\t408\nApopka\t32703\t404\nBradenton\t34207\t400\nSaint Petersburg\t33703\t398\nRiverview\t33578\t384\nRiverview\t33579\t373\nDeltona\t32725\t370\nOrlando\t32822\t370\nBradenton\t34210\t364\nBradenton\t34211\t359\nNaples\t34117\t359\nDaytona Beach\t32118\t357\nLakeland\t33801\t352\nSarasota\t34240\t351\nDeltona\t32738\t351\nSaint Petersburg\t33702\t349\nTampa\t33647\t346\nPort Orange\t32127\t341\nOrmond Beach\t32176\t340\nNaples\t34109\t339\nClearwater Beach\t33767\t338\nTampa\t33611\t335\nSarasota\t34238\t325\nLakeland\t33803\t323\nSarasota\t34243\t317\nTampa\t33629\t316\nSarasota\t34241\t316\nSarasota\t34234\t315\nTampa\t33615\t311\nNaples\t34105\t310\nClearwater\t33764\t303\nOrlando\t32832\t302\nBradenton\t34208\t299\nOrlando\t32824\t298\nDaytona Beach\t32124\t298\nTampa\t33602\t298\nWinter Haven\t33880\t293\nTampa\t33610\t291\nLakeland\t33815\t291\nBradenton\t34212\t289\nFort Myers\t33916\t289\nTampa\t33604\t288\nOrlando\t32835\t288\nKissimmee\t34741\t286\nSaint Petersburg\t33709\t285\nPlant City\t33565\t280\nSaint Petersburg\t33705\t275\nDaytona Beach\t32114\t275\nPort Orange\t32129\t274\nSaint Petersburg\t33701\t274\nBradenton\t34205\t269\nOrlando\t32819\t268\nOrlando\t32820\t258\nFort Myers\t33901\t258\nSaint Pete Beach\t33706\t257\nLakewood Ranch\t34202\t257\nSaint Petersburg\t33714\t257\nBrandon\t33511\t254\nFort Myers\t33907\t247\nOrlando\t32811\t245\nOrlando\t32821\t245\nOrlando\t32827\t244\nSaint Petersburg\t33713\t243\nSarasota\t34232\t241\nSaint Petersburg\t33710\t241\nLakeland\t33811\t240\nLakewood Ranch\t34211\t239\nClearwater\t33763\t235\nOrlando\t32828\t229\nLakeland\t33809\t228\nClearwater\t33761\t224\nRiverview\t33569\t221\nWinter Park\t32789\t215\nSarasota\t34239\t215\nTreasure Island\t33706\t215\nPort Orange\t32128\t214\nOrlando\t32808\t210\nSaint Petersburg\t33711\t208\nLakeland\t33813\t207\nTampa\t33609\t207\nOrlando\t32839\t207\nSaint Petersburg\t33704\t203\nOrlando\t32825\t200\nClearwater\t33755\t200\nSaint Petersburg\t33715\t197\nMinneola\t34715\t197\nNaples\t34104\t196\nFort Myers\t33912\t195\nWinter Park\t32792\t194\nOrlando\t32806\t191\nOrlando\t32801\t187\nOrlando\t32833\t186\nAltamonte Springs\t32714\t185\nOcoee\t34761\t185\nOrlando\t32837\t185\nDaytona Beach\t32117\t185\nMadeira Beach\t33708\t184\nClearwater\t33756\t184\nLutz\t33558\t184\nOrlando\t32836\t183\nTampa\t33614\t174\nTampa\t33606\t170\nWesley Chapel\t33544\t169\nOrlando\t32804\t169\nLakeland\t33805\t169\nTampa\t33624\t169\nSaint Petersburg\t33712\t169\nTampa\t33603\t168\nSarasota\t34233\t168\nTampa\t33619\t168\nSouth Daytona\t32119\t162\nSarasota\t34235\t162\nTampa\t33607\t160\nAltamonte Springs\t32701\t158\nGulfport\t33707\t158\nTampa\t33605\t157\nOrlando\t32818\t157\nOrlando\t32803\t157\nTampa\t33618\t157\nSarasota\t34237\t152\nDaytona Beach\t32119\t148\nOrlando\t32829\t148\nPlant City\t33566\t147\nTampa\t33612\t144\nOrlando\t32812\t141\nSaint Petersburg\t33708\t140\nPlant City\t33563\t140\nTampa\t33625\t137\nOrlando\t32826\t136\nClearwater\t33760\t135\nClearwater\t33759\t135\nTampa\t33635\t133\nHolly Hill\t32117\t129\nTampa\t33616\t127\nKissimmee\t34743\t127\nTampa\t33613\t126\nOrlando\t32807\t124\nOrlando\t32810\t124\nOrlando\t32817\t122\nTampa\t33626\t121\nNaples\t34116\t121\nTampa\t33617\t118\nKissimmee\t\t116\nSouth Pasadena\t33707\t116\nOrlando\t\t115\nLutz\t33549\t114\nBrandon\t33510\t113\nBradenton\t34202\t112\nClermont\t34715\t108\nOrlando\t32805\t106\nSaint Petersburg\t33707\t106\nDaytona Beach Shores\t32118\t103\nPonce Inlet\t32127\t100\nRedington Shores\t33708\t97\nFORT MYERS\t\t92\nClearwater\t33765\t91\nTierra Verde\t33715\t89\nOrlando\t32809\t88\nDeland\t\t86\nTemple Terrace\t33617\t85\nDover\t33527\t82\nCelebration\t34747\t75\nBelleair\t33756\t74\nLakeland\t33812\t73\nReunion\t34747\t72\nClearwater\t\t69\nClearwater\t33762\t69\nSarasota\t\t69\nSaint Petersburg\t33716\t69\nTampa\t33634\t67\nClearwater\t33767\t59\nPlant City\t33567\t55\nMiromar Lakes\t33913\t53\nLutz\t33559\t53\nRedington Beach\t33708\t50\nWinter Park\t\t49\nLutz\t33548\t46\nUniversity Park\t34201\t44\nCape Coral\t\t43\nBradenton\t\t42\nPort Orange\t\t39\nKenneth City\t33709\t39\nTampa\t33637\t37\nTemple Terrace\t33637\t36\nOcala\t\t28\nNAPLES\t\t27\nNorth Redington Beach\t33708\t26\nLakeland\t\t24\nBradenton\t34201\t24\nDaytona Beach\t\t23\nWinter Haven\t\t22\nGulfport\t33711\t20\nLakewood Ranch\t34240\t18\nLake Hamilton\t33844\t17\nSaint Petersburg\t33706\t16\nBelle Isle\t32812\t16\nCelebration\t\t13\nMatlacha\t33993\t10\nFort Myers\t33917\t9\nBelle Isle\t32809\t9\nEnterprise\t32725\t9\nLakewood Ranch\t34212\t9\nZephyrhills\t33543\t8\nGolden Oak\t32836\t7\nSaint Pete\t33708\t7\nMatlacha Isles\t33991\t6\nSiesta Key\t34242\t6\nLargo\t33756\t5\nSeminole\t33708\t4\nOrlando\t34761\t3\nSaint Pete Beach\t33707\t3\nCoral\t\t3\nZephyrhills\t33544\t3\nLehigh Acres\t\t2\nRocky Point\t\t2\nKissimmee\t32821\t2\nLithia\t33579\t2\nWilbur By the Sea\t32127\t2\nPoinciana\t34758\t2\nWinter Haven\t33844\t2\nPt Orange\t\t2\nZephyrhills\t33545\t2\nWinter H\t33884\t1\nLakeland\t33603\t1\nValrico\t33511\t1\nOther City Not In The State Of Florida\t\t1\nEloise\t33880\t1\nSaint Pete\t33709\t1\nDunnellon\t\t1\nWinter Garden\t\t1\nPinellas Park\t33709\t1\nDaytona Beach Shores\t32119\t1\nFl 33566\t33565\t1\nMidway Road\t33844\t1\nLehigh Acres\t33905\t1\nLehigh Acres\t33907\t1\nWaldo\t34231\t1\nDe Leon Springs\t\t1\nUS Highway 17\t33844\t1\nLutz\t\t1\nJennings Rd\t33844\t1\nDavenport\t\t1\nSaint Pete\t33713\t1\nZep\t33543\t1\nFlorida Ridge\t34113\t1\nDaytona Beach\t32127\t1\nMiromar Lakes\t33919\t1\nHialeah\t33909\t1\nSt. Petersburg\t33738\t1\nEverglades City\t34108\t1\nHugh Price Reduced For Quick Sale\t33565\t1\nKissimmee\t33051\t1\nEdgewood\t32839\t1\nFlorida Ridge\t34231\t1\nOrlando\t32831\t1\nEstero\t33905\t1\nOwner Financing\t33565\t1\nEverglades City\t34110\t1\nLargo\t33764\t1\nLockhart\t32810\t1\nEdgewood\t32809\t1\nPalatka\t32129\t1\nNorth Fort Myers\t33901\t1\nFort Myers\t33991\t1\nCusseta\t32805\t1\nOrmond Beach\t32118\t1\nMirom\t33913\t1\nDe Leon Springs\t32120\t1\nNorth Port\t34236\t1\nNorth Fort Myers\t33909\t1\nLargo\t33755\t1\nLehigh Acres\t33913\t1\nRuskin\t33619\t1\n",
+  "stderr": "",
+  "execution_time_ms": 97
+}

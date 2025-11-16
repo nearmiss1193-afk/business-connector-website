@@ -1,0 +1,15 @@
+{
+  "query": "SELECT \n  COUNT(*) as total_properties,\n  COUNT(DISTINCT city) as total_cities,\n  (SELECT COUNT(*) FROM property_images WHERE property_images.property_id IN (SELECT id FROM properties WHERE source = 'zillow')) as total_images\nFROM properties WHERE source = 'zillow';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  COUNT(*) as total_properties,\n  COUNT(DISTINCT city) as total_cities,\n  (SELECT COUNT(*) FROM property_images WHERE property_images.property_id IN (SELECT id FROM properties WHERE source = 'zillow')) as total_images\nFROM properties WHERE source = 'zillow';",
+  "rows": [
+    {
+      "total_properties": "400",
+      "total_cities": "13",
+      "total_images": "15879"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_properties\ttotal_cities\ttotal_images\n400\t13\t15879\n",
+  "stderr": "",
+  "execution_time_ms": 330
+}

@@ -1,0 +1,70 @@
+{
+  "query": "SELECT city, COUNT(*) as count FROM properties GROUP BY city ORDER BY count DESC LIMIT 15",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT city, COUNT(*) as count FROM properties GROUP BY city ORDER BY count DESC LIMIT 15",
+  "rows": [
+    {
+      "city": "Naples",
+      "count": "6133"
+    },
+    {
+      "city": "Orlando",
+      "count": "5772"
+    },
+    {
+      "city": "Tampa",
+      "count": "4725"
+    },
+    {
+      "city": "Sarasota",
+      "count": "3986"
+    },
+    {
+      "city": "Saint Petersburg",
+      "count": "3430"
+    },
+    {
+      "city": "Fort Myers",
+      "count": "3186"
+    },
+    {
+      "city": "Cape Coral",
+      "count": "3151"
+    },
+    {
+      "city": "Bradenton",
+      "count": "2982"
+    },
+    {
+      "city": "Lakeland",
+      "count": "2448"
+    },
+    {
+      "city": "Kissimmee",
+      "count": "2293"
+    },
+    {
+      "city": "Clearwater",
+      "count": "1635"
+    },
+    {
+      "city": "Winter Haven",
+      "count": "1409"
+    },
+    {
+      "city": "Daytona Beach",
+      "count": "1264"
+    },
+    {
+      "city": "Clermont",
+      "count": "1076"
+    },
+    {
+      "city": "Wesley Chapel",
+      "count": "1013"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\tcount\nNaples\t6133\nOrlando\t5772\nTampa\t4725\nSarasota\t3986\nSaint Petersburg\t3430\nFort Myers\t3186\nCape Coral\t3151\nBradenton\t2982\nLakeland\t2448\nKissimmee\t2293\nClearwater\t1635\nWinter Haven\t1409\nDaytona Beach\t1264\nClermont\t1076\nWesley Chapel\t1013\n",
+  "stderr": "",
+  "execution_time_ms": 84
+}

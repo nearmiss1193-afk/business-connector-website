@@ -1,0 +1,23 @@
+{
+  "buildCommand": "npm run build",
+  "startCommand": "npm start",
+  "outputDirectory": "dist",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "server/_core/index.ts": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/.*",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.js"
+    }
+  ]
+}

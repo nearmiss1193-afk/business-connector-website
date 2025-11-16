@@ -1,0 +1,153 @@
+import { useAuth } from "@/_core/hooks/useAuth";
+import { APP_LOGO, getLoginUrl } from "@/const";
+import { Link, useLocation } from "wouter";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
+export default function TopNavigation() {
+  const { isAuthenticated, user } = useAuth();
+  const [location] = useLocation();
+
+
+  const navItems = [
+    { label: "Buy", href: "/properties", active: location === "/properties" },
+    { label: "Rent", href: "/rentals", active: location === "/rentals" },
+    { label: "Sell", href: "/sell", active: location === "/sell" },
+    { label: "Find an agent", href: "/contact", active: location === "/contact" },
+    { label: "Advertise", href: "/advertise", active: location === "/advertise" },
+    { label: "Get help", href: "/contact", active: location === "/contact" },
+  ];
+
+  return (
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-[1400px] mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <img src={APP_LOGO} alt="Logo" className="h-8 w-auto" />
+          </Link>
+
+          {/* Navigation Items */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navItems.map((item) => (
+              item.hasDropdown ? (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setShowMortgageDropdown(true)}
+                  onMouseLeave={() => setShowMortgageDropdown(false)}
+                >
+                  <button
+                    className={`px-4 py-2 text-sm font-medium rounded transition-colors flex items-center gap-1 ${
+                      item.active
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    {item.label}
+                    {item.hasDropdown && <ChevronDown className="w-4 h-4" />}
+                  </button>
+                  
+                  {/* Dropdown Menu */}
+                  {showMortgageDropdown && (
+                    <div className="absolute top-full left-0 mt-1 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
+                      <div className="p-6">
+                        <div className="grid grid-cols-2 gap-6">
+                          <div>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">Your mortgage</h3>
+                            <Link href="#" className="block text-sm text-blue-600 hover:underline mb-2">
+                              Discover Zillow Home Loans
+                            </Link>
+                            <Link href="#" className="block text-sm text-blue-600 hover:underline mb-2">
+                              Calculate your BuyAbility
+                            </Link>
+                            <Link href="#" className="block text-sm text-blue-600 hover:underline">
+                              Get pre-qualified
+                            </Link>
+                          </div>
+                          <div>
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase mb-3">Mortgage tools</h3>
+                            <Link href="#" className="block text-sm text-blue-600 hover:underline mb-2">
+                              Estimate your mortgage payment
+                            </Link>
+                            <Link href="#" className="block text-sm text-blue-600 hover:underline mb-2">
+                              See current mortgage rates
+                            </Link>
+                            <Link href="#" className="block text-sm text-blue-600 hover:underline">
+                              Learn about financing a home
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <p className="text-xs text-gray-600">Started a loan application?</p>
+                          <Link href="#" className="text-sm text-blue-600 hover:underline">
+                            Home Loans dashboard
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
+                    item.active
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            ))}
+          </div>
+
+          {/* Sign In Button */}
+          <div className="flex items-center">
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-gray-700">
+                  {user?.name || user?.email}
+                </span>
+                {user?.role === "admin" && (
+                  <Link
+                    href="/admin/properties"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded"
+                  >
+                    Admin
+                  </Link>
+                )}
+              </div>
+            ) : (
+              <a
+                href={getLoginUrl()}
+                className="px-6 py-2 text-sm font-medium bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              >
+                Sign in
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="lg:hidden pb-3 flex flex-wrap gap-2">
+          {navItems.slice(0, 4).map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={`px-3 py-1.5 text-xs font-medium rounded transition-colors ${
+                item.active
+                  ? "bg-blue-600 text-white"
+                  : "text-gray-700 hover:bg-gray-100 border border-gray-300"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
+}

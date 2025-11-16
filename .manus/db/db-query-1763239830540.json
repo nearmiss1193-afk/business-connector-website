@@ -1,0 +1,15 @@
+{
+  "query": "SELECT COUNT(DISTINCT property_id) as properties_with_images, (SELECT COUNT(*) FROM properties) as total_properties, ROUND(100.0 * COUNT(DISTINCT property_id) / (SELECT COUNT(*) FROM properties), 2) as percentage_with_images FROM property_images;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT COUNT(DISTINCT property_id) as properties_with_images, (SELECT COUNT(*) FROM properties) as total_properties, ROUND(100.0 * COUNT(DISTINCT property_id) / (SELECT COUNT(*) FROM properties), 2) as percentage_with_images FROM property_images;",
+  "rows": [
+    {
+      "properties_with_images": "54328",
+      "total_properties": "56297",
+      "percentage_with_images": "96.50"
+    }
+  ],
+  "messages": [],
+  "stdout": "properties_with_images\ttotal_properties\tpercentage_with_images\n54328\t56297\t96.50\n",
+  "stderr": "",
+  "execution_time_ms": 118
+}

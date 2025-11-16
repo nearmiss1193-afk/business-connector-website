@@ -1,0 +1,90 @@
+{
+  "query": "SELECT id, address, city, zip_code, price, bedrooms FROM properties LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT id, address, city, zip_code, price, bedrooms FROM properties LIMIT 10;",
+  "rows": [
+    {
+      "id": "1",
+      "address": "598 Maple St",
+      "city": "Kissimmee",
+      "zip_code": "33051",
+      "price": "573141.00",
+      "bedrooms": "5"
+    },
+    {
+      "id": "2",
+      "address": "509 Lake St",
+      "city": "St. Petersburg",
+      "zip_code": "33738",
+      "price": "676636.00",
+      "bedrooms": "4"
+    },
+    {
+      "id": "30003",
+      "address": "1234 Ocean Drive",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "425000.00",
+      "bedrooms": "3"
+    },
+    {
+      "id": "30004",
+      "address": "789 Pine Avenue",
+      "city": "Orlando",
+      "zip_code": "32801",
+      "price": "895000.00",
+      "bedrooms": "5"
+    },
+    {
+      "id": "90001",
+      "address": "2806 N Morgan St",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "299000.00",
+      "bedrooms": "0"
+    },
+    {
+      "id": "90002",
+      "address": "2723 N Ridgewood Ave",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "500000.00",
+      "bedrooms": "2"
+    },
+    {
+      "id": "90003",
+      "address": "2308 N Morgan St",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "900000.00",
+      "bedrooms": "0"
+    },
+    {
+      "id": "90004",
+      "address": "2804 N Morgan St",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "175000.00",
+      "bedrooms": "0"
+    },
+    {
+      "id": "90005",
+      "address": "2402 N Ridgewood Ave",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "2125000.00",
+      "bedrooms": "6"
+    },
+    {
+      "id": "90006",
+      "address": "510 E Robles St",
+      "city": "Tampa",
+      "zip_code": "33602",
+      "price": "535000.00",
+      "bedrooms": "3"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\taddress\tcity\tzip_code\tprice\tbedrooms\n1\t598 Maple St\tKissimmee\t33051\t573141.00\t5\n2\t509 Lake St\tSt. Petersburg\t33738\t676636.00\t4\n30003\t1234 Ocean Drive\tTampa\t33602\t425000.00\t3\n30004\t789 Pine Avenue\tOrlando\t32801\t895000.00\t5\n90001\t2806 N Morgan St\tTampa\t33602\t299000.00\t0\n90002\t2723 N Ridgewood Ave\tTampa\t33602\t500000.00\t2\n90003\t2308 N Morgan St\tTampa\t33602\t900000.00\t0\n90004\t2804 N Morgan St\tTampa\t33602\t175000.00\t0\n90005\t2402 N Ridgewood Ave\tTampa\t33602\t2125000.00\t6\n90006\t510 E Robles St\tTampa\t33602\t535000.00\t3\n",
+  "stderr": "",
+  "execution_time_ms": 50
+}

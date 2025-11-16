@@ -1,0 +1,17 @@
+{
+  "query": "SELECT \n  COUNT(*) as total_properties,\n  COUNT(DISTINCT city) as cities,\n  MIN(price) as min_price,\n  MAX(price) as max_price,\n  AVG(price) as avg_price\nFROM properties WHERE source = 'zillow';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  COUNT(*) as total_properties,\n  COUNT(DISTINCT city) as cities,\n  MIN(price) as min_price,\n  MAX(price) as max_price,\n  AVG(price) as avg_price\nFROM properties WHERE source = 'zillow';",
+  "rows": [
+    {
+      "total_properties": "451",
+      "cities": "14",
+      "min_price": "4000.00",
+      "max_price": "42000000.00",
+      "avg_price": "804977.241685"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_properties\tcities\tmin_price\tmax_price\tavg_price\n451\t14\t4000.00\t42000000.00\t804977.241685\n",
+  "stderr": "",
+  "execution_time_ms": 82
+}

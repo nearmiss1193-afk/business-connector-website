@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM property_images WHERE id IN (SELECT id FROM (SELECT pi.id, ROW_NUMBER() OVER (PARTITION BY pi.image_url ORDER BY pi.id DESC) as row_num FROM property_images pi WHERE pi.image_url IN (SELECT image_url FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1)) as dup WHERE row_num > 1);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute DELETE FROM property_images WHERE id IN (SELECT id FROM (SELECT pi.id, ROW_NUMBER() OVER (PARTITION BY pi.image_url ORDER BY pi.id DESC) as row_num FROM property_images pi WHERE pi.image_url IN (SELECT image_url FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1)) as dup WHERE row_num > 1);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 261
+}

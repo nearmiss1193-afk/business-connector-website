@@ -1,0 +1,45 @@
+{
+  "query": "SELECT id, mls_id, address, city, price FROM properties LIMIT 5",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT id, mls_id, address, city, price FROM properties LIMIT 5",
+  "rows": [
+    {
+      "id": "1",
+      "mls_id": "FL-12345",
+      "address": "598 Maple St",
+      "city": "Kissimmee",
+      "price": "573141.00"
+    },
+    {
+      "id": "2",
+      "mls_id": "FL-12346",
+      "address": "509 Lake St",
+      "city": "St. Petersburg",
+      "price": "676636.00"
+    },
+    {
+      "id": "30003",
+      "mls_id": "FL-12347",
+      "address": "1234 Ocean Drive",
+      "city": "Tampa",
+      "price": "425000.00"
+    },
+    {
+      "id": "30004",
+      "mls_id": "FL-12348",
+      "address": "789 Pine Avenue",
+      "city": "Orlando",
+      "price": "895000.00"
+    },
+    {
+      "id": "90001",
+      "mls_id": "6657877442",
+      "address": "2806 N Morgan St",
+      "city": "Tampa",
+      "price": "299000.00"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tmls_id\taddress\tcity\tprice\n1\tFL-12345\t598 Maple St\tKissimmee\t573141.00\n2\tFL-12346\t509 Lake St\tSt. Petersburg\t676636.00\n30003\tFL-12347\t1234 Ocean Drive\tTampa\t425000.00\n30004\tFL-12348\t789 Pine Avenue\tOrlando\t895000.00\n90001\t6657877442\t2806 N Morgan St\tTampa\t299000.00\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}

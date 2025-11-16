@@ -1,0 +1,9 @@
+{
+  "query": "SELECT image_url, COUNT(DISTINCT property_id) as num_properties_using_image FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1 ORDER BY COUNT(DISTINCT property_id) DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT image_url, COUNT(DISTINCT property_id) as num_properties_using_image FROM property_images GROUP BY image_url HAVING COUNT(DISTINCT property_id) > 1 ORDER BY COUNT(DISTINCT property_id) DESC LIMIT 20;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 201
+}

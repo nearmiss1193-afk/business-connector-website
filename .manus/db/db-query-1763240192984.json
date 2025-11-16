@@ -1,0 +1,110 @@
+{
+  "query": "SELECT \n  city,\n  COUNT(*) as total_in_city,\n  COUNT(CASE WHEN id IN (SELECT DISTINCT property_id FROM property_images) THEN 1 END) as with_images\nFROM properties\nGROUP BY city\nORDER BY with_images DESC\nLIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2keGdn6fwLYaSZ6.229283a86c70 --database 4KtxBXcBzp6DmAsnEmQ3Tt --execute SELECT \n  city,\n  COUNT(*) as total_in_city,\n  COUNT(CASE WHEN id IN (SELECT DISTINCT property_id FROM property_images) THEN 1 END) as with_images\nFROM properties\nGROUP BY city\nORDER BY with_images DESC\nLIMIT 20;",
+  "rows": [
+    {
+      "city": "Naples",
+      "total_in_city": "6133",
+      "with_images": "6127"
+    },
+    {
+      "city": "Orlando",
+      "total_in_city": "5772",
+      "with_images": "5579"
+    },
+    {
+      "city": "Tampa",
+      "total_in_city": "4725",
+      "with_images": "4526"
+    },
+    {
+      "city": "Sarasota",
+      "total_in_city": "3986",
+      "with_images": "3986"
+    },
+    {
+      "city": "Saint Petersburg",
+      "total_in_city": "3430",
+      "with_images": "3230"
+    },
+    {
+      "city": "Fort Myers",
+      "total_in_city": "3186",
+      "with_images": "3182"
+    },
+    {
+      "city": "Cape Coral",
+      "total_in_city": "3151",
+      "with_images": "3137"
+    },
+    {
+      "city": "Bradenton",
+      "total_in_city": "2982",
+      "with_images": "2982"
+    },
+    {
+      "city": "Lakeland",
+      "total_in_city": "2448",
+      "with_images": "2242"
+    },
+    {
+      "city": "Kissimmee",
+      "total_in_city": "2293",
+      "with_images": "2108"
+    },
+    {
+      "city": "Clearwater",
+      "total_in_city": "1635",
+      "with_images": "1439"
+    },
+    {
+      "city": "Winter Haven",
+      "total_in_city": "1409",
+      "with_images": "1212"
+    },
+    {
+      "city": "Daytona Beach",
+      "total_in_city": "1264",
+      "with_images": "1102"
+    },
+    {
+      "city": "Clermont",
+      "total_in_city": "1076",
+      "with_images": "1075"
+    },
+    {
+      "city": "Wesley Chapel",
+      "total_in_city": "1013",
+      "with_images": "1012"
+    },
+    {
+      "city": "Riverview",
+      "total_in_city": "978",
+      "with_images": "977"
+    },
+    {
+      "city": "Apopka",
+      "total_in_city": "973",
+      "with_images": "969"
+    },
+    {
+      "city": "Ormond Beach",
+      "total_in_city": "840",
+      "with_images": "840"
+    },
+    {
+      "city": "Deltona",
+      "total_in_city": "721",
+      "with_images": "721"
+    },
+    {
+      "city": "Port Orange",
+      "total_in_city": "829",
+      "with_images": "710"
+    }
+  ],
+  "messages": [],
+  "stdout": "city\ttotal_in_city\twith_images\nNaples\t6133\t6127\nOrlando\t5772\t5579\nTampa\t4725\t4526\nSarasota\t3986\t3986\nSaint Petersburg\t3430\t3230\nFort Myers\t3186\t3182\nCape Coral\t3151\t3137\nBradenton\t2982\t2982\nLakeland\t2448\t2242\nKissimmee\t2293\t2108\nClearwater\t1635\t1439\nWinter Haven\t1409\t1212\nDaytona Beach\t1264\t1102\nClermont\t1076\t1075\nWesley Chapel\t1013\t1012\nRiverview\t978\t977\nApopka\t973\t969\nOrmond Beach\t840\t840\nDeltona\t721\t721\nPort Orange\t829\t710\n",
+  "stderr": "",
+  "execution_time_ms": 91
+}
