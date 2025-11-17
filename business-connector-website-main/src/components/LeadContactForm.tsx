@@ -26,7 +26,7 @@ const schema = z.object({
 
 export type LeadContactFormValues = z.infer<typeof schema>;
 
-export default function LeadContactForm({ propertyId }: { propertyId?: string }) {
+export default function LeadContactForm({ propertyId, onSuccess }: { propertyId?: string, onSuccess?: () => void }) {
   const {
     register,
     handleSubmit,
@@ -68,6 +68,7 @@ export default function LeadContactForm({ propertyId }: { propertyId?: string })
       await axios.post("/api/lead", { recaptchaToken, payload });
       toast.success("Thanks! We'll be in touch shortly.");
       reset();
+      onSuccess?.();
     } catch (err) {
       console.error(err);
       toast.error("Failed to send. Please try again.");

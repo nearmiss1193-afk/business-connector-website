@@ -1,13 +1,16 @@
 import { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
-import { Link, useLocation } from 'wouter';
+import { useLocation } from 'wouter';
 import AdvancedSearchFilters from '@/components/AdvancedSearchFilters';
 import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Bed, Bath, Square } from 'lucide-react';
 import Hero from '@/components/Hero';
+import PropertyDetailsModal from '@/components/PropertyDetailsModal';
+import RegistrationGateModal from '@/components/RegistrationGateModal';
+import AdSlot from '@/components/AdSlot';
 
 function Home() {
   const [, setLocation] = useLocation();
@@ -19,6 +22,10 @@ function Home() {
   const [sort, setSort] = useState<'relevant' | 'price-asc' | 'price-desc' | 'newest'>('relevant');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [gateOpen, setGateOpen] = useState(false);
+  const [pendingId, setPendingId] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -91,7 +98,7 @@ function Home() {
       <Hero
         title="Find your next home in Central Florida"
         subtitle="Search thousands of homes for sale and rent across Orlando, Tampa, and beyond. Real-time data, beautiful photos, and powerful filters."
-        backgroundUrl="/hero-bg.svg"
+        backgroundUrl="/hero-house.svg"
         searchValue={search}
         onSearchChange={setSearch}
         onSearchSubmit={() => {/* triggers useEffect */}}
@@ -108,6 +115,7 @@ function Home() {
       />
 
       <div className="p-4 max-w-[1200px] mx-auto">
+      <AdSlot variant="banner" className="mb-4" />
       <div className="flex flex-col md:flex-row md:items-center gap-3 mb-4">
         <input
           type="text"
@@ -179,9 +187,23 @@ function Home() {
             const status = (l.homeStatus || l.statusText || '').toString().toUpperCase();
             const isNew = l.listingDate ? (Date.now() - new Date(l.listingDate).getTime()) / (1000*60*60*24) <= 7 : false;
 
+            const openCard = () => {
+              const id = String(l.zpid ?? l.id ?? '');
+              if (!id) return;
+              const registered = localStorage.getItem('cfh_registered') === 'true';
+              const views = parseInt(localStorage.getItem('cfh_views_count') || '0', 10) + 1;
+              localStorage.setItem('cfh_views_count', String(views));
+              if (!registered && views >= 3) {
+                setPendingId(id);
+                setGateOpen(true);
+              } else {
+                setSelectedId(id);
+                setDetailsOpen(true);
+              }
+            };
+
             return (
-              <Link key={l.zpid ?? l.id} to={`/listing/${l.zpid ?? l.id}`} className="group">
-                <Card className="overflow-hidden bg-white border hover:shadow-lg transition-all">
+                <Card key={l.zpid ?? l.id} className="overflow-hidden bg-white border hover:shadow-lg transition-all cursor-pointer" onClick={openCard}>
                   <div className="relative">
                     {l.imgSrc ? (
                       <img src={l.imgSrc} alt={address} className="w-full h-48 object-cover" />
@@ -204,24 +226,8 @@ function Home() {
                     </div>
                     <p className="text-sm font-medium text-gray-900 line-clamp-1">{address}</p>
                     <p className="text-xs text-gray-600 line-clamp-1">{cityLine}</p>
-                    <div className="mt-2">
-                      <button
-                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          const id = l.zpid ?? l.id;
-                          if (id) {
-                            setLocation(`/listing/${id}#contact`);
-                          }
-                        }}
-                      >
-                        Request Info
-                      </button>
-                    </div>
                   </div>
                 </Card>
-              </Link>
             );
           })}
         </div>
@@ -241,6 +247,23 @@ function Home() {
         </div>
       )}
       </div>
+      <PropertyDetailsModal
+        open={detailsOpen}
+        onOpenChange={setDetailsOpen}
+        zpid={selectedId}
+      />
+      <RegistrationGateModal
+        open={gateOpen}
+        onOpenChange={(v) => {
+          setGateOpen(v);
+          const registered = localStorage.getItem('cfh_registered') === 'true';
+          if (!v && registered && pendingId) {
+            setSelectedId(pendingId);
+            setDetailsOpen(true);
+            setPendingId(null);
+          }
+        }}
+      />
       {/* Simple feature highlights */}
       <section className="bg-white border-t">
         <div className="max-w-[1200px] mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
