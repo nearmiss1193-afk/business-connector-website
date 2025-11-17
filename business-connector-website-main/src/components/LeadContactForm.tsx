@@ -36,11 +36,6 @@ export default function LeadContactForm({ propertyId }: { propertyId?: string })
 
   const onSubmit = async (values: LeadContactFormValues) => {
     try {
-      const url = import.meta.env.VITE_GHL_WEBHOOK_URL as string | undefined;
-      if (!url) {
-        toast.error("Lead webhook not configured");
-        return;
-      }
       const payload = {
         type: "contact",
         source: propertyId ? "property-detail" : "contact-page",
@@ -53,7 +48,24 @@ export default function LeadContactForm({ propertyId }: { propertyId?: string })
           timestamp: new Date().toISOString(),
         },
       };
-      await axios.post(url, payload);
+      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+      let recaptchaToken: string | undefined = undefined;
+      if (siteKey) {
+        // load reCAPTCHA v3 script on demand
+        if (!(window as any).grecaptcha) {
+          await new Promise<void>((resolve, reject) => {
+            const s = document.createElement("script");
+            s.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+            s.async = true;
+            s.onload = () => resolve();
+            s.onerror = () => reject(new Error("Failed to load reCAPTCHA"));
+            document.head.appendChild(s);
+          });
+        }
+        recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: "lead" });
+      }
+      // send to server which verifies reCAPTCHA (if secret configured) and relays to webhook
+      await axios.post("/api/lead", { recaptchaToken, payload });
       toast.success("Thanks! We'll be in touch shortly.");
       reset();
     } catch (err) {
