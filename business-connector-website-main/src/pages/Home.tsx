@@ -30,7 +30,7 @@ function Home() {
         </div>
       ) : (
         <div style={{ height: '500px', width: '100%' }}>
-          <GoogleMapReact bootstrapURLKeys={ { key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY } } defaultCenter={{ lat: 28.5383, lng: -81.3792 }} defaultZoom={10}>
+          <GoogleMapReact bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_KEY }} defaultCenter={{ lat: 28.5383, lng: -81.3792 }} defaultZoom={10}>
             {listings.map(l => (
               <div key={l.zpid} lat={l.latitude} lng={l.longitude}>
                 <img src={l.imgSrc} alt={l.address} className="w-8 h-8" />
