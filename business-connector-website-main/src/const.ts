@@ -4,7 +4,7 @@ export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 export const APP_TITLE = import.meta.env.VITE_APP_TITLE || 'Central Florida Homes';
 
-export const APP_LOGO = import.meta.env.VITE_APP_LOGO || "https://placehold.co/128x128/2563eb/ffffff?text=CFH&font=montserrat";
+export const APP_LOGO = import.meta.env.VITE_APP_LOGO || "/favicon.svg";
 
 export const GHL_API_KEY = import.meta.env.VITE_GHL_API_KEY;
 
