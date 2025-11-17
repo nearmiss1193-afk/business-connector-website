@@ -544,9 +544,6 @@ async function sendToPipedreamWebhook(formData: FormData, leadType: LeadType) {
  */
 export async function handleFormSubmission(formData: FormData) {
   try {
-    console.log('[FORM SUBMISSION] Starting with data:', JSON.stringify(formData));
-    console.log('[FORM SUBMISSION] API Token present:', !!GHL_API_TOKEN);
-    console.log('[FORM SUBMISSION] Location ID:', ENV.gohighlevelLocationId);
     // Determine lead type
     const leadType = determineLeadType(formData);
     console.log(`\n📋 Lead Type Detected: ${leadType}\n`);
