@@ -8,11 +8,26 @@
  * Reports progress to master coordinator
  */
 
-require('dotenv').config(); // Load from .env
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+const dotenv = require('dotenv');
+dotenv.config(); // Load from .env
 const axios = require('axios');
-const axiosRetry = require('axios-retry');
+const axiosRetry = require('axios-retry').default;
 const fs = require('fs');
+const path = require('path');
 const winston = require('winston');
+
+const vercelEnvPath = path.resolve(process.cwd(), '.vercel/.env.preview.local');
+if (fs.existsSync(vercelEnvPath)) {
+  const parsed = dotenv.parse(fs.readFileSync(vercelEnvPath));
+  for (const [key, value] of Object.entries(parsed)) {
+    if (!process.env[key] && value) {
+      process.env[key] = value;
+    }
+  }
+}
 
 // Configure logger
 const logger = winston.createLogger({
@@ -20,6 +35,13 @@ const logger = winston.createLogger({
   format: winston.format.simple(),
   transports: [new winston.transports.Console()],
 });
+
+// Throttling knobs (env-overridable)
+const REQUEST_DELAY_MS = parseInt(process.env.REQUEST_DELAY_MS || '2000');
+const PAGE_DELAY_MS = parseInt(process.env.PAGE_DELAY_MS || REQUEST_DELAY_MS);
+const ZIP_DELAY_MS = parseInt(process.env.ZIP_DELAY_MS || REQUEST_DELAY_MS);
+const UPLOAD_DELAY_MS = parseInt(process.env.UPLOAD_DELAY_MS || '500');
+const REALTY_PAGE_LIMIT = parseInt(process.env.REALTY_PAGE_LIMIT || '50');
 
 // Load worker configuration
 const configFile = process.argv[2];
@@ -38,7 +60,7 @@ const BASE44 = {
 };
 
 // RapidAPI key from env
-const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
+const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY || process.env.VITE_RAPIDAPI_KEY;
 if (!RAPIDAPI_KEY) {
   logger.error('Error: RAPIDAPI_KEY not set in .env');
   process.exit(1);
@@ -125,38 +147,65 @@ function getBestImage(property, api) {
 async function scrapeRealtyInUS(city, state, zip) {
   let properties = [];
   let offset = 0;
-  const limit = 200;
+  const limit = REALTY_PAGE_LIMIT;
   while (true) {
     try {
-      const response = await axios.get('https://realty-in-us.p.rapidapi.com/properties/v3/list', {
-        params: { city, state_code: state, postal_code: zip, limit, offset, sort: 'relevance' },
-        headers: { 'X-RapidAPI-Key': RAPIDAPI_KEY, 'X-RapidAPI-Host': 'realty-in-us.p.rapidapi.com' },
-        timeout: 30000
-      });
+      const requestBody = {
+        limit,
+        offset,
+        postal_code: zip,
+        city,
+        state_code: state,
+        status: ['for_sale'],
+        sort: { direction: 'desc', field: 'list_date' }
+      };
 
-      // Fixed path: response.data.properties
-      const results = response.data.properties || [];
+      const response = await axios.post(
+        'https://realty-in-us.p.rapidapi.com/properties/v3/list',
+        requestBody,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-RapidAPI-Key': RAPIDAPI_KEY,
+            'X-RapidAPI-Host': 'realty-in-us.p.rapidapi.com'
+          },
+          timeout: 30000
+        }
+      );
+
+      const results = response.data?.data?.home_search?.results || [];
       if (results.length === 0) break;
-      properties.push(...results.map(p => ({
-        property_id: p.property_id || `realty-${Date.now()}-${Math.random()}`,
-        address: p.location?.address?.line || 'Address not available',
-        city: p.location?.address?.city || city,
-        state: p.location?.address?.state_code || state,
-        zip_code: p.location?.address?.postal_code || zip,
-        price: p.list_price || 0,
-        bedrooms: p.description?.beds || null,
-        bathrooms: p.description?.baths || null,
-        square_feet: p.description?.sqft || null,
-        property_type: p.description?.type || 'Unknown',
-        image_url: getBestImage(p, 'realty_in_us'),  // Fixed image handling
-        listing_url: p.href || null,
-        virtual_tour_url: p.virtual_tours?.[0]?.href || null,
-        video_url: null,
-        has_3d_tour: p.flags?.is_new_construction || false,
-        notes: detectDistressedProperty(p, 'realty_in_us')
-      })).filter(p => p.image_url));  // Skip if no valid image
+      properties.push(
+        ...results
+          .map((p) => {
+            const property = p || {};
+            const location = property.location || {};
+            const address = location.address || {};
+            const description = property.description || {};
+
+            return {
+              property_id: property.property_id || `realty-${Date.now()}-${Math.random()}`,
+              address: address.line || 'Address not available',
+              city: address.city || city,
+              state: address.state_code || state,
+              zip_code: address.postal_code || zip,
+              price: property.list_price || 0,
+              bedrooms: description.beds || null,
+              bathrooms: description.baths || null,
+              square_feet: description.sqft || null,
+              property_type: description.type || 'Unknown',
+              image_url: getBestImage(property, 'realty_in_us'),
+              listing_url: property.href || null,
+              virtual_tour_url: property.virtual_tours?.[0]?.href || null,
+              video_url: null,
+              has_3d_tour: property.flags?.is_new_construction || false,
+              notes: detectDistressedProperty(property, 'realty_in_us')
+            };
+          })
+          .filter((p) => p.image_url)
+      );
       offset += limit;
-      await sleep(500); // Rate limit
+      await sleep(PAGE_DELAY_MS); // Give the API breathing room
     } catch (error) {
       logger.error(`Realty scrape error for ${zip}: ${error.message}`);
       stats.errors++;
@@ -206,7 +255,7 @@ async function scrapeZillow(city, state, zip) {
         notes: detectDistressedProperty(p, 'zillow')
       })).filter(p => p.image_url));  // Skip if no valid image
       page++;
-      await sleep(500); // Rate limit
+      await sleep(PAGE_DELAY_MS); // Give the API breathing room
     } catch (error) {
       logger.error(`Zillow scrape error for ${zip}: ${error.message}`);
       stats.errors++;
@@ -314,12 +363,15 @@ async function processZip(city, state, zip, api) {
   for (const property of properties) {
     await uploadProperty(property);
     await integrateWithGHL(property);
-    await sleep(200);
+    await sleep(UPLOAD_DELAY_MS);
   }
   
   stats.zipsProcessed++;
   
   logger.info(`  ✅ ${city} ${zip}: ${properties.length} properties (${stats.propertiesUploaded} uploaded, ${stats.duplicatesSkipped} duplicates)`);
+
+  // Slow down between ZIPs to avoid burst bans
+  await sleep(ZIP_DELAY_MS);
 }
 
 // Main worker function
@@ -335,8 +387,9 @@ async function main() {
   for (const cityData of workerConfig.cities) {
     logger.info(`📍 Processing ${cityData.city}...`);
     
-    const zipPromises = cityData.zips.map(zip => processZip(cityData.city, cityData.state, zip, workerConfig.api));
-    await Promise.allSettled(zipPromises);
+    for (const zip of cityData.zips) {
+      await processZip(cityData.city, cityData.state, zip, workerConfig.api);
+    }
     
     stats.citiesProcessed++;
   }

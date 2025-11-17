@@ -184,4 +184,30 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .leaflet-container {
+    font-family: inherit;
+  }
+
+  .cfh-map-marker-wrapper {
+    background: transparent;
+    border: none;
+  }
+
+  .cfh-map-marker {
+    width: 52px;
+    height: 52px;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    background: #fff;
+  }
+
+  .cfh-map-marker img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 }

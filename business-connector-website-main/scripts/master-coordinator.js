@@ -9,10 +9,18 @@
  * Handles retries
  */
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const winston = require('winston');
+const { fileURLToPath } = require('url');
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configure logger
 const logger = winston.createLogger({
@@ -22,7 +30,7 @@ const logger = winston.createLogger({
 });
 
 // Configuration
-const WORKER_COUNT = parseInt(process.env.WORKER_COUNT || '4');
+const WORKER_COUNT = parseInt(process.env.WORKER_COUNT || '1');
 const CITIES = [
   { city: 'Tampa', state: 'FL', zips: ['33602', '33603', '33604', '33605', '33606', '33607', '33609', '33610', '33611', '33612', '33613', '33614', '33615', '33616', '33617', '33618', '33619', '33620', '33621', '33622'] },
   { city: 'Orlando', state: 'FL', zips: ['32801', '32802', '32803', '32804', '32805', '32806', '32807', '32808', '32809', '32810', '32811', '32812', '32814', '32815', '32816', '32817', '32818', '32819', '32820', '32821'] },
@@ -77,7 +85,8 @@ function distributeWork() {
 // Spawn worker process
 function spawnWorker(workerConfig) {
   return new Promise((resolve, reject) => {
-    const configFile = `/tmp/worker-${workerConfig.id}.json`;
+    const tmpDir = os.tmpdir();
+    const configFile = path.join(tmpDir, `worker-${workerConfig.id}.json`);
     fs.writeFileSync(configFile, JSON.stringify(workerConfig, null, 2));
     
     logger.info(`🚀 Starting ${workerConfig.name}`);

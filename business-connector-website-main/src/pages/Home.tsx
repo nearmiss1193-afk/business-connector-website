@@ -1,6 +1,5 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import GoogleMapReact from 'google-map-react';
 import { useLocation } from 'wouter';
 import AdvancedSearchFilters from '@/components/AdvancedSearchFilters';
 import { toast } from 'sonner';
@@ -11,6 +10,7 @@ import Hero from '@/components/Hero';
 import PropertyDetailsModal from '@/components/PropertyDetailsModal';
 import RegistrationGateModal from '@/components/RegistrationGateModal';
 import AdSlot from '@/components/AdSlot';
+import { MapView } from '@/components/Map';
 
 function Home() {
   const [, setLocation] = useLocation();
@@ -93,12 +93,46 @@ function Home() {
     return { total, median, avgBeds };
   }, [filteredSorted]);
 
+  const handleListingClick = useCallback((listing: any) => {
+    const id = String(listing?.zpid ?? listing?.id ?? '');
+    if (!id) return;
+    if (typeof window === 'undefined') return;
+    const registered = localStorage.getItem('cfh_registered') === 'true';
+    const views = parseInt(localStorage.getItem('cfh_views_count') || '0', 10) + 1;
+    localStorage.setItem('cfh_views_count', String(views));
+    if (!registered && views >= 3) {
+      setPendingId(id);
+      setGateOpen(true);
+    } else {
+      setSelectedId(id);
+      setDetailsOpen(true);
+    }
+  }, []);
+
+  const mapMarkers = useMemo(() => {
+    return filteredSorted
+      .map((l: any) => {
+        const lat = Number(l.latitude ?? l.lat ?? l.coord?.lat);
+        const lng = Number(l.longitude ?? l.lng ?? l.coord?.lng);
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+        return {
+          id: String(l.zpid ?? l.id ?? `${lat}-${lng}`),
+          lat,
+          lng,
+          image: l.imgSrc,
+          label: l.address || l.streetAddress || 'Listing',
+          onClick: () => handleListingClick(l),
+        };
+      })
+      .filter(Boolean) as Array<{ id?: string; lat: number; lng: number; image?: string; label?: string; onClick?: () => void }>;
+  }, [filteredSorted, handleListingClick]);
+
   return (
     <div>
       <Hero
         title="Find your next home in Central Florida"
         subtitle="Search thousands of homes for sale and rent across Orlando, Tampa, and beyond. Real-time data, beautiful photos, and powerful filters."
-        backgroundUrl="/hero-house.svg"
+        backgroundUrl="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?q=80&w=2400&auto=format&fit=crop"
         searchValue={search}
         onSearchChange={setSearch}
         onSearchSubmit={() => {/* triggers useEffect */}}
@@ -110,7 +144,7 @@ function Home() {
         ]}
         ctas={[
           { label: 'Buy a home', onClick: () => window.scrollTo({ top: 600, behavior: 'smooth' }) },
-          { label: 'Get pre-approved', onClick: () => window.location.assign('/get-pre-approved'), variant: 'outline' },
+          { label: 'Get pre-approved', onClick: () => setGateOpen(true), variant: 'outline' },
         ]}
       />
 
@@ -187,23 +221,8 @@ function Home() {
             const status = (l.homeStatus || l.statusText || '').toString().toUpperCase();
             const isNew = l.listingDate ? (Date.now() - new Date(l.listingDate).getTime()) / (1000*60*60*24) <= 7 : false;
 
-            const openCard = () => {
-              const id = String(l.zpid ?? l.id ?? '');
-              if (!id) return;
-              const registered = localStorage.getItem('cfh_registered') === 'true';
-              const views = parseInt(localStorage.getItem('cfh_views_count') || '0', 10) + 1;
-              localStorage.setItem('cfh_views_count', String(views));
-              if (!registered && views >= 3) {
-                setPendingId(id);
-                setGateOpen(true);
-              } else {
-                setSelectedId(id);
-                setDetailsOpen(true);
-              }
-            };
-
             return (
-                <Card key={l.zpid ?? l.id} className="overflow-hidden bg-white border hover:shadow-lg transition-all cursor-pointer" onClick={openCard}>
+                <Card key={l.zpid ?? l.id} className="overflow-hidden bg-white border hover:shadow-lg transition-all cursor-pointer" onClick={() => handleListingClick(l)}>
                   <div className="relative">
                     {l.imgSrc ? (
                       <img src={l.imgSrc} alt={address} className="w-full h-48 object-cover" />
@@ -233,17 +252,19 @@ function Home() {
         </div>
       ) : (
         <div style={{ height: '600px', width: '100%' }} className="rounded overflow-hidden">
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_KEY }}
-            defaultCenter={{ lat: 28.5383, lng: -81.3792 }}
-            defaultZoom={10}
-          >
-            {filteredSorted.map((l: any) => (
-              <div key={l.zpid} lat={l.latitude} lng={l.longitude}>
-                <img src={l.imgSrc} alt={l.address} className="w-8 h-8 rounded-full border-2 border-white shadow" />
-              </div>
-            ))}
-          </GoogleMapReact>
+          {mapMarkers.length > 0 ? (
+            <MapView
+              className="w-full h-full"
+              center={{ lat: 28.5383, lng: -81.3792 }}
+              zoom={10}
+              markers={mapMarkers}
+              fitToMarkers
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-600">
+              Map preview unavailable for this search.
+            </div>
+          )}
         </div>
       )}
       </div>

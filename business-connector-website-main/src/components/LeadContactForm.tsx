@@ -65,13 +65,17 @@ export default function LeadContactForm({ propertyId, onSuccess }: { propertyId?
         recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: "lead" });
       }
       // send to server which verifies reCAPTCHA (if secret configured) and relays to webhook
-      await axios.post("/api/lead", { recaptchaToken, payload });
+      const resp = await axios.post("/api/lead", { recaptchaToken, payload });
+      if (!resp.data?.ok) {
+        throw new Error(resp.data?.error || "Lead submission failed");
+      }
       toast.success("Thanks! We'll be in touch shortly.");
       reset();
       onSuccess?.();
     } catch (err) {
       console.error(err);
-      toast.error("Failed to send. Please try again.");
+      const message = (err as any)?.response?.data?.error || (err as any)?.message || "Failed to send. Please try again.";
+      toast.error(message);
     }
   };
 
@@ -137,8 +141,8 @@ export default function LeadContactForm({ propertyId, onSuccess }: { propertyId?
         </label>
         {errors.agreeConsent && <p className="text-sm text-red-600">{errors.agreeConsent.message as string}</p>}
       </div>
-      <div>
-        <button disabled={isSubmitting} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-70">
+      <div className="sticky bottom-0 -mx-6 px-6 py-4 bg-white border-t">
+        <button disabled={isSubmitting} className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-70">
           {isSubmitting ? "Sending..." : "Submit"}
         </button>
       </div>
