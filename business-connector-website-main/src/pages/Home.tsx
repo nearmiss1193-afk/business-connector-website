@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import AdvancedSearchFilters from '@/components/AdvancedSearchFilters';
 import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
@@ -10,6 +10,7 @@ import { Bed, Bath, Square } from 'lucide-react';
 import Hero from '@/components/Hero';
 
 function Home() {
+  const [, setLocation] = useLocation();
   const [listings, setListings] = useState<any[]>([]);
   const [search, setSearch] = useState('Central Florida');
   const [view, setView] = useState<'list' | 'map'>('list');
@@ -211,7 +212,7 @@ function Home() {
                           e.stopPropagation();
                           const id = l.zpid ?? l.id;
                           if (id) {
-                            window.location.assign(`/listing/${id}#contact`);
+                            setLocation(`/listing/${id}#contact`);
                           }
                         }}
                       >
