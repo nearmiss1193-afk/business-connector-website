@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "wouter";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 import { APP_LOGO, APP_TITLE } from "@/const";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
@@ -22,6 +23,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       </header>
       <main className="flex-1">{children}</main>
       <Footer />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
