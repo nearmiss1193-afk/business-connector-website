@@ -107,10 +107,46 @@ export const leadsRouter = router({
     )
     .mutation(async ({ input }) => {
       try {
+        // First try GoHighLevel API
         const result = await handleFormSubmission(input);
         return result;
       } catch (error: any) {
-        console.error("Form submission error:", error);
+        console.error("GoHighLevel API failed, falling back to webhook:", error);
+        
+        // Fallback: Send to /api/lead endpoint which forwards to Pipedream webhook
+        try {
+          const webhookUrl = process.env.GHL_WEBHOOK_URL || "https://eomhc.m.pipedream.net";
+          const webhookId = process.env.GHL_WEBHOOK_ID || "pit-b0a41b0b-24e5-4cee-8126-ee7b80b4c89e";
+          
+          const response = await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              webhook_id: webhookId,
+              timestamp: new Date().toISOString(),
+              lead_type: input.propertyAddress ? 'BUYER' : 'AGENT',
+              contact: {
+                firstName: input.firstName,
+                lastName: input.lastName,
+                email: input.email,
+                phone: input.phone,
+              },
+              ...input,
+            }),
+          });
+
+          if (response.ok) {
+            console.log("Lead sent via webhook fallback");
+            return {
+              success: true,
+              contactId: `WEBHOOK-${Date.now()}`,
+              message: "Lead submitted via webhook",
+            };
+          }
+        } catch (webhookError) {
+          console.error("Webhook fallback also failed:", webhookError);
+        }
+        
         throw new Error(error.message || "Failed to submit form");
       }
     }),
