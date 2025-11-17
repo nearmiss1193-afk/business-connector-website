@@ -67,6 +67,24 @@ function Home() {
     return r;
   }, [listings, filters, sort]);
 
+  const stats = useMemo(() => {
+    const nums = filteredSorted
+      .map((l: any) => (typeof l.price === 'number' ? l.price : (typeof l.unformattedPrice === 'number' ? l.unformattedPrice : null)))
+      .filter((n: any) => typeof n === 'number') as number[];
+    const bedNums = filteredSorted
+      .map((l: any) => (typeof l.beds === 'number' ? l.beds : (typeof l.bedrooms === 'number' ? l.bedrooms : null)))
+      .filter((n: any) => typeof n === 'number') as number[];
+    const total = filteredSorted.length;
+    let median = null as number | null;
+    if (nums.length) {
+      const sorted = [...nums].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      median = sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+    }
+    const avgBeds = bedNums.length ? bedNums.reduce((a, b) => a + b, 0) / bedNums.length : null;
+    return { total, median, avgBeds };
+  }, [filteredSorted]);
+
   return (
     <div>
       <Hero
@@ -240,6 +258,75 @@ function Home() {
           <div>
             <h3 className="text-lg font-semibold">Easy to connect</h3>
             <p className="text-sm text-gray-600">Request info in one click—our team follows up fast to help you tour and buy.</p>
+          </div>
+        </div>
+      </section>
+      {/* How It Works */}
+      <section className="bg-slate-50 border-t">
+        <div className="max-w-[1200px] mx-auto px-4 py-14">
+          <h2 className="text-2xl font-bold mb-6">How it works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg border p-5">
+              <div className="text-blue-600 font-bold text-sm">Step 1</div>
+              <h3 className="font-semibold mt-1">Search homes</h3>
+              <p className="text-sm text-gray-600 mt-2">Use the powerful search and filters to find homes that fit your budget and lifestyle.</p>
+            </div>
+            <div className="bg-white rounded-lg border p-5">
+              <div className="text-blue-600 font-bold text-sm">Step 2</div>
+              <h3 className="font-semibold mt-1">Tour & compare</h3>
+              <p className="text-sm text-gray-600 mt-2">Request info or schedule tours. We’ll coordinate showings and answer your questions.</p>
+            </div>
+            <div className="bg-white rounded-lg border p-5">
+              <div className="text-blue-600 font-bold text-sm">Step 3</div>
+              <h3 className="font-semibold mt-1">Make an offer</h3>
+              <p className="text-sm text-gray-600 mt-2">Get expert guidance through offers, inspections, and closing—all the way home.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Market Stats */}
+      <section className="bg-white border-t">
+        <div className="max-w-[1200px] mx-auto px-4 py-14">
+          <h2 className="text-2xl font-bold mb-6">Market snapshot</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="rounded-lg border p-5 bg-slate-50">
+              <div className="text-sm text-gray-600">Active listings</div>
+              <div className="text-2xl font-bold">{stats.total.toLocaleString()}</div>
+            </div>
+            <div className="rounded-lg border p-5 bg-slate-50">
+              <div className="text-sm text-gray-600">Median price</div>
+              <div className="text-2xl font-bold">{typeof stats.median === 'number' ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(stats.median) : '—'}</div>
+            </div>
+            <div className="rounded-lg border p-5 bg-slate-50">
+              <div className="text-sm text-gray-600">Avg. beds</div>
+              <div className="text-2xl font-bold">{typeof stats.avgBeds === 'number' ? stats.avgBeds.toFixed(1) : '—'}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Areas */}
+      <section className="bg-slate-50 border-t">
+        <div className="max-w-[1200px] mx-auto px-4 py-14">
+          <h2 className="text-2xl font-bold mb-6">Popular Central Florida areas</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            {[
+              'Orlando, FL',
+              'Tampa, FL',
+              'Kissimmee, FL',
+              'Winter Park, FL',
+              'Lakeland, FL',
+              'Sanford, FL',
+            ].map((city) => (
+              <button
+                key={city}
+                onClick={() => setSearch(city)}
+                className="rounded border bg-white px-3 py-2 text-sm hover:bg-gray-50"
+              >
+                {city}
+              </button>
+            ))}
           </div>
         </div>
       </section>
