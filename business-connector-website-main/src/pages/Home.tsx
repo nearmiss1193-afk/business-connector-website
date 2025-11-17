@@ -208,11 +208,38 @@ function Home() {
                         className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
                         onClick={async (e) => {
                           e.preventDefault();
+                          e.stopPropagation();
                           try {
-                            const url = import.meta.env.VITE_GHL_WEBHOOK_URL;
-                            if (!url) return toast.error('Lead webhook not configured');
-                            await axios.post(url, { property: l });
-                            toast.success('Lead sent to GoHighLevel');
+                            const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+                            let recaptchaToken: string | undefined = undefined;
+                            if (siteKey) {
+                              if (!(window as any).grecaptcha) {
+                                await new Promise<void>((resolve, reject) => {
+                                  const s = document.createElement('script');
+                                  s.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+                                  s.async = true;
+                                  s.onload = () => resolve();
+                                  s.onerror = () => reject(new Error('Failed to load reCAPTCHA'));
+                                  document.head.appendChild(s);
+                                });
+                              }
+                              recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: 'lead' });
+                            }
+
+                            const payload = {
+                              type: 'quick-lead',
+                              source: 'listing-card',
+                              propertyId: l.zpid ?? l.id ?? null,
+                              data: { property: l },
+                              meta: {
+                                userAgent: navigator.userAgent,
+                                referrer: document.referrer,
+                                location: window.location.href,
+                                timestamp: new Date().toISOString(),
+                              },
+                            };
+                            await axios.post('/api/lead', { recaptchaToken, payload });
+                            toast.success('Thanks! We\'ll be in touch shortly.');
                           } catch (err) {
                             console.error(err);
                             toast.error('Failed to send lead');
