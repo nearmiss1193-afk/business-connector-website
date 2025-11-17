@@ -24,6 +24,7 @@ import { trpc } from '@/lib/trpc';
 import BuyerRegistrationModal from '@/components/BuyerRegistrationModal';
 import AgentBanner from '@/components/AgentBanner';
 import MortgageCalculatorModal from '@/components/MortgageCalculatorModal';
+import SearchAutocomplete from '@/components/SearchAutocomplete';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Properties() {
@@ -107,13 +108,12 @@ export default function Properties() {
             <div className="bg-white rounded-lg shadow-xl p-6 text-gray-900">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Location */}
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    placeholder="City, State, or ZIP"
+                <div className="col-span-1 md:col-span-2 lg:col-span-1">
+                  <SearchAutocomplete
                     value={searchLocation}
-                    onChange={(e) => setSearchLocation(e.target.value)}
-                    className="pl-10"
+                    onChange={setSearchLocation}
+                    placeholder="City, State, or ZIP"
+                    className="w-full"
                   />
                 {
 
@@ -200,8 +200,23 @@ export default function Properties() {
 
         {/* Stats Bar */}
         <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
-          <div className="text-lg font-semibold text-gray-700">
-            {properties?.total.toLocaleString() || 0} Properties Found
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">
+              {properties?.total.toLocaleString() || 0} {properties?.total === 1 ? 'Property' : 'Properties'} Found
+              {searchLocation && (
+                <span className="font-medium text-gray-600"> in {searchLocation}</span>
+              )}
+            </h2>
+            <div className="flex items-center gap-4 mt-2 flex-wrap">
+              {(minPrice || maxPrice || bedrooms || bathrooms || propertyType) && (
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span className="font-medium">
+                    Filtered by: {[minPrice && `$${parseInt(minPrice).toLocaleString()}+`, maxPrice && `up to $${parseInt(maxPrice).toLocaleString()}`, bedrooms && `${bedrooms}+ beds`, bathrooms && `${bathrooms}+ baths`, propertyType && propertyType].filter(Boolean).join(', ')}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
           {
           <div className="flex gap-2 items-center">
             <Badge variant="secondary" className="text-sm">

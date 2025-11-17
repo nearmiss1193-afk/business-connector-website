@@ -106,6 +106,9 @@ export default function PropertyHome() {
     }
   }, [locationDetected]);
 
+  // Fetch total property count
+  const { data: propertyStats } = trpc.properties.getTotalCount.useQuery();
+
   // Fetch featured properties based on location
   const { data: featuredData } = trpc.properties.getFeaturedByLocation.useQuery(
     {
@@ -150,9 +153,28 @@ export default function PropertyHome() {
             <br />
             Agents. Loans.
           </h1>
-          <p className="text-xl md:text-2xl text-white/95 mb-8 max-w-2xl drop-shadow-lg">
+          <p className="text-xl md:text-2xl text-white/95 mb-4 max-w-2xl drop-shadow-lg">
             Search thousands of properties in Tampa, Orlando, St. Petersburg, and beyond
           </p>
+          {propertyStats && (
+            <div className="flex items-center gap-6 mb-4 text-white/90">
+              <div className="flex items-center gap-2">
+                <Home className="w-5 h-5" />
+                <span className="text-lg font-semibold">{propertyStats.total.toLocaleString()}</span>
+                <span className="text-sm">Homes</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5" />
+                <span className="text-lg font-semibold">{propertyStats.cities}</span>
+                <span className="text-sm">Cities</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5" />
+                <span className="text-lg font-semibold">{propertyStats.active.toLocaleString()}</span>
+                <span className="text-sm">Active Listings</span>
+              </div>
+            </div>
+          )}
 
           {/* Tab Toggle */}
           <div className="w-full max-w-3xl mb-4">

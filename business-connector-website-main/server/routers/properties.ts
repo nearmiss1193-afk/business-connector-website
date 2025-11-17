@@ -121,6 +121,34 @@ export const propertiesRouter = router({
     }),
 
   /**
+   * Get total property count and active listing statistics
+   */
+  getTotalCount: publicProcedure.query(async () => {
+    const db = await getDb();
+    if (!db) return { total: 0, active: 0, cities: 0 };
+
+    try {
+      const result = await db.execute(
+        sql`SELECT 
+          COUNT(*) as total,
+          SUM(CASE WHEN listing_status = 'active' THEN 1 ELSE 0 END) as active,
+          COUNT(DISTINCT city) as cities
+        FROM properties`
+      );
+      
+      const stats = (result as any[])[0] || { total: 0, active: 0, cities: 0 };
+      return {
+        total: parseInt(stats.total) || 0,
+        active: parseInt(stats.active) || 0,
+        cities: parseInt(stats.cities) || 0
+      };
+    } catch (error) {
+      console.error('Error fetching property count:', error);
+      return { total: 0, active: 0, cities: 0 };
+    }
+  }),
+
+  /**
    * Get all available cities and zip codes for search dropdown
    */
   getAvailableLocations: publicProcedure.query(async () => {

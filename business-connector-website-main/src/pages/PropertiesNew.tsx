@@ -33,6 +33,7 @@ import { trpc } from '@/lib/trpc';
 import BuyerRegistrationModal from '@/components/BuyerRegistrationModal';
 import RecentlyViewed from '@/components/RecentlyViewed';
 import LazyImage from '@/components/LazyImage';
+import SearchAutocomplete from '@/components/SearchAutocomplete';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function PropertiesNew() {
@@ -126,22 +127,19 @@ export default function PropertiesNew() {
       <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
         <div className="container py-8">
           {/* Main Search Bar */}
-          <div className="max-w-4xl mx-auto mb-6">
-            <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                placeholder="Enter an address, neighborhood, city, or ZIP code"
-                value={searchLocation}
-                onChange={(e) => setSearchLocation(e.target.value)}
-                className="pl-12 pr-24 h-14 text-lg border-2 border-gray-300 focus:border-blue-500 rounded-lg shadow-sm"
-              />
-              <Button
-                size="lg"
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-10"
-              >
-                <Search className="h-5 w-5" />
-              </Button>
-            </div>
+          <div className="max-w-4xl mx-auto mb-6 relative">
+            <SearchAutocomplete
+              value={searchLocation}
+              onChange={setSearchLocation}
+              placeholder="Enter an address, neighborhood, city, or ZIP code"
+              className="w-full"
+            />
+            <Button
+              size="lg"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-10 z-10"
+            >
+              <Search className="h-5 w-5" />
+            </Button>
           </div>
 
           {/* Quick Filters */}
@@ -225,12 +223,26 @@ export default function PropertiesNew() {
         {/* Results Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">
-              {properties?.total.toLocaleString() || 0} Homes for Sale
+            <h2 className="text-2xl font-bold text-gray-900">
+              {properties?.total.toLocaleString() || 0} {properties?.total === 1 ? 'Home' : 'Homes'} for Sale
+              {searchLocation && (
+                <span className="font-medium text-gray-600"> in {searchLocation}</span>
+              )}
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              {properties?.virtualTours.toLocaleString() || 0} with 3D tours
-            </p>
+            <div className="flex items-center gap-4 mt-2 flex-wrap">
+              <p className="text-sm text-gray-600">
+                <Camera className="inline h-4 w-4 mr-1 text-blue-600" />
+                {properties?.virtualTours.toLocaleString() || 0} with 3D tours
+              </p>
+              {(minPrice || maxPrice || bedrooms || bathrooms || propertyType) && (
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span>•</span>
+                  <span className="font-medium">
+                    {[minPrice && `$${parseInt(minPrice).toLocaleString()}+`, maxPrice && `up to $${parseInt(maxPrice).toLocaleString()}`, bedrooms && bedrooms !== 'any' && `${bedrooms}+ beds`, bathrooms && bathrooms !== 'any' && `${bathrooms}+ baths`, propertyType && propertyType !== 'any' && propertyType].filter(Boolean).join(', ')}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-3">
