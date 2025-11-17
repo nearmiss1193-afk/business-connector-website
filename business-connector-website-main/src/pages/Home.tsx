@@ -4,6 +4,9 @@ import GoogleMapReact from 'google-map-react';
 import { Link } from 'wouter';
 import AdvancedSearchFilters from '@/components/AdvancedSearchFilters';
 import { toast } from 'sonner';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Bed, Bath, Square } from 'lucide-react';
 
 function Home() {
   const [listings, setListings] = useState<any[]>([]);
@@ -105,38 +108,86 @@ function Home() {
         />
       </div>
 
-      {loading && <p className="text-blue-600">Loading properties...</p>}
+      {loading && listings.length === 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <Card key={i} className="overflow-hidden">
+              <Skeleton className="h-48 w-full" />
+              <div className="p-3 space-y-2">
+                <Skeleton className="h-5 w-32" />
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-40" />
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
       {error && <p className="text-red-600">{error}</p>}
 
       {view === 'list' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredSorted.map((l: any) => (
-            <Link key={l.zpid} to={`/listing/${l.zpid}`} className="border rounded overflow-hidden bg-white hover:shadow">
-              <img src={l.imgSrc} alt={l.address} className="w-full h-48 object-cover" />
-              <div className="p-3">
-                <p className="font-bold">${'{'}l.price{'}'}</p>
-                <p className="text-sm text-gray-600">{l.beds} bd • {l.baths} ba</p>
-                <p className="text-sm">{l.address}</p>
-                <button
-                  className="mt-2 bg-blue-600 text-white px-3 py-1 rounded"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    try {
-                      const url = import.meta.env.VITE_GHL_WEBHOOK_URL;
-                      if (!url) return toast.error('Lead webhook not configured');
-                      await axios.post(url, { property: l });
-                      toast.success('Lead sent to GoHighLevel');
-                    } catch (err) {
-                      console.error(err);
-                      toast.error('Failed to send lead');
-                    }
-                  }}
-                >
-                  Send Lead to GHL
-                </button>
-              </div>
-            </Link>
-          ))}
+          {filteredSorted.map((l: any) => {
+            const price = l.price ?? l.unformattedPrice ?? l.priceText;
+            const priceFmt = typeof price === 'number'
+              ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price)
+              : price ?? '—';
+            const address = l.address || l.streetAddress || l.addressStreet || 'Address unavailable';
+            const cityLine = [l.city || '', l.state || '', l.zipcode || ''].filter(Boolean).join(', ').replace(', ,', ',');
+            const beds = l.beds ?? l.bedrooms ?? '-';
+            const baths = l.baths ?? l.bathrooms ?? '-';
+            const sqft = l.livingArea ?? l.sqft ?? null;
+            const status = (l.homeStatus || l.statusText || '').toString().toUpperCase();
+            const isNew = l.listingDate ? (Date.now() - new Date(l.listingDate).getTime()) / (1000*60*60*24) <= 7 : false;
+
+            return (
+              <Link key={l.zpid ?? l.id} to={`/listing/${l.zpid ?? l.id}`} className="group">
+                <Card className="overflow-hidden bg-white border hover:shadow-lg transition-all">
+                  <div className="relative">
+                    {l.imgSrc ? (
+                      <img src={l.imgSrc} alt={address} className="w-full h-48 object-cover" />
+                    ) : (
+                      <div className="w-full h-48 bg-gray-200" />
+                    )}
+                    <div className="absolute top-2 left-2 flex gap-2">
+                      {isNew && <span className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">NEW</span>}
+                      {status.includes('PENDING') && <span className="bg-orange-600 text-white text-xs font-bold px-2 py-1 rounded">PENDING</span>}
+                    </div>
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white text-sm font-semibold px-2 py-1 rounded">
+                      {priceFmt}
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <div className="flex items-center gap-4 text-gray-700 mb-1">
+                      <div className="flex items-center gap-1"><Bed className="w-4 h-4" /><span className="text-sm font-medium">{beds} bd</span></div>
+                      <div className="flex items-center gap-1"><Bath className="w-4 h-4" /><span className="text-sm font-medium">{baths} ba</span></div>
+                      {sqft && <div className="flex items-center gap-1"><Square className="w-4 h-4" /><span className="text-sm font-medium">{new Intl.NumberFormat('en-US').format(sqft)} sqft</span></div>}
+                    </div>
+                    <p className="text-sm font-medium text-gray-900 line-clamp-1">{address}</p>
+                    <p className="text-xs text-gray-600 line-clamp-1">{cityLine}</p>
+                    <div className="mt-2">
+                      <button
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          try {
+                            const url = import.meta.env.VITE_GHL_WEBHOOK_URL;
+                            if (!url) return toast.error('Lead webhook not configured');
+                            await axios.post(url, { property: l });
+                            toast.success('Lead sent to GoHighLevel');
+                          } catch (err) {
+                            console.error(err);
+                            toast.error('Failed to send lead');
+                          }
+                        }}
+                      >
+                        Request Info
+                      </button>
+                    </div>
+                  </div>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
       ) : (
         <div style={{ height: '600px', width: '100%' }} className="rounded overflow-hidden">
