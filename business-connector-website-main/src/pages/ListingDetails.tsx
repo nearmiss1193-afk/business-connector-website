@@ -27,8 +27,15 @@ function ListingDetails() {
   const priceFmt = priceNum !== null
     ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(priceNum)
     : (listing.priceText || '—');
-  const address: string = listing.address || listing.streetAddress || 'Address unavailable';
-  const city = [listing.city, listing.state, listing.zipcode].filter(Boolean).join(', ').replace(', ,', ',');
+  const rawAddress = (listing as any).address;
+  const address: string = typeof rawAddress === 'string'
+    ? rawAddress
+    : ((listing as any).streetAddress || rawAddress?.streetAddress || rawAddress?.address || 'Address unavailable');
+  const city = [
+    (listing as any).city || rawAddress?.city || '',
+    (listing as any).state || rawAddress?.state || '',
+    (listing as any).zipcode || rawAddress?.zipcode || ''
+  ].filter(Boolean).join(', ').replace(', ,', ',');
   const beds = listing.beds ?? listing.bedrooms ?? '-';
   const baths = listing.baths ?? listing.bathrooms ?? '-';
   const sqft = listing.livingArea ?? listing.sqft ?? null;
