@@ -124,7 +124,7 @@ export default function PropertyDetailLeadForm({
   };
 
   return (
-    <Card className="p-6 sticky top-24">
+    <Card id="contact" className="p-6 sticky top-24">
       <h3 className="text-xl font-bold mb-4">Request Information</h3>
       
       {submitStatus === 'success' && (

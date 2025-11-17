@@ -491,8 +491,8 @@ async function handleBuyerLead(formData: FormData) {
  * Send lead to Pipedream webhook for GoHighLevel integration
  */
 async function sendToPipedreamWebhook(formData: FormData, leadType: LeadType) {
-  const WEBHOOK_URL = 'https://eomhc.m.pipedream.net';
-  const WEBHOOK_ID = 'pit-b0a41b0b-24e5-4cee-8126-ee7b80b4c89e';
+  const WEBHOOK_URL = process.env.GHL_WEBHOOK_URL || process.env.VITE_GHL_WEBHOOK_URL || 'https://eomhc.m.pipedream.net';
+  const WEBHOOK_ID = process.env.GHL_WEBHOOK_ID || '';
   
   try {
     const payload = {
