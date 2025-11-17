@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Bed, Bath, Square } from 'lucide-react';
+import Hero from '@/components/Hero';
 
 function Home() {
   const [listings, setListings] = useState<any[]>([]);
@@ -67,7 +68,27 @@ function Home() {
   }, [listings, filters, sort]);
 
   return (
-    <div className="p-4 max-w-[1200px] mx-auto">
+    <div>
+      <Hero
+        title="Find your next home in Central Florida"
+        subtitle="Search thousands of homes for sale and rent across Orlando, Tampa, and beyond. Real-time data, beautiful photos, and powerful filters."
+        backgroundUrl="/hero-bg.svg"
+        searchValue={search}
+        onSearchChange={setSearch}
+        onSearchSubmit={() => {/* triggers useEffect */}}
+        chips={[
+          { label: 'Orlando', onClick: () => setSearch('Orlando, FL') },
+          { label: 'Tampa', onClick: () => setSearch('Tampa, FL') },
+          { label: 'Under $500k', onClick: () => setFilters((f: any) => ({ ...f, maxPrice: 500000 })) },
+          { label: '3+ Beds', onClick: () => setFilters((f: any) => ({ ...f, bedrooms: 3 })) },
+        ]}
+        ctas={[
+          { label: 'Buy a home', onClick: () => window.scrollTo({ top: 600, behavior: 'smooth' }) },
+          { label: 'Get pre-approved', onClick: () => window.location.assign('/get-pre-approved'), variant: 'outline' },
+        ]}
+      />
+
+      <div className="p-4 max-w-[1200px] mx-auto">
       <div className="flex flex-col md:flex-row md:items-center gap-3 mb-4">
         <input
           type="text"
@@ -204,6 +225,24 @@ function Home() {
           </GoogleMapReact>
         </div>
       )}
+      </div>
+      {/* Simple feature highlights */}
+      <section className="bg-white border-t">
+        <div className="max-w-[1200px] mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div>
+            <h3 className="text-lg font-semibold">Powerful search</h3>
+            <p className="text-sm text-gray-600">Filter by price, beds, baths, and home type. See results on a map or in a list.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">Local insights</h3>
+            <p className="text-sm text-gray-600">Explore neighborhoods across Central Florida with up-to-date market data.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">Easy to connect</h3>
+            <p className="text-sm text-gray-600">Request info in one click—our team follows up fast to help you tour and buy.</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
