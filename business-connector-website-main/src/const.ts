@@ -1,16 +1,16 @@
-// src/const.ts - Fixed Invalid URL and added title
+// src/const.ts - Vite-friendly env accessors for client
 
-export const API_BASE_URL = process.env.VITE_API_URL || '/api'; // Fixed: Env or relative - no localhost
+export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
-export const APP_TITLE = process.env.VITE_APP_TITLE || 'Business Conector - Real Estate Leads'; // For browser title
+export const APP_TITLE = import.meta.env.VITE_APP_TITLE || 'Business Connector - Real Estate Leads';
 
-export const APP_LOGO = import.meta.env.VITE_APP_LOGO || "https://placehold.co/128x128/2563eb/ffffff?text=BC&font=montserrat"; // For logo
+export const APP_LOGO = import.meta.env.VITE_APP_LOGO || "https://placehold.co/128x128/2563eb/ffffff?text=BC&font=montserrat";
 
-export const GHL_API_KEY = process.env.GHL_API_KEY; // For leads
+export const GHL_API_KEY = import.meta.env.VITE_GHL_API_KEY;
 
-export const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY; // For listings
+export const RAPIDAPI_KEY = import.meta.env.VITE_RAPIDAPI_KEY;
 
-export const GOOGLE_MAPS_KEY = process.env.GOOGLE_MAPS_KEY; // For maps
+export const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
 // Generate login URL at runtime so redirect URI reflects the current origin.
 export const getLoginUrl = () => {
