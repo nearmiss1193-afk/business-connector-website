@@ -63,3 +63,4 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+// Vercel redeploy trigger - Mon Nov 17 11:39:30 EST 2025
