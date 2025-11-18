@@ -224,7 +224,7 @@ export default function BuyerRegistrationModal({
           {/* TCPA/SMS Compliance Disclosure */}
           <div className="text-xs text-gray-500 text-center space-y-2 border-t pt-4">
             <p>
-              By submitting this form, you expressly consent to receive communications from Business Conector 
+              By submitting this form, you expressly consent to receive communications from Central Florida Homes 
               and affiliated real estate professionals via telephone calls (including autodialed and pre-recorded calls), 
               text messages (SMS/MMS), and email regarding property listings, market updates, and related services.
             </p>

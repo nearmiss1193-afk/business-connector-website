@@ -331,7 +331,7 @@ export default function Advertise() {
               {/* TCPA/SMS Compliance Disclosure */}
               <div className="text-xs text-gray-500 text-center space-y-2 border-t pt-4 mt-4">
                 <p>
-                  By submitting this form, you expressly consent to receive communications from Business Conector 
+                  By submitting this form, you expressly consent to receive communications from Central Florida Homes 
                   via telephone calls (including autodialed and pre-recorded calls), text messages (SMS/MMS), and email 
                   regarding advertising packages, platform features, and related services.
                 </p>

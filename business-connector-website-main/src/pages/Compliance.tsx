@@ -12,9 +12,9 @@ export default function Compliance() {
           <Link href="/">
             <a className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                BC
+                CF
               </div>
-              <span className="font-bold text-xl">Business Conector</span>
+              <span className="font-bold text-xl">Central Florida Homes</span>
             </a>
           </Link>
           <Button variant="ghost" size="sm" asChild>
@@ -38,7 +38,7 @@ export default function Compliance() {
               A2P 10DLC Compliance
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Business Conector is fully compliant with A2P 10DLC regulations, ensuring your SMS messages 
+              Central Florida Homes is fully compliant with A2P 10DLC regulations, ensuring your SMS messages 
               are delivered reliably and legally.
             </p>
           </div>
@@ -120,12 +120,12 @@ export default function Compliance() {
               </CardContent>
             </Card>
 
-            {/* How Business Conector is Compliant */}
+            {/* How Central Florida Homes is Compliant */}
             <Card className="border-accent/50 bg-accent/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Shield className="h-5 w-5 text-accent" />
-                  How Business Conector Ensures Compliance
+                  How Central Florida Homes Ensures Compliance
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -137,7 +137,7 @@ export default function Compliance() {
                     <div>
                       <h3 className="font-semibold mb-1">Brand Registration</h3>
                       <p className="text-sm text-muted-foreground">
-                        Business Conector is registered as a verified brand with The Campaign Registry (TCR), 
+                        Central Florida Homes is registered as a verified brand with The Campaign Registry (TCR), 
                         the official A2P 10DLC registration platform.
                       </p>
                     </div>
@@ -204,11 +204,11 @@ export default function Compliance() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  When you sign up for Business Conector, you'll see a consent checkbox that states:
+                  When you sign up for Central Florida Homes, you'll see a consent checkbox that states:
                 </p>
                 <div className="bg-muted p-4 rounded-lg border">
                   <p className="text-sm">
-                    "I consent to receive SMS messages from Business Conector regarding my account, leads, 
+                    "I consent to receive SMS messages from Central Florida Homes regarding my account, leads, 
                     and service updates. Message and data rates may apply. Reply STOP to opt out."
                   </p>
                 </div>
@@ -259,7 +259,7 @@ export default function Compliance() {
                   <div>
                     <h3 className="font-semibold mb-1">No Hidden Fees</h3>
                     <p className="text-sm text-muted-foreground">
-                      Business Conector does not charge for SMS messages. However, standard message and data 
+                      Central Florida Homes does not charge for SMS messages. However, standard message and data 
                       rates from your mobile carrier may apply.
                     </p>
                   </div>
@@ -304,7 +304,7 @@ export default function Compliance() {
       <footer className="py-12 bg-muted/30 border-t mt-auto">
         <div className="container">
           <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 Business Conector. All rights reserved.</p>
+            <p>&copy; 2025 Central Florida Homes. All rights reserved.</p>
             <p className="mt-2">
               <Link href="/">
                 <a className="hover:text-foreground transition-colors">Home</a>

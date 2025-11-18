@@ -12,9 +12,9 @@ export default function Success() {
           <Link href="/">
             <a className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                BC
+                CF
               </div>
-              <span className="font-bold text-xl">Business Conector</span>
+              <span className="font-bold text-xl">Central Florida Homes</span>
             </a>
           </Link>
         </div>
@@ -37,7 +37,7 @@ export default function Success() {
                 Application Submitted Successfully!
               </h1>
               <p className="text-lg text-muted-foreground">
-                Thank you for your interest in Business Conector. We've received your application 
+                Thank you for your interest in Central Florida Homes. We've received your application 
                 and will contact you within 24 hours to schedule your onboarding call.
               </p>
             </div>
@@ -108,7 +108,7 @@ export default function Success() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="mailto:support@businessconector.com">Contact Support</a>
+                <a href="mailto:support@centralfloridahomes.com">Contact Support</a>
               </Button>
             </div>
 
@@ -116,8 +116,8 @@ export default function Success() {
             <div className="pt-8 border-t">
               <p className="text-sm text-muted-foreground">
                 <strong>Questions?</strong> Email us at{" "}
-                <a href="mailto:support@businessconector.com" className="text-primary hover:underline">
-                  support@businessconector.com
+                <a href="mailto:support@centralfloridahomes.com" className="text-primary hover:underline">
+                  support@centralfloridahomes.com
                 </a>{" "}
                 or call{" "}
                 <a href="tel:+15551234567" className="text-primary hover:underline">
@@ -133,7 +133,7 @@ export default function Success() {
       <footer className="py-12 bg-muted/30 border-t">
         <div className="container">
           <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 Business Conector. All rights reserved.</p>
+            <p>&copy; 2025 Central Florida Homes. All rights reserved.</p>
           </div>
         </div>
       </footer>

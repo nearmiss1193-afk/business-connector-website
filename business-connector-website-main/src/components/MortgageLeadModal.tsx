@@ -167,7 +167,7 @@ export default function MortgageLeadModal({ open, onOpenChange, mortgageData }: 
               {/* TCPA/SMS Compliance Disclosure */}
               <div className="text-xs text-gray-500 text-center space-y-2 border-t pt-4">
                 <p>
-                  By submitting this form, you expressly consent to receive communications from Business Conector 
+                  By submitting this form, you expressly consent to receive communications from Central Florida Homes 
                   and affiliated mortgage lenders via telephone calls (including autodialed and pre-recorded calls), 
                   text messages (SMS/MMS), and email regarding mortgage pre-approval, loan options, and related services.
                 </p>

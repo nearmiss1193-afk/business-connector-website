@@ -15,7 +15,7 @@ import MortgageLeadModal from '@/components/MortgageLeadModal';
 import Footer from '@/components/Footer';
 import TopNavigation from '@/components/TopNavigation';
 import DrawMapModal from '@/components/DrawMapModal';
-import SearchLocationDropdown from '@/components/SearchLocationDropdown';
+import SearchAutocomplete from '@/components/SearchAutocomplete';
 import {
   Search,
   MapPin,
@@ -118,9 +118,15 @@ export default function PropertyHome() {
     { enabled: !!userCity }
   );
 
-  const handleSearch = (e: React.FormEvent) => {
+  const submitSearch = (query: string) => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    setLocation(`/properties?location=${encodeURIComponent(trimmed)}`);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLocation(`/properties?location=${encodeURIComponent(searchQuery)}`);
+    submitSearch(searchQuery);
   };
 
   const formatPrice = (price: string) => {
@@ -205,28 +211,26 @@ export default function PropertyHome() {
           {/* Search Bar - Zillow Style */}
           {activeTab === 'buy' && (
             <div className="w-full max-w-3xl">
-              <form onSubmit={handleSearch}>
-                <div className="bg-white rounded-xl shadow-2xl p-1.5 flex items-center gap-2">
-                  <div className="flex-1 flex items-center gap-3 px-5">
-                    <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                    <SearchLocationDropdown
-                      value={searchQuery}
-                      onChange={setSearchQuery}
-                      onSelect={() => {
-                        setTimeout(() => {
-                          const form = document.querySelector('form');
-                          if (form) form.requestSubmit();
-                        }, 100);
-                      }}
-                    />
+              <form onSubmit={handleSearchSubmit}>
+                <div className="bg-white rounded-xl shadow-2xl p-1.5 flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1">
+                      <SearchAutocomplete
+                        value={searchQuery}
+                        onChange={setSearchQuery}
+                        onSearch={submitSearch}
+                        placeholder="Search Central Florida cities, neighborhoods, or ZIPs"
+                        className="w-full"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
+                    >
+                      <Search className="w-5 h-5" />
+                    </Button>
                   </div>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-7 text-base font-medium rounded-lg"
-                  >
-                    <Search className="w-5 h-5" />
-                  </Button>
                 </div>
               </form>
               
@@ -274,6 +278,58 @@ export default function PropertyHome() {
                 </Button>
               </div>
               
+              {propertyStats && (
+                <div className="mt-4 space-y-3 text-white">
+                  <p className="text-sm font-medium text-white/90">
+                    Live Central Florida stats · refreshed hourly
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <Card className="bg-white/90 backdrop-blur border-white/50">
+                      <CardContent className="py-4">
+                        <div className="flex items-center gap-3">
+                          <Home className="w-5 h-5 text-blue-600" />
+                          <div>
+                            <p className="text-xs uppercase tracking-widest text-gray-500">Homes Indexed</p>
+                            <p className="text-2xl font-bold text-gray-900 leading-tight">
+                              {propertyStats.total.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">Across MLS + partner feeds</p>
+                      </CardContent>
+                    </Card>
+                    <Card className="bg-white/90 backdrop-blur border-white/50">
+                      <CardContent className="py-4">
+                        <div className="flex items-center gap-3">
+                          <TrendingUp className="w-5 h-5 text-blue-600" />
+                          <div>
+                            <p className="text-xs uppercase tracking-widest text-gray-500">Active Listings</p>
+                            <p className="text-2xl font-bold text-gray-900 leading-tight">
+                              {propertyStats.active.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">Updated every 15 minutes</p>
+                      </CardContent>
+                    </Card>
+                    <Card className="bg-white/90 backdrop-blur border-white/50">
+                      <CardContent className="py-4">
+                        <div className="flex items-center gap-3">
+                          <MapPin className="w-5 h-5 text-blue-600" />
+                          <div>
+                            <p className="text-xs uppercase tracking-widest text-gray-500">Cities Covered</p>
+                            <p className="text-2xl font-bold text-gray-900 leading-tight">
+                              {propertyStats.cities}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">From Tampa to Orlando</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
+
               {/* Filter Panel */}
               {showFilters && (
                 <div className="mt-3 bg-white rounded-xl shadow-2xl p-6">

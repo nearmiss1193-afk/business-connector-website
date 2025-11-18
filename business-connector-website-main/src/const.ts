@@ -2,7 +2,13 @@
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
-export const APP_TITLE = import.meta.env.VITE_APP_TITLE || 'Central Florida Homes';
+const legacyTitle = import.meta.env.VITE_APP_TITLE?.trim();
+const legacyLower = legacyTitle?.toLowerCase() || '';
+const isLegacyBusiness =
+  legacyLower.includes('business connector') ||
+  legacyLower.includes('business conector') ||
+  legacyLower.includes('business-connector');
+export const APP_TITLE = legacyTitle && !isLegacyBusiness ? legacyTitle : 'Central Florida Homes';
 
 export const APP_LOGO = import.meta.env.VITE_APP_LOGO || "/favicon.svg";
 

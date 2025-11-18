@@ -35,7 +35,7 @@ export default function Contact() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600">Send us an email</p>
-              <p className="text-sm font-semibold text-blue-600 mt-2">danielcoffman@businessconector.com</p>
+              <p className="text-sm font-semibold text-blue-600 mt-2">danielcoffman@centralfloridahomes.com</p>
             </CardContent>
           </Card>
 

@@ -103,9 +103,9 @@ export default function GetStarted() {
           <Link href="/">
             <a className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                BC
+                CF
               </div>
-              <span className="font-bold text-xl">Business Conector</span>
+              <span className="font-bold text-xl">Central Florida Homes</span>
             </a>
           </Link>
           <Button variant="ghost" size="sm" asChild>
@@ -349,7 +349,7 @@ export default function GetStarted() {
                         id="message"
                         value={formData.message}
                         onChange={(e) => handleChange("message", e.target.value)}
-                        placeholder="What are you hoping to achieve with Business Conector?"
+                        placeholder="What are you hoping to achieve with Central Florida Homes?"
                         rows={4}
                       />
                     </div>
@@ -364,7 +364,7 @@ export default function GetStarted() {
                         onCheckedChange={(checked) => handleChange("agreeToSMS", checked as boolean)}
                       />
                       <Label htmlFor="agreeToSMS" className="text-sm font-normal leading-relaxed cursor-pointer">
-                        I consent to receive SMS messages from Business Conector regarding my account, 
+                        I consent to receive SMS messages from Central Florida Homes regarding my account, 
                         leads, and service updates. Message and data rates may apply. Reply STOP to opt out. 
                         <span className="text-destructive">*</span>
                       </Label>

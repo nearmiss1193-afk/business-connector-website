@@ -262,7 +262,7 @@ export default function AgentAds() {
           <Card>
             <CardHeader>
               <CardTitle>Agent Inquiries</CardTitle>
-              <CardDescription>Agents interested in advertising (Business Conector leads)</CardDescription>
+              <CardDescription>Agents interested in advertising (Central Florida Homes leads)</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
